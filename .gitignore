@@ -1,0 +1,11 @@
+# Python
+__pycache__/
+*.pyc
+*.pyo
+
+# Scratch
+*.log
+.DS_Store
+build/
+dist/
+*.blend1

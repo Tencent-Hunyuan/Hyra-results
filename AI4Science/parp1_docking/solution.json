@@ -1,0 +1,30 @@
+{
+  "molecules": [
+    "CC(=O)N1CCN(C(=O)c2c(C#N)cc(Cc3n[nH]c(=O)c4cc(F)ccc34)c(C)c2F)CC1",
+    "CC(=O)N1CCN(C(=O)c2c(C#N)cc(Cc3n[nH]c(=O)c4cc(F)ccc34)c(C)c2C#N)CC1",
+    "CC(=O)N1CCN(C(=O)c2c(C#N)cc(Cc3n[nH]c(=O)c4cc(F)ccc34)c(F)c2C)CC1",
+    "CC(=O)N1CCN(C(=O)c2ccc(Cc3n[nH]c(=O)c4cc(F)ccc34)c(C)c2C#N)CC1",
+    "CC(=O)N1CCN(C(=O)c2c(F)cc(Cc3n[nH]c(=O)c4cc(F)ccc34)c(C)c2C#N)CC1",
+    "CC(=O)N1CCN(C(=O)c2c(C#N)cc(Cc3n[nH]c(=O)c4cc(F)ccc34)c(C)c2Cl)CC1",
+    "CC(=O)N1CCN(C(=O)c2c(Cl)cc(Cc3n[nH]c(=O)c4cc(F)ccc34)c(C)c2C#N)CC1",
+    "CC(=O)N1CCN(C(=O)c2ccc(Cc3n[nH]c(=O)c4cc(F)ccc34)c(C#N)c2)CC1",
+    "CC(=O)N1CCN(C(=O)c2ccc(Cc3n[nH]c(=O)c4cc(F)ccc34)cc2C#N)CC1",
+    "CC(=O)N1CCN(C(=O)c2c(C)cc(Cc3n[nH]c(=O)c4cc(F)ccc34)c(C)c2F)CC1",
+    "CC(=O)N1CCN(C(=O)c2ccc(Cc3n[nH]c(=O)c4c(F)c(F)ccc34)cc2C)CC1",
+    "CC(=O)N1CCN(C(=O)c2c(C)cc(Cc3n[nH]c(=O)c4cc(F)ccc34)c(F)c2C)CC1",
+    "CC(=O)N1CCN(C(=O)c2ccc(Cc3n[nH]c(=O)c4ccccc34)cc2)CC1",
+    "Cc1cc(Cc2n[nH]c(=O)c3cc(F)ccc23)ccc1C(=O)N1CCN(C(N)=O)CC1",
+    "Cc1cc(C(=O)N2CCN(C(N)=O)CC2)c(C)cc1Cc1n[nH]c(=O)c2cc(F)ccc12",
+    "CC(=O)N1CCN(C(=O)c2ccc(Cc3n[nH]c(=O)c4ccccc34)c(C#N)c2)CC1",
+    "CC(=O)N1CCN(C(=O)c2c(C)cc(Cc3n[nH]c(=O)c4cc(F)ccc34)cc2C)CC1",
+    "CC(=O)N1CCN(C(=O)c2cc(C)c(Cc3n[nH]c(=O)c4cc(F)ccc34)cc2C#N)CC1",
+    "CC(=O)N1CCN(C(=O)c2c(C)cc(Cc3n[nH]c(=O)c4c(F)c(F)ccc34)c(C)c2F)CC1",
+    "CC(=O)N1CCN(C(=O)c2ccc(Cc3n[nH]c(=O)c4cc(F)ccc34)c(F)c2C#N)CC1",
+    "CC(=O)N1CCN(C(=O)c2c(C)cc(Cc3n[nH]c(=O)c4cc(F)ccc34)c(C)c2Cl)CC1",
+    "CC(=O)N1CCN(C(=O)c2c(C)cc(Cc3n[nH]c(=O)c4cc(F)cc(F)c34)cc2C)CC1",
+    "CC(=O)N1CCN(C(=O)c2c(C)cc(Cc3n[nH]c(=O)c4cc(F)cc(F)c34)c(C)c2C)CC1",
+    "CC(=O)N1CCN(C(=O)c2c(F)cc(Cc3n[nH]c(=O)c4cc(F)ccc34)c(C)c2F)CC1",
+    "CC(=O)N1CCN(C(=O)c2c(F)cc(Cc3n[nH]c(=O)c4cc(F)ccc34)c(F)c2C)CC1"
+  ],
+  "target": "PARP1"
+}

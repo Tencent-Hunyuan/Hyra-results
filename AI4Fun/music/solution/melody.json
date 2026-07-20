@@ -1,0 +1,346 @@
+{
+  "key": "C major",
+  "tonic_pc": 0,
+  "mode": "gong_pentatonic",
+  "scale_pcs": [
+    0,
+    2,
+    4,
+    7,
+    9
+  ],
+  "tempo_bpm": 88,
+  "grid": "eighth",
+  "grid_per_beat": 2,
+  "n_notes": 57,
+  "range_midi": [
+    43,
+    57
+  ],
+  "notes": [
+    {
+      "midi": 43,
+      "dur_8th": 3
+    },
+    {
+      "midi": 43,
+      "dur_8th": 1
+    },
+    {
+      "midi": 45,
+      "dur_8th": 2
+    },
+    {
+      "midi": 48,
+      "dur_8th": 2
+    },
+    {
+      "midi": 50,
+      "dur_8th": 2
+    },
+    {
+      "midi": 48,
+      "dur_8th": 1
+    },
+    {
+      "midi": 50,
+      "dur_8th": 1
+    },
+    {
+      "midi": 52,
+      "dur_8th": 4
+    },
+    {
+      "midi": 55,
+      "dur_8th": 3
+    },
+    {
+      "midi": 52,
+      "dur_8th": 1
+    },
+    {
+      "midi": 52,
+      "dur_8th": 1
+    },
+    {
+      "midi": 50,
+      "dur_8th": 1
+    },
+    {
+      "midi": 48,
+      "dur_8th": 2
+    },
+    {
+      "midi": 50,
+      "dur_8th": 8
+    },
+    {
+      "midi": 52,
+      "dur_8th": 3
+    },
+    {
+      "midi": 55,
+      "dur_8th": 1
+    },
+    {
+      "midi": 55,
+      "dur_8th": 2
+    },
+    {
+      "midi": 52,
+      "dur_8th": 1
+    },
+    {
+      "midi": 55,
+      "dur_8th": 1
+    },
+    {
+      "midi": 48,
+      "dur_8th": 3
+    },
+    {
+      "midi": 50,
+      "dur_8th": 1
+    },
+    {
+      "midi": 50,
+      "dur_8th": 4
+    },
+    {
+      "midi": 43,
+      "dur_8th": 3
+    },
+    {
+      "midi": 52,
+      "dur_8th": 1
+    },
+    {
+      "midi": 52,
+      "dur_8th": 2
+    },
+    {
+      "midi": 50,
+      "dur_8th": 2
+    },
+    {
+      "midi": 48,
+      "dur_8th": 8
+    },
+    {
+      "midi": 50,
+      "dur_8th": 3
+    },
+    {
+      "midi": 50,
+      "dur_8th": 1
+    },
+    {
+      "midi": 52,
+      "dur_8th": 2
+    },
+    {
+      "midi": 50,
+      "dur_8th": 1
+    },
+    {
+      "midi": 48,
+      "dur_8th": 1
+    },
+    {
+      "midi": 45,
+      "dur_8th": 2
+    },
+    {
+      "midi": 43,
+      "dur_8th": 1
+    },
+    {
+      "midi": 45,
+      "dur_8th": 1
+    },
+    {
+      "midi": 48,
+      "dur_8th": 4
+    },
+    {
+      "midi": 45,
+      "dur_8th": 3
+    },
+    {
+      "midi": 48,
+      "dur_8th": 1
+    },
+    {
+      "midi": 50,
+      "dur_8th": 2
+    },
+    {
+      "midi": 52,
+      "dur_8th": 2
+    },
+    {
+      "midi": 55,
+      "dur_8th": 8
+    },
+    {
+      "midi": 55,
+      "dur_8th": 3
+    },
+    {
+      "midi": 55,
+      "dur_8th": 1
+    },
+    {
+      "midi": 57,
+      "dur_8th": 2
+    },
+    {
+      "midi": 55,
+      "dur_8th": 1
+    },
+    {
+      "midi": 52,
+      "dur_8th": 1
+    },
+    {
+      "midi": 52,
+      "dur_8th": 2
+    },
+    {
+      "midi": 50,
+      "dur_8th": 1
+    },
+    {
+      "midi": 48,
+      "dur_8th": 1
+    },
+    {
+      "midi": 45,
+      "dur_8th": 4
+    },
+    {
+      "midi": 43,
+      "dur_8th": 3
+    },
+    {
+      "midi": 52,
+      "dur_8th": 1
+    },
+    {
+      "midi": 52,
+      "dur_8th": 1
+    },
+    {
+      "midi": 50,
+      "dur_8th": 1
+    },
+    {
+      "midi": 48,
+      "dur_8th": 1
+    },
+    {
+      "midi": 50,
+      "dur_8th": 1
+    },
+    {
+      "midi": 48,
+      "dur_8th": 8
+    }
+  ],
+  "song": "望春風 (Bāng-chhun-hong), 鄧雨賢 1933, lyrics 李臨秋; the COMPLETE verse - four distinct sung phrases (NOT a strophic ABAB repeat): 獨夜無伴守燈下，清風對面吹／想欲郎君做翁婿，意愛在心裡 (here 想起邂逅的少年，姑娘心兒醉)／果然標緻面肉白，誰家人子弟／想要問伊驚歹勢，相縫如萍水 (variant lyric 想要問他口難開).",
+  "source": "IMMUTABLE ground-truth melody for the multi-instrument arrangement of this melody. The full verse of 望春風 has FOUR DISTINCT melodic phrases (one per lyric line) - it is NOT a strophic ABAB repeat (an earlier version of this file wrongly repeated phrases 1-2 as 3-4 and was missing the genuine 4th phrase). All four phrases TRANSCRIBED note-for-note from the canonical jianpu lead sheet at qupu123.com (望春風, 李臨秋 詞/鄧雨賢 曲, 1=F 4/4 in the source; re-based here to 1=C, low register so 1=C3=48), cross-checked against the song's known shape. Gong-mode pentatonic (digits 1 2 3 5 6 = C D E G A; no 4/fa, no 7/ti). Phrase 1 (notes 1-14): .5 .5 .6 1 2 1 2 3 5 3 3 2 1 2. Phrase 2 (15-27): 3 5 5 3 5 1 2 2 .5 3 3 2 1. Phrase 3 (28-41): 2 2 3 2 1 .6 .5 .6 1 .6 1 2 3 5 - the song's signature gesture (also quoted instrumentally as the intro/interlude). Phrase 4 (42-57): 5 5 6 5 3 3 2 1 .6 .5 3 3 2 1 2 1 - opens in the mid register (5=G3, 6=A3), dips to low A2/G2, and cadences twice on 3 3 2 1 → 1. 57 notes, 16 bars of 4/4, 256 sixteenths, range G2-A3. The arrangement may transpose the whole melody by octaves (the carrier gate allows an octave change at each phrase boundary).",
+  "form": "through-composed (4 distinct phrases)",
+  "phrases": [
+    {
+      "label": "P1",
+      "lyric": "獨夜無伴守燈下，清風對面吹",
+      "notes": [
+        0,
+        14
+      ]
+    },
+    {
+      "label": "P2",
+      "lyric": "想著少年家（十七八歲未出嫁）",
+      "notes": [
+        14,
+        27
+      ]
+    },
+    {
+      "label": "P3",
+      "lyric": "果然標緻面肉白，誰家人子弟",
+      "notes": [
+        27,
+        41
+      ]
+    },
+    {
+      "label": "P4",
+      "lyric": "想要問伊驚歹勢，相縫如萍水",
+      "notes": [
+        41,
+        57
+      ]
+    }
+  ],
+  "jianpu": [
+    ".5",
+    ".5",
+    ".6",
+    "1",
+    "2",
+    "1",
+    "2",
+    "3",
+    "5",
+    "3",
+    "3",
+    "2",
+    "1",
+    "2",
+    "3",
+    "5",
+    "5",
+    "3",
+    "5",
+    "1",
+    "2",
+    "2",
+    ".5",
+    "3",
+    "3",
+    "2",
+    "1",
+    "2",
+    "2",
+    "3",
+    "2",
+    "1",
+    ".6",
+    ".5",
+    ".6",
+    "1",
+    ".6",
+    "1",
+    "2",
+    "3",
+    "5",
+    "5",
+    "5",
+    "6",
+    "5",
+    "3",
+    "3",
+    "2",
+    "1",
+    ".6",
+    ".5",
+    "3",
+    "3",
+    "2",
+    "1",
+    "2",
+    "1"
+  ]
+}

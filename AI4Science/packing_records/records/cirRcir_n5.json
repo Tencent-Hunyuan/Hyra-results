@@ -1,0 +1,41 @@
+{
+  "problem": "perim/circles_in_circle",
+  "page": "https://erich-friedman.github.io/packing/cirRcir/",
+  "n": 5,
+  "dimension": 2,
+  "sum_s": 1.86684,
+  "sum_s_plus": "1.86684+",
+  "sum_s_full": 1.8668436136187876,
+  "currently_listed": "1+\u221a3/2 = 1.866+",
+  "currently_listed_by": "Veit Elser, November 2009",
+  "improvement": 0.00081,
+  "coords_note": "coordinates are full-precision; reported value truncated to 5dp (x.xxxxx+)",
+  "format": "[x, y, radius] per circle; unit container",
+  "pieces": [
+    [
+      -0.4862567842328681,
+      -0.3179751035638992,
+      0.4190061742694893
+    ],
+    [
+      0.4483320572889063,
+      -0.10326713140536911,
+      0.5399285565246915
+    ],
+    [
+      0.012538088099756133,
+      -0.7554446067561817,
+      0.2444513543000013
+    ],
+    [
+      -0.2981574525250361,
+      0.49865414891340193,
+      0.41900617424728115
+    ],
+    [
+      0.34175378339301876,
+      0.6738383404801364,
+      0.24445135427732445
+    ]
+  ]
+}

@@ -1,0 +1,46 @@
+{
+  "problem": "min/pentagons_in_square",
+  "page": "https://erich-friedman.github.io/packing/peninsqu/",
+  "n": 6,
+  "dimension": 2,
+  "s": 3.88299,
+  "s_plus": "3.88299+",
+  "s_full": 3.882992252618798,
+  "currently_listed": "s = 3.88300+",
+  "currently_listed_by": "Jonathan Viquerat, April 2026",
+  "improvement": 1e-05,
+  "coords_note": "coordinates are full-precision; reported value truncated to 5dp (x.xxxxx+)",
+  "format": "[x, y, theta] per piece; unit piece, container scale s",
+  "pieces": [
+    [
+      -1.2533051425119197,
+      -1.1324791314113685,
+      2.199114857425042
+    ],
+    [
+      0.37714422448749124,
+      -1.2533051424970405,
+      2.5132741227840207
+    ],
+    [
+      -0.32578426268903826,
+      0.13810104473616283,
+      3.769911184219939
+    ],
+    [
+      1.2533051654784604,
+      -0.0392219145214461,
+      2.827433388143
+    ],
+    [
+      -1.1324791313599234,
+      1.253305165529905,
+      3.1415926535019794
+    ],
+    [
+      0.48412223192004566,
+      1.2522616449273007,
+      3.143682702572609
+    ]
+  ]
+}

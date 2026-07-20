@@ -1,0 +1,94 @@
+case_id,problem,n,measure,value,listed_prior,improvement,prior_by,source
+cubincub_n11,min/cubes_in_cube,11,s,2.8829529104956513,2.89444,0.01149,"Timo Berthold, et al, March 2026",friedman_20260702
+cubincub_n12,min/cubes_in_cube,12,s,2.9327717687048653,2.94281,0.01004,"Erich Friedman, 1998",friedman_20260702
+hexincir_n25,min/hexagons_in_circle,25,s,5.188040818850871,5.18816,0.00012,"Jake Loyd, June 2026",friedman_20260702
+hexincir_n26,min/hexagons_in_circle,26,s,5.257463836639421,5.28194,0.02448,"Thomas Greenleaf, June 2026",friedman_20260702
+hexincir_n27,min/hexagons_in_circle,27,s,5.281677775812385,5.28194,0.00026,"Thomas Greenleaf, June 2026",friedman_20260702
+hexintri_n9,min/hexagons_in_triangle,9,s,8.644948767918143,8.645,5e-05,"Jonathan Viquerat, April 2026",friedman_20260702
+hexintri_n12,min/hexagons_in_triangle,12,s,9.964302557645235,9.9644,0.0001,"Jonathan Viquerat, April 2026",friedman_20260702
+hexintri_n13,min/hexagons_in_triangle,13,s,10.288575844132138,10.2886,2e-05,"Jonathan Viquerat, April 2026",friedman_20260702
+hexintri_n29,min/hexagons_in_triangle,29,s,14.785579007998574,14.80187,0.01629,"Mohamed Metwalli, June 2026",friedman_20260702
+hexintri_n30,min/hexagons_in_triangle,30,s,15.0,15.0142,0.0142,"Mohamed Metwalli, June 2026",friedman_20260702
+hexintri_n31,min/hexagons_in_triangle,31,s,15.0,15.36956,0.36956,"Mohamed Metwalli, June 2026",friedman_20260702
+hexintri_n32,min/hexagons_in_triangle,32,s,15.475730056406233,15.488,0.01227,"Mohamed Metwalli, June 2026",friedman_20260702
+octinL_n15,min/octagons_in_L,15,s,5.820021502927343,,,,blog_showcase_record
+octincir_n14,min/octagons_in_circle,14,s,5.341302585430498,5.34131,1e-05,"Jonathan Viquerat, June 2026",friedman_20260702
+octincir_n16,min/octagons_in_circle,16,s,5.732951336509084,5.73298,3e-05,"Jonathan Viquerat, June 2026",friedman_20260702
+octincir_n18,min/octagons_in_circle,18,s,6.059667895910237,6.05968,1e-05,"Jonathan Viquerat, June 2026",friedman_20260702
+octincir_n20,min/octagons_in_circle,20,s,6.367244507264158,6.36903,0.00179,"Jonathan Viquerat, June 2026",friedman_20260702
+octincub_n21,min/octahedra_in_cube,21,s,2.592849935818519,2.59297,0.00012,"Riain Walsh, June 2026",friedman_20260702
+octincub_n24,min/octahedra_in_cube,24,s,2.6331889674258844,2.63504,0.00185,"Riain Walsh, June 2026",friedman_20260702
+penincir_n21,min/pentagons_in_circle,21,s,3.906936422646795,3.90697,3e-05,"Jake Loyd, June 2026",friedman_20260702
+penincir_n22,min/pentagons_in_circle,22,s,3.997810379591897,3.9979,9e-05,"Jonathan Viquerat, June 2026",friedman_20260702
+penincir_n23,min/pentagons_in_circle,23,s,4.071936354465431,4.07272,0.00078,"Jonathan Viquerat, June 2026",friedman_20260702
+penincir_n24,min/pentagons_in_circle,24,s,4.124024512457134,4.12412,0.0001,"Jonathan Viquerat, June 2026",friedman_20260702
+peninsqu_n6,min/pentagons_in_square,6,s,3.882992252618798,3.883,1e-05,"Jonathan Viquerat, April 2026",friedman_20260702
+peninsqu_n11,min/pentagons_in_square,11,s,5.115562392068272,5.11557,1e-05,"Jonathan Viquerat, April 2026",friedman_20260702
+peninsqu_n15,min/pentagons_in_square,15,s,5.901196219585243,5.90121,1e-05,"Jonathan Viquerat, June 2026",friedman_20260702
+peninsqu_n20,min/pentagons_in_square,20,s,6.661353866658333,6.66138,3e-05,"Thomas Greenleaf, June 2026",friedman_20260702
+peninsqu_n22,min/pentagons_in_square,22,s,7.0444547621061275,7.04446,1e-05,"Jake Loyd, June 2026",friedman_20260702
+penintri_n9,min/pentagons_in_triangle,9,s,7.08969014758358,7.08971,2e-05,Found by Jonathan Viquerat in May 2026,friedman_20260702
+penintri_n10,min/pentagons_in_triangle,10,s,7.172357326632918,7.1724,4e-05,Found by Jonathan Viquerat in May 2026,friedman_20260702
+penintri_n14,min/pentagons_in_triangle,14,s,8.589171576979561,8.58923,6e-05,Found by Jonathan Viquerat in May 2026,friedman_20260702
+penintri_n19,min/pentagons_in_triangle,19,s,9.925670279235451,9.92571,4e-05,Found by Thomas Greenleaf in June 2026,friedman_20260702
+penintri_n26,min/pentagons_in_triangle,26,s,11.466862259286074,11.47102,0.00416,Found by Jonathan Viquerat in May 2026,friedman_20260702
+penintri_n27,min/pentagons_in_triangle,27,s,11.608969812981561,11.62853,0.01956,Found by Mohamed Metwalli in June 2026,friedman_20260702
+penintri_n30,min/pentagons_in_triangle,30,s,12.388931594090428,12.40449,0.01556,Found by Mohamed Metwalli in June 2026,friedman_20260702
+penintri_n31,min/pentagons_in_triangle,31,s,12.59201050301334,12.59595,0.00394,Found by Mohamed Metwalli in June 2026,friedman_20260702
+penintri_n32,min/pentagons_in_triangle,32,s,12.71117847507754,12.73299,0.02181,Found by Mohamed Metwalli in June 2026,friedman_20260702
+penintri_n33,min/pentagons_in_triangle,33,s,12.863919951364004,12.8756,0.01168,Found by Mohamed Metwalli in June 2026,friedman_20260702
+penintri_n34,min/pentagons_in_triangle,34,s,12.981411502918387,12.98943,0.00802,Found by Mohamed Metwalli in June 2026,friedman_20260702
+penintri_n36,min/pentagons_in_triangle,36,s,13.183541244629845,13.2009,0.01736,Found by Mohamed Metwalli in June 2026,friedman_20260702
+penintri_n37,min/pentagons_in_triangle,37,s,13.643594159525076,13.66616,0.02257,Found by Mohamed Metwalli in June 2026,friedman_20260702
+penintri_n38,min/pentagons_in_triangle,38,s,13.849956659137431,13.86558,0.01562,Found by Mohamed Metwalli in June 2026,friedman_20260702
+penintri_n39,min/pentagons_in_triangle,39,s,13.984314969529127,14.02137,0.03706,Found by Mohamed Metwalli in June 2026,friedman_20260702
+penintri_n40,min/pentagons_in_triangle,40,s,14.139537836278508,14.17298,0.03344,Found by Mohamed Metwalli in June 2026,friedman_20260702
+squincir_n22,min/squares_in_circle,22,s,3.032399268543576,3.03274,0.00034,Milan Kovacic in May 2026,friedman_20260702
+squincir_n25,min/squares_in_circle,25,s,3.174503223133547,3.1757,0.0012,David W. Cantrell in April 2002,friedman_20260702
+squincir_n31,min/squares_in_circle,31,s,3.527718727696061,3.53381,0.00609,Milan Kovacic in May 2026,friedman_20260702
+squincir_n33,min/squares_in_circle,33,s,3.6001081828794605,3.60555,0.00544,Maurizio Morandi in June 2010,friedman_20260702
+squinhex_n18,min/squares_in_hexagon,18,s,2.921049764077844,2.92111,6e-05,"Ian Watson, April 2026",friedman_20260702
+squinhex_n19,min/squares_in_hexagon,19,s,2.9350860978091533,2.93511,2e-05,"Ian Watson, April 2026",friedman_20260702
+squintri_n20,min/squares_in_triangle,20,s,7.616954722204242,7.6188,0.00185,"Erich Friedman, 1997",friedman_20260702
+squintri_n39,min/squares_in_triangle,39,s,10.309768418937567,10.31,0.00023,"Emerson Connelly, April 2026",friedman_20260702
+squintri_n41,min/squares_in_triangle,41,s,10.619233698687543,10.62435,0.00512,"Mohamed Metwalli, June 2026",friedman_20260702
+squintri_n42,min/squares_in_triangle,42,s,10.619564696539525,10.77662,0.15706,"Mohamed Metwalli, June 2026",friedman_20260702
+squintri_n43,min/squares_in_triangle,43,s,10.774059695385683,10.93472,0.16066,"Mohamed Metwalli, June 2026",friedman_20260702
+tanincir_n16,min/tans_in_circle,16,s,1.735882060783881,1.7418,0.00592,"Jake Loyd, June 2026",friedman_20260702
+tanincir_n17,min/tans_in_circle,17,s,1.7972328932995292,1.80067,0.00344,"Jake Loyd, June 2026",friedman_20260702
+tanincir_n20,min/tans_in_circle,20,s,1.9366190154466456,1.93833,0.00171,"Jake Loyd, June 2026",friedman_20260702
+triinhex_n21,min/triangles_in_hexagon,21,s,1.9986989915636764,1.99878,8e-05,"Ian Watson, April 2026",friedman_20260702
+triinhex_n27,min/triangles_in_hexagon,27,s,2.2954034576911986,2.29541,1e-05,"Ian Watson, April 2026",friedman_20260702
+triinhex_n32,min/triangles_in_hexagon,32,s,2.461045492220891,2.46121,0.00016,"Jake Loyd, June 2026",friedman_20260702
+triintri_n43,min/triangles_in_triangle,43,s,6.800004634565251,6.83333,0.03333,"Emerson Connelly, May 2026",friedman_20260702
+cirRcir_n5,perim/circles_in_circle,5,sum_s,1.8668436136187876,1.86603,0.00081,"Veit Elser, November 2009",friedman_20260702
+cirRsqu_n26,perim/circles_in_square,26,sum_s,2.6359830951068446,2.634,0.001,"David W. Cantrell, July 2011",friedman_20260702
+cirRsqu_n33,perim/circles_in_square,33,sum_s,2.9872850198249474,2.9789,0.00838,"Jonathan Viquerat, June 2026",friedman_20260702
+cirRsqu_n34,perim/circles_in_square,34,sum_s,3.0297992386878443,3.0297,9e-05,"Jonathan Viquerat, June 2026",friedman_20260702
+cirRsqu_n35,perim/circles_in_square,35,sum_s,3.0740363770828374,3.06942,0.00461,"Jonathan Viquerat, June 2026",friedman_20260702
+cirRsqu_n36,perim/circles_in_square,36,sum_s,3.1217544985781105,3.11023,0.01152,"Jonathan Viquerat, June 2026",friedman_20260702
+cirRsqu_n37,perim/circles_in_square,37,sum_s,3.161498930069363,3.1578,0.00369,"Jonathan Viquerat, June 2026",friedman_20260702
+cirRsqu_n38,perim/circles_in_square,38,sum_s,3.205945642435773,3.1988,0.00714,"Jonathan Viquerat, June 2026",friedman_20260702
+cirRsqu_n39,perim/circles_in_square,39,sum_s,3.2481108110444517,3.24433,0.00378,"Jonathan Viquerat, June 2026",friedman_20260702
+cirRsqu_n40,perim/circles_in_square,40,sum_s,3.292391588765887,3.28632,0.00607,"Jonathan Viquerat, June 2026",friedman_20260702
+cirRtri_n27,perim/circles_in_triangle,27,sum_s,1.7642169240709487,1.763,0.001,"David W. Cantrell, July 2011",friedman_20260702
+cirRtri_n30,perim/circles_in_triangle,30,sum_s,1.8658058437770781,1.86315,0.00265,"Jonathan Viquerat, June 2026",friedman_20260702
+penRcir_n12,perim/pentagons_in_circle,12,sum_s,4.1165048112103255,,,,blog_showcase_record
+penRcir_n14,perim/pentagons_in_circle,14,sum_s,4.494383501801835,,,,blog_showcase_record
+penRcir_n15,perim/pentagons_in_circle,15,sum_s,4.655079405470388,,,,blog_showcase_record
+squRcir_n22,perim/squares_in_circle,22,sum_s,7.667701787072836,7.66761,9e-05,"Jonathan Viquerat, June 2026",friedman_20260702
+squRcir_n24,perim/squares_in_circle,24,sum_s,8.032352104179438,8.0321,0.00025,"Jonathan Viquerat, June 2026",friedman_20260702
+squRcir_n25,perim/squares_in_circle,25,sum_s,8.204244413269864,8.20354,0.0007,"Jonathan Viquerat, June 2026",friedman_20260702
+squRtri_n9,perim/squares_in_triangle,9,sum_s,1.755818859380334,1.75264,0.00317,"Jonathan Viquerat, June 2026",friedman_20260702
+squRtri_n10,perim/squares_in_triangle,10,sum_s,1.8660746011941427,1.8657,0.00037,"Jonathan Viquerat, June 2026",friedman_20260702
+squRtri_n13,perim/squares_in_triangle,13,sum_s,2.154734795723491,2.14253,0.0122,"Jonathan Viquerat, June 2026",friedman_20260702
+squRtri_n14,perim/squares_in_triangle,14,sum_s,2.2435270810365897,2.23885,0.00468,"Jonathan Viquerat, June 2026",friedman_20260702
+squRtri_n15,perim/squares_in_triangle,15,sum_s,2.332806723288046,2.33159,0.00122,"Jonathan Viquerat, June 2026",friedman_20260702
+squRtri_n17,perim/squares_in_triangle,17,sum_s,2.4981751474038782,2.4932,0.00497,"Jonathan Viquerat, June 2026",friedman_20260702
+squRtri_n18,perim/squares_in_triangle,18,sum_s,2.5785568386008957,2.57051,0.00804,"Jonathan Viquerat, June 2026",friedman_20260702
+squRtri_n19,perim/squares_in_triangle,19,sum_s,2.651217390606955,2.6452,0.00601,"Jonathan Viquerat, June 2026",friedman_20260702
+squRtri_n20,perim/squares_in_triangle,20,sum_s,2.725339887827097,2.72358,0.00175,"Jonathan Viquerat, June 2026",friedman_20260702
+squRtri_n21,perim/squares_in_triangle,21,sum_s,2.8020021940421564,2.79406,0.00794,"Jonathan Viquerat, June 2026",friedman_20260702
+triRcir_n9,perim/triangles_in_circle,9,sum_s,7.006367209987958,7.0063,6e-05,"Jonathan Viquerat, June 2026",friedman_20260702
+triRsqu_n17,perim/triangles_in_square,17,sum_s,5.835547069880296,5.81278,0.02276,"Jonathan Viquerat, June 2026",friedman_20260702
+triRsqu_n20,perim/triangles_in_square,20,sum_s,6.361461150204931,6.34299,0.01847,"Jonathan Viquerat, June 2026",friedman_20260702
