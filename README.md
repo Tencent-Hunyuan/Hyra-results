@@ -9,6 +9,18 @@ artifact and, where relevant, the self-contained scripts that reproduce it.
 
 > 📝 Launch post: **[hy.tencent.com/research/hyra](https://hy.tencent.com/research/hyra)**
 
+## News
+
+- **2026-07-29** — 🎉 **The sum-vs-difference problem is settled.** Going beyond
+  the concrete `sums_diffs` record below, we now have a *complete, machine-checked*
+  resolution of the optimal exponent
+  `C(A) = log(|A+A|/|A|) / log(|A−A|/|A|)`: over all finite `A ⊆ ℤ` with `|A| ≥ 2`
+  its supremum is **exactly 2** — the bound `C(A) < 2` holds universally, and `2`
+  is approached arbitrarily closely (to within `10⁻⁹⁹⁹` by an explicit set) but
+  never attained. The construction at the heart of the matching
+  lower bound was developed with Hyra. Paper, proof, and reproduction scripts are in this repo:
+  **[sum-diff-proof](https://github.com/linhaowei1/sum-diff-proof)**.
+
 ## Results
 
 Each row compares the best prior published result (**Prev best**, from the cited
