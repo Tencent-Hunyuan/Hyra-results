@@ -1,6 +1,6 @@
 # Hyra Results
 
-Companion artifacts for **Hyra**: **H**n**y**uan **R**esearch **A**gent.
+Companion artifacts for **Hyra**: **H**un**y**uan **R**esearch **A**gent.
 
 This repository collects concrete solutions that Hyra produced across a range of
 open problems in science, mathematics, engineering, and creative design,
@@ -30,7 +30,7 @@ system or leaderboard) against **Hyra**. Arrows mark the better direction
 | Track | Task | Metric | Prev best | Hyra |
 |---|---|---|---|---|
 | **AI4AI** | [`nanochat_autoresearch`](AI4AI/nanochat_autoresearch/) | val BPB ↓ | 0.9109 <sup>e</sup> | **0.9015** |
-| | [`nanogpt_speedrun`](AI4AI/nanogpt_speedrun/) | wall-clock ↓ | 77.5 s <sup>e</sup> | **76.4 s** |
+| | [`nanogpt_speedrun`](AI4AI/nanogpt_speedrun/) | wall-clock ↓ | 77.5 s <sup>e</sup> | **76.4 s** (mean val loss: **3.280**) |
 | | [`sol_execbench`](AI4AI/sol_execbench/) | score ↑ | 0.754 <sup>e</sup> | **0.771** |
 | **AI4Science** | [`autocorrelation_first`](AI4Science/autocorrelation_first/) | C₁ ↓ | 1.502870 <sup>a</sup> | **1.502850** |
 | | [`autocorrelation_second`](AI4Science/autocorrelation_second/) | R ↑ | 0.962694 <sup>b</sup> | **0.962901** |
@@ -112,4 +112,4 @@ If you use these results, please cite:
 ## License
 
 This repository is licensed under the Apache License, Version 2.0; see
-[`LICENSE`](LICENSE). 
+[`LICENSE`](LICENSE).

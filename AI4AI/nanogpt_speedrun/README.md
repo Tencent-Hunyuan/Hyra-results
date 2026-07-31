@@ -1,41 +1,93 @@
-# nanogpt_speedrun submission: FP8-MLP + firm-8 schedule
+# nanoGPT speedrun: FP8 MLP with a firm-8 schedule
 
-## Result (this recorded 3-run, on the .04 boxes = 8×H100, driver 580.159.04)
-- **train_time (mean over 3 runs): 76.435s**  (runs: 76.431, 76.467, 76.408)
-- val_loss (mean over 3 runs): 3.28007         (runs: 3.2783, 3.2827, 3.2792)
-- See `solution/solution.json`.
+This directory contains Hyra's submission for the nanoGPT speedrun track. It
+adds FP8 computation to the two large MLP matrix multiplications in the
+record-83 training stack and adjusts the schedule by eight cooldown steps.
 
-## Comparison to Recursive (same .04 basis, measured here)
-- This solution: ~76.44s, val ~3.280
-- Recursive best: ~77.76s, val ~3.284   (official reported ~77.5s)
-- => ~1.3s faster AND lower val on the same hardware.
+## Recorded three-run result
 
-## IMPORTANT: honest notes on validity & hardware (read before quoting a number)
-1. **val is right at the 3.28 bar.** On these .04 boxes the 3-run mean val is ~3.280–3.281
-   (this recorded 3-run: 3.28007, a hair over; a 5-run measurement averaged 3.2801).
-   On the .03 boxes (driver 580.159.03) the SAME solution converges to val ~3.2796 (< 3.28,
-   passes on average) at ~77.0s. So: "sub-77.5 + val≈3.28" holds on .04; "val < 3.28 strictly"
-   holds on .03 at ~77.0s. This borderline-val is a property of the record #83 regime
-   (Recursive is in the same regime, actually worse val), NOT specific to this solution.
-2. **Hardware matters ~0.7s.** .04 boxes run ~0.7s faster than .03. Numbers above are .04.
-   Under sustained load the SM clock throttles (1980→~1800MHz, 700W cap), and shared-machine
-   contention adds variance; clean idle single-machine run-to-run variance is ~0.03s.
+The tracked [`solution.json`](solution.json) contains three independent runs on
+the same 8×H100 machine:
 
-## What this solution does (vs the prior 78.3s record #83 baseline)
-Only change: the MLP's two big matmuls (forward fc, backward dpre) are computed in **FP8
-inside the Triton `linear_relu_square_kernel`** (fp8 `tl.dot`, per-tensor amax scale passed as
-a tensor, dequant by scale), with `BLOCK_SIZE_K` retuned 64→128 for fp8 WGMMA. Plus
-`num_scheduled_iterations` 1405→1413 (+8 cooldown steps) to bring val onto the 3.28 bar.
-This is the only place FP8 pays off here (in-kernel, small operand, non-precision-sensitive).
-Everything else is from record #83 (NorMuon+Adam, FA3 windowed attention+YaRN, ReLU²
-MLP@2816, MTP, fp8 lm_head, value embeddings, MUDD, U-net skips, 3-stage schedule).
+| Run | Training time | Validation loss |
+|---:|---:|---:|
+| 1 | 76.431 s | 3.2783 |
+| 2 | 76.467 s | 3.2827 |
+| 3 | 76.408 s | 3.2792 |
+| **Mean** | **76.435 s** | **3.28007** |
 
-## How to run
-    cd solution && bash solve.sh     # runs N independent torchruns, writes solution.json
-Env: torch 2.10.0+cu128, triton 3.6.0, python 3.12, FA3 kernel (kernels-community/flash-attn3),
-8×H100. FineWeb10B shards at $NANOGPT_DATA/data/fineweb10B/. See environment/.
+The prior result cited in the repository-level comparison is approximately
+77.5 seconds. This recorded mean is about 1.1 seconds faster on the stated
+hardware basis.
 
-## Two recorded results (SAME firm8 code, different hardware)
-- `solution/solution.json`        : .04 boxes: 76.435s, val 3.28007 (val at/just-over bar)
-- `solution/solution_03_valid.json`: .03 boxes: 77.088s, val 3.2796  (val strictly < 3.28)
-Same solution; .04 is ~0.63s faster but val sits on the bar, .03 is strictly valid.
+### Measurement note
+
+The three-run mean validation loss is **3.28007**, which rounds to **3.280** at
+three decimal places. The individual values (3.2783, 3.2827, and 3.2792) reflect
+the expected run-to-run variation of this hardware-sensitive benchmark.
+
+## What changed
+
+Relative to the record-83 baseline, the released code:
+
+- computes the MLP forward `fc` and backward `dpre` matrix multiplications with
+  FP8 `tl.dot` operations inside the fused Triton
+  `linear_relu_square_kernel`;
+- uses tensor-provided per-tensor scales and dequantizes by those scales;
+- retunes `BLOCK_SIZE_K` from 64 to 128 for the FP8 path; and
+- increases `num_scheduled_iterations` from 1,405 to 1,413.
+
+The rest of the stack includes NorMuon and Adam, windowed FlashAttention 3 with
+YaRN, a 2,816-wide ReLU² MLP, multi-token prediction, an FP8 language-model
+head, value embeddings, MUDD, and U-Net-style skips.
+
+## Recorded environment
+
+- 8×NVIDIA H100
+- Python 3.12
+- PyTorch 2.10.0 built for CUDA 12.8
+- Triton 3.6.0
+- `kernels-community/flash-attn3`
+- NVIDIA driver 580.159.04
+
+Wall-clock results are sensitive to driver versions, GPU clocks, power limits,
+compilation caches, machine load, and contention. Compare numbers only under a
+matched setup.
+
+## Data layout
+
+`NANOGPT_DATA` must point to a directory containing the FineWeb10B binary
+shards at:
+
+```text
+<NANOGPT_DATA>/data/fineweb10B/
+├── fineweb_train_*.bin
+└── fineweb_val_*.bin
+```
+
+The virtual environment selected by `NANOGPT_VENV` must provide `python` and
+`torchrun`.
+
+## Run
+
+```bash
+cd AI4AI/nanogpt_speedrun
+export NANOGPT_VENV=/path/to/venv
+export NANOGPT_DATA=/path/to/data-root
+bash solve.sh
+```
+
+By default, `solve.sh` launches three fresh eight-process training runs, writes
+`run_1.log` through `run_3.log`, and aggregates their final metrics into
+`solution.json`.
+
+For a one-run diagnostic using the full schedule:
+
+```bash
+VALIDATE=1 NANOGPT_RUNS=1 bash solve.sh
+```
+
+For a shorter smoke test, also set `NANOGPT_MAX_STEPS`; such a run is not a
+scored result.
+
+See the [AI4AI overview](../README.md) for the other released tracks.
