@@ -1,0 +1,992 @@
+\documentclass[11pt,reqno]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{microtype}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{graphicx}
+\usepackage{booktabs,longtable,array}
+\usepackage{float}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,noabbrev]{cleveref}
+\hypersetup{
+  pdftitle={A certified geometric lower bound for the three-dimensional Blaschke--Lebesgue problem},
+  pdfauthor={Hyra},
+  pdfsubject={Convex bodies of constant width in Euclidean three-space},
+  pdfkeywords={Blaschke--Lebesgue problem, constant width, computer-assisted proof, exact rational arithmetic}
+}
+
+\setlist{nosep}
+\allowdisplaybreaks
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{claim}[theorem]{Claim}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{algorithm}[theorem]{Verification protocol}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Sph}{\mathbb{S}^{2}}
+\newcommand{\Vol}{\operatorname{Vol}}
+\newcommand{\diam}{\operatorname{diam}}
+\newcommand{\conv}{\operatorname{conv}}
+\newcommand{\Id}{\mathrm{Id}}
+\newcommand{\dd}{\,\mathrm{d}}
+\newcommand{\eps}{\varepsilon}
+\newcommand{\ip}[2]{\langle #1,#2\rangle}
+\newcommand{\cstar}{c_{\mathrm{cert}}}
+
+\title[A certified lower bound for the Blaschke--Lebesgue problem]
+{A certified geometric lower bound for the three-dimensional Blaschke--Lebesgue problem}
+\author{Hyra}
+\date{August 15, 2026}
+\subjclass[2020]{Primary 52A20; Secondary 52A40, 65G30}
+\keywords{body of constant width, Blaschke--Lebesgue problem, Meissner conjecture, convex geometry, computer-assisted proof, exact rational arithmetic}
+
+\begin{document}
+
+\begin{abstract}
+We prove that every convex body $K\subset\R^{3}$ of constant width $w>0$ satisfies
+\[
+ \begin{gathered}
+ \Vol(K)\geq \cstar w^{3},\qquad
+ \cstar:=\frac{130838246407123}{10^{15}}\pi,\\
+ \cstar>0.411040473721188.
+ \end{gathered}
+\]
+The proof combines the contact geometry of a minimum circumscribed ball, an opposite-point identity specific to bodies of constant width, a divergence estimate for the radial function, and a tangent-line majorant whose nonnegative deficit is recovered on eight disjoint spherical caps. The last step is a finite computer-assisted verification carried out entirely with exact rational inequalities; floating-point arithmetic is used only to propose candidates that are subsequently rechecked exactly. Independently of the computer-assisted part, the same method yields the explicit analytic bound
+\[
+ \Vol(K)\geq \frac{533032}{4143735}\pi w^{3}
+ =0.404120778796972\ldots\,w^{3}.
+\]
+The certified bound reaches $97.8994\%$ of the volume of a Meissner tetrahedron of the same width.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+A convex body $K\subset\R^{3}$ has \emph{constant width} $w>0$ if the distance between its two supporting planes orthogonal to any unit vector is $w$. For $w>0$, set
+\[
+ m_3(w):=\inf\{\Vol(K):K\subset\R^3\text{ is a convex body of constant width }w\}.
+\]
+Dilation gives $m_3(w)=w^3m_3(1)$. The planar minimum-area problem was solved independently by Lebesgue and Blaschke: the minimizers are the Reuleaux triangles \cite{Lebesgue1914,Blaschke1915}. In dimension three, determining $m_3(w)$ remains the classical Blaschke--Lebesgue problem. Bonnesen and Fenchel conjectured that the minimum is attained by the two noncongruent Meissner tetrahedra \cite{BonnesenFenchel1934,MeissnerSchilling1912,KawohlWeber2011}. Their common volume is
+\begin{equation}\label{eq:Meissner-volume}
+ V_{\mathrm M}(w)
+ =\frac{\pi}{12}\left(8-3\sqrt3\arccos\frac13\right)w^{3}
+ =0.419860045965080\ldots\,w^{3};
+\end{equation}
+see, for example, \cite{ArmanEtAl2024,Bogosel2026}.
+
+Chakerian proved the lower bound
+\[
+ \Vol(K)\geq \frac{\pi}{3}(3\sqrt6-7)w^{3}
+ =0.364916122595\ldots\,w^{3}
+\]
+in \cite{Chakerian1966}. A recent spectral argument of Nishioka improved this to
+\begin{equation}\label{eq:Nishioka}
+ \Vol(K)\geq \frac{4\pi}{33}w^{3}
+ =0.380799109526\ldots\,w^{3};
+\end{equation}
+see \cite{Nishioka2026}. The purpose of this paper is to establish the following further improvement.
+
+\begin{theorem}[Main theorem]\label{thm:main-intro}
+Every convex body $K\subset\R^{3}$ of constant width $w>0$ satisfies
+\begin{equation}\label{eq:main-bound-intro}
+ \Vol(K)\geq
+ \frac{130838246407123}{10^{15}}\pi w^{3}
+ >0.411040473721188\,w^{3}.
+\end{equation}
+\end{theorem}
+
+Together with \eqref{eq:Meissner-volume}, this gives the unconditional bracket
+\[
+ 0.411040473721188\,w^{3}
+ <m_3(w)
+ \leq 0.419860045965080\ldots\,w^{3}.
+\]
+The new lower bound is $7.94\%$ larger than \eqref{eq:Nishioka}, and it is $97.8994\%$ of the conjectured optimum.
+
+The geometric mechanism is as follows. Normalize $w=1$ and place the origin at the center of a minimum circumscribed ball of radius $R$. Constant width implies the opposite-point relation
+\[
+ x-n\in K
+\]
+whenever $x\in\partial K$ and $n$ is an outer unit normal at $x$. Since $K\subset B(0,R)$, this gives the pointwise estimate
+\begin{equation}\label{eq:intro-key}
+ \ip{x}{n}\geq \frac{|x|^{2}+1-R^{2}}2.
+\end{equation}
+Applying the divergence theorem to
+\[
+ F_m(x)=\frac{2x}{|x|^{2}+m},\qquad 0<m\leq 1-R^{2},
+\]
+yields, for the radial function $\rho$ of $K$,
+\begin{equation}\label{eq:intro-transport}
+ S(K)\leq \int_{\Sph}\frac{2\rho(u)^{3}}{\rho(u)^{2}+m}\,\dd\sigma(u),
+ \qquad
+ 3\Vol(K)=\int_{\Sph}\rho(u)^{3}\,\dd\sigma(u).
+\end{equation}
+Blaschke's identity
+\begin{equation}\label{eq:intro-Blaschke}
+ S(K)=2\Vol(K)+\frac{2\pi}{3}
+\end{equation}
+then converts a suitable affine majorant of the integrand into a volume lower bound.
+
+The affine majorant is tangent in the variable $X=\rho^{3}$. Its gap $G(\rho)\geq0$ is discarded in the purely analytic argument, which already gives the following result.
+
+\begin{theorem}[Analytic bound]\label{thm:analytic-intro}
+Every convex body $K\subset\R^{3}$ of constant width $w>0$ satisfies
+\begin{equation}\label{eq:analytic-bound-intro}
+ \Vol(K)\geq \frac{533032}{4143735}\pi w^{3}
+ =0.404120778796972\ldots\,w^{3}.
+\end{equation}
+\end{theorem}
+
+To prove \cref{thm:main-intro}, we recover a positive portion of the discarded gap. When $R^{2}>1/3$, the minimum circumscribed ball has four contact directions $u_1,\dots,u_4$ whose mutual angles satisfy explicit two-sided bounds. The radial function is forced to be large in caps about the $u_i$ by successive supporting-plane estimates, and small in caps about $-u_i$ because
+\[
+ K\subset B(Ru_i,1).
+\]
+The resulting eight caps are pairwise disjoint. Integrating $G(\rho)$ over rational spherical rings gives a finite exact-rational certificate. The circumradius interval
+\[
+ \frac12\leq R\leq \frac{\sqrt6}{4}
+\]
+is divided into finitely many subintervals, and every required inequality is verified with integer arithmetic.
+
+The computer-assisted component is deliberately narrow. All geometric statements, all monotonicity arguments, and the reduction to finitely many rational inequalities are proved in the text. The remaining computation is an evaluation of explicit rational inequalities, carried out in exact rational arithmetic. Binary floating point is used only to locate a candidate grid point; each accepted point and every implication used in the proof are rechecked by exact rational inequalities.
+
+\paragraph{Organization.}
+\Cref{sec:preliminaries} records the constant-width identities. The circumsphere contact geometry and Jung's inequality are proved in \cref{sec:circumsphere}. Radial propagation estimates are developed in \cref{sec:radial}. The divergence inequality is established in \cref{sec:transport}. The tangent majorant and \cref{thm:analytic-intro} are proved in \cref{sec:majorant}. The eight-cap deficit estimate is given in \cref{sec:caps}. The exact certificate and the optimized circumradius partition are described in \cref{sec:certificate}, and the main theorem is concluded in \cref{sec:assembly}. A certified rational lower bound for $\pi$ and a purely algebraic form of the tangent gap are collected in the appendices.
+
+\section{Constant-width identities}\label{sec:preliminaries}
+
+Throughout the proof we normalize the width to be $1$. The general statement follows by dilation. Let $B(z,r)$ denote the closed Euclidean ball of center $z$ and radius $r$, and write $B=B(0,1)$. Surface measure on $\Sph$ is denoted by $\sigma$, with $\sigma(\Sph)=4\pi$.
+
+For a convex body $K$, its support function is
+\[
+ h_K(u)=\max_{x\in K}\ip{x}{u},\qquad u\in\Sph.
+\]
+
+\begin{lemma}\label{lem:constant-width-support}
+A convex body $K$ has constant width $1$ if and only if
+\[
+ h_K(u)+h_K(-u)=1\qquad (u\in\Sph).
+\]
+Consequently,
+\begin{equation}\label{eq:difference-body}
+ K+(-K)=B,
+ \qquad
+ \diam K=1.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The two supporting planes orthogonal to $u$ have equations
+$\ip{x}{u}=h_K(u)$ and $\ip{x}{u}=-h_K(-u)$, so their distance is $h_K(u)+h_K(-u)$. Moreover,
+\[
+ h_{K+(-K)}(u)=h_K(u)+h_K(-u)=1=h_B(u),
+\]
+which proves the first identity in \eqref{eq:difference-body}. If $x,y\in K$ and $x\neq y$, then with $u=(x-y)/|x-y|$,
+\[
+ |x-y|=\ip{x}{u}+\ip{-y}{u}\leq h_K(u)+h_K(-u)=1.
+\]
+Conversely, two supporting planes at distance $1$ contain points of $K$, so $\diam K\geq1$.
+\end{proof}
+
+\begin{lemma}[Blaschke's identity]\label{lem:Blaschke}
+If $K\subset\R^{3}$ has constant width $1$, volume $V$, and surface area $S$, then
+\begin{equation}\label{eq:Blaschke}
+ V=\frac{S}{2}-\frac{\pi}{3},
+ \qquad\text{equivalently}\qquad
+ S=2V+\frac{2\pi}{3}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Let $V(\cdot,\cdot,\cdot)$ denote mixed volume, normalized by $V(A,A,A)=\Vol(A)$. From \eqref{eq:difference-body} and multilinearity,
+\[
+ \frac{4\pi}{3}=\Vol(K+(-K))=2V+6V(K,K,-K).
+\]
+On the other hand,
+\[
+ \frac{S}{3}=V(K,K,B)=V(K,K,K+(-K))=V+V(K,K,-K).
+\]
+Eliminating the mixed volume gives \eqref{eq:Blaschke}. We refer to \cite[Chapter~5]{Schneider2014} for the standard mixed-volume facts used here.
+\end{proof}
+
+\section{The minimum circumscribed ball}\label{sec:circumsphere}
+
+Let $B(0,R)$ be a minimum-radius ball containing $K$, after translating its center to the origin, and set
+\[
+ \mathcal F=K\cap \partial B(0,R).
+\]
+
+\begin{lemma}[Contact balance]\label{lem:contact-balance}
+The origin belongs to $\conv(\mathcal F)$. Consequently, there exist pairwise distinct directions $u_1,\dots,u_n\in\Sph$, with $2\leq n\leq4$, and positive numbers $\lambda_1,\dots,\lambda_n$ such that
+\begin{equation}\label{eq:contact-balance}
+ Ru_i\in K,
+ \qquad
+ \sum_{i=1}^{n}\lambda_i=1,
+ \qquad
+ \sum_{i=1}^{n}\lambda_i u_i=0.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Suppose $0\notin\conv(\mathcal F)$. By strict separation there are a unit vector $e$ and $\alpha>0$ such that $\ip{y}{e}\geq\alpha$ for every $y\in\mathcal F$. Put
+\[
+ A=\{y\in K:\ip{y}{e}\leq\alpha/2\}.
+\]
+If $A\neq\varnothing$, then $A$ is compact and disjoint from $\mathcal F$, hence
+$\mu:=\max_{A}|y|<R$. Choose $t>0$ so small that $t<\alpha/2$ and, when $A\neq\varnothing$, $\mu+t<R$. If $y\notin A$, then
+\[
+ |y-te|^{2}=|y|^{2}-2t\ip{y}{e}+t^{2}
+ \leq R^{2}-t\alpha+t^{2}<R^{2}.
+\]
+If $y\in A$, then $|y-te|\leq\mu+t<R$. Compactness now gives $K\subset B(te,R')$ for some $R'<R$, contradicting minimality. Thus $0\in\conv(\mathcal F)$. Carath\'eodory's theorem gives a convex representation using at most four points; deleting zero coefficients gives \eqref{eq:contact-balance}. The case $n=1$ is impossible.
+\end{proof}
+
+\begin{lemma}\label{lem:contact-angle}
+For $i\neq j$,
+\begin{equation}\label{eq:contact-lower}
+ \ip{u_i}{u_j}\geq c:=1-\frac{1}{2R^{2}}.
+\end{equation}
+Moreover $c<0$. Writing
+\begin{equation}\label{eq:eta}
+ \eta:=-c=\frac{1}{2R^{2}}-1>0,
+\end{equation}
+one has
+\begin{equation}\label{eq:lambda-bound}
+ \lambda_j\leq \frac{\eta}{1+\eta},
+ \qquad
+ n\geq \frac{1+\eta}{\eta}=\frac{1}{1-2R^{2}}.
+\end{equation}
+If $n=4$ and $\eta<1$, then also
+\begin{equation}\label{eq:contact-upper}
+ \ip{u_i}{u_j}\leq t_{\max}(\eta):=\frac{4\eta^{2}}{1-\eta}-1
+ \qquad(i\neq j).
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+By \cref{lem:constant-width-support},
+\[
+ 1\geq |Ru_i-Ru_j|^{2}=2R^{2}\bigl(1-\ip{u_i}{u_j}\bigr),
+\]
+which proves \eqref{eq:contact-lower}. Taking the scalar product of \eqref{eq:contact-balance} with $u_j$ gives
+\[
+ 0=\lambda_j+\sum_{i\neq j}\lambda_i\ip{u_i}{u_j}
+ \geq \lambda_j+c(1-\lambda_j).
+\]
+Since $\lambda_j>0$, this forces $c<0$, and then yields
+$\lambda_j(1+\eta)\leq\eta$. Summing over $j$ proves \eqref{eq:lambda-bound}.
+
+Assume now $n=4$. Fix the pair $(1,2)$, set $t=\ip{u_1}{u_2}$ and $A=\lambda_1+\lambda_2$. Applying the preceding scalar-product inequality for $j=1,2$ and adding gives
+\begin{equation}\label{eq:A-upper}
+ A(1+t)\leq 2\eta(1-A).
+\end{equation}
+Applying it for $j=3,4$ and adding gives
+\[
+ 1-A\leq\eta(1+A),
+ \qquad\text{hence}\qquad
+ A\geq\frac{1-\eta}{1+\eta}.
+\]
+Substitution into \eqref{eq:A-upper} yields
+\[
+ 1+t\leq2\eta\left(\frac1A-1\right)
+ \leq\frac{4\eta^{2}}{1-\eta},
+\]
+which is \eqref{eq:contact-upper}.
+\end{proof}
+
+\begin{corollary}[Jung's inequality in dimension three]\label{cor:Jung}
+The circumradius satisfies
+\begin{equation}\label{eq:Jung}
+ \frac12\leq R\leq \frac{\sqrt6}{4},
+ \qquad
+ R^{2}\leq\frac38.
+\end{equation}
+If $R^{2}>1/3$, then $n=4$ in \cref{lem:contact-balance} and
+\begin{equation}\label{eq:eta-range}
+ \frac13\leq\eta<\frac12.
+\end{equation}
+\end{corollary}
+
+\begin{proof}
+The lower bound follows from $\diam K=1$ and $K\subset B(0,R)$. By \eqref{eq:lambda-bound} and $n\leq4$,
+\[
+ \frac{1}{1-2R^{2}}\leq4,
+\]
+which is equivalent to $R^{2}\leq3/8$. If $R^{2}>1/3$, then \eqref{eq:lambda-bound} gives $n>3$, so $n=4$. Formula \eqref{eq:eta} gives \eqref{eq:eta-range}. This is the classical theorem of Jung \cite{Jung1901}, here obtained directly from the contact balance.
+\end{proof}
+
+Since $R<1$, the origin lies in the interior of $K$. Indeed, $h_K(u)\leq R$ and constant width give $h_K(u)\geq1-R$, hence
+\begin{equation}\label{eq:inner-outer-balls}
+ B(0,1-R)\subset K\subset B(0,R).
+\end{equation}
+We may therefore define the continuous radial function
+\[
+ \rho(u)=\max\{t\geq0:tu\in K\},\qquad u\in\Sph,
+\]
+which satisfies
+\begin{equation}\label{eq:rho-range}
+ 1-R\leq\rho(u)\leq R.
+\end{equation}
+For every contact direction in \eqref{eq:contact-balance},
+\begin{equation}\label{eq:rho-contact}
+ \rho(u_i)=R,
+\end{equation}
+and the plane $\ip{x}{u_i}=R$ supports $K$ at $Ru_i$.
+
+\begin{lemma}[Ball bound]\label{lem:ball-bound}
+Let $Ru\in K$, let $0<R_{*}\leq R$, and let $v\in\Sph$ satisfy
+$c:=-\ip{v}{u}\in[0,1]$. Then
+\begin{equation}\label{eq:ball-quadratic}
+ \rho(v)^{2}+2R_{*}c\rho(v)+R_{*}^{2}\leq1,
+\end{equation}
+and hence
+\begin{equation}\label{eq:Pi}
+ \rho(v)\leq \Pi(R_{*},c)
+ :=-R_{*}c+\sqrt{1-R_{*}^{2}(1-c^{2})}.
+\end{equation}
+For fixed $R_{*}$, the function $c\mapsto\Pi(R_{*},c)$ is strictly decreasing on $[0,1]$, and $\Pi(R_{*},1)=1-R_{*}$.
+\end{lemma}
+
+\begin{proof}
+The points $\rho(v)v$ and $Ru$ belong to $K$, so their distance is at most $1$. Thus
+\[
+ \rho(v)^{2}+2Rc\rho(v)+R^{2}\leq1.
+\]
+Replacing $R$ by the smaller $R_{*}$ decreases the left-hand side and gives \eqref{eq:ball-quadratic}. Solving the quadratic inequality for its nonnegative root gives \eqref{eq:Pi}. Strict monotonicity follows either by differentiating or by comparing the quadratics
+$t^{2}+2R_{*}ct+R_{*}^{2}-1$ for different $c$.
+\end{proof}
+
+\section{Opposite points and radial propagation}\label{sec:radial}
+
+\begin{lemma}[Opposite point]\label{lem:opposite-point}
+Let $x\in\partial K$ and let $n$ be an outer unit normal of $K$ at $x$. Then
+\begin{equation}\label{eq:opposite-point}
+ x-n\in K.
+\end{equation}
+Consequently,
+\begin{equation}\label{eq:key-pointwise}
+ \ip{x}{n}\geq\frac{|x|^{2}+1-R^{2}}2.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+Choose $y\in K$ on the opposite supporting plane. Since the width in direction $n$ is $1$,
+\[
+ \ip{x-y}{n}=1.
+\]
+By \cref{lem:constant-width-support}, $|x-y|\leq1$. Equality in Cauchy--Schwarz therefore gives $x-y=n$, proving \eqref{eq:opposite-point}. Since $x-n\in K\subset B(0,R)$,
+\[
+ R^{2}\geq|x-n|^{2}=|x|^{2}-2\ip{x}{n}+1,
+\]
+which is \eqref{eq:key-pointwise}.
+\end{proof}
+
+Fix from now on a number
+\begin{equation}\label{eq:m-range}
+ \frac58\leq m\leq1-R^{2}.
+\end{equation}
+For $s\in[1-R,R]$, define
+\begin{equation}\label{eq:gamma-max}
+ \cos\gamma_m(s)=\frac{s^{2}+m}{2s},
+ \qquad 0\leq\gamma_m(s)<\frac\pi2.
+\end{equation}
+The expression lies in $(0,1]$: the inequality $(s^{2}+m)/(2s)\leq1$ follows from $m\leq1-R^{2}$ and $s\in[1-R,R]$. Moreover,
+\[
+ \frac{\dd}{\dd s}\frac{s^{2}+m}{2s}=\frac12\left(1-\frac{m}{s^{2}}\right)<0,
+\]
+because $s^{2}\leq R^{2}\leq3/8<5/8\leq m$. Thus $\gamma_m$ is strictly increasing. By \eqref{eq:key-pointwise}, if $x=\rho(v)v$ and $n$ is an outer normal at $x$, then
+\begin{equation}\label{eq:normal-angle}
+ d(v,n)\leq\gamma_m(\rho(v)).
+\end{equation}
+
+For $s\in[1-R,R]$ and $0\leq\delta<\pi/2$, define
+\begin{equation}\label{eq:N-def}
+ N_m(s,\delta)
+ :=\frac{s\cos\gamma_m(s)}{\cos(\gamma_m(s)+\delta)}
+ =\frac{s(s^{2}+m)}{(s^{2}+m)\cos\delta-
+ \sqrt{4s^{2}-(s^{2}+m)^{2}}\sin\delta},
+\end{equation}
+whenever the denominator is positive.
+
+\begin{lemma}[Supporting-plane step]\label{lem:plane-step}
+Let $v,v'\in\Sph$, $d(v,v')=\delta$, and suppose
+$\gamma_m(\rho(v'))+\delta<\pi/2$. Then
+\begin{equation}\label{eq:plane-step}
+ \rho(v)\leq N_m(\rho(v'),\delta).
+\end{equation}
+For fixed admissible $\delta>0$, $s\mapsto N_m(s,\delta)$ is strictly increasing; for fixed admissible $s$, $\delta\mapsto N_m(s,\delta)$ is nondecreasing.
+\end{lemma}
+
+\begin{proof}
+Let $x=\rho(v')v'$ and choose an outer unit normal $n$ at $x$. Set $\gamma=d(v',n)$. By \eqref{eq:normal-angle}, $\gamma\leq\gamma_m(\rho(v'))$. The supporting plane at $x$ gives
+\[
+ \rho(v)\ip{v}{n}\leq\ip{x}{n}=\rho(v')\cos\gamma.
+\]
+The spherical triangle inequality gives $d(v,n)\leq\delta+\gamma<\pi/2$, hence
+\[
+ \rho(v)\leq\rho(v')\frac{\cos\gamma}{\cos(\gamma+\delta)}.
+\]
+The function $t\mapsto\cos t/\cos(t+\delta)$ is nondecreasing, since its derivative is $\sin\delta/\cos^{2}(t+\delta)$. This proves \eqref{eq:plane-step}. The monotonicities follow from
+\[
+ N_m(s,\delta)=\frac{(s^{2}+m)/2}{\cos(\gamma_m(s)+\delta)},
+\]
+because the numerator and $\gamma_m(s)$ are strictly increasing in $s$.
+\end{proof}
+
+\begin{lemma}[Rational step certificate]\label{lem:rational-step}
+Let $X,Y,m,c_{\delta},s_{\delta}$ be positive rationals with
+$c_{\delta}^{2}+s_{\delta}^{2}=1$. Put
+\[
+ T=X^{2}+m,
+ \qquad
+ D=4X^{2}-T^{2}.
+\]
+Assume $D\geq0$ and
+\begin{align}
+ T(Yc_{\delta}-X)&>0, \label{eq:C1}\\
+ Y^{2}D s_{\delta}^{2}&\leq T^{2}(Yc_{\delta}-X)^{2}. \label{eq:C2}
+\end{align}
+If $\delta\in(0,\pi/2)$ has cosine $c_{\delta}$ and sine $s_{\delta}$, then
+\[
+ \gamma_m(X)+\delta<\frac\pi2,
+ \qquad
+ N_m(X,\delta)\leq Y.
+\]
+\end{lemma}
+
+\begin{proof}
+The left-hand side of \eqref{eq:C1} is positive. Taking square roots in \eqref{eq:C2} gives
+\[
+ Y\sqrt D\,s_{\delta}\leq T(Yc_{\delta}-X),
+\]
+so
+\[
+ Y(Tc_{\delta}-\sqrt D\,s_{\delta})\geq TX>0.
+\]
+The factor in parentheses equals $2X\cos(\gamma_m(X)+\delta)$ and is therefore positive. Dividing gives $Y\geq N_m(X,\delta)$.
+\end{proof}
+
+Fix a positive integer $N$ and define a rational angular grid by
+\begin{equation}\label{eq:angular-grid}
+ \begin{aligned}
+ t_k&=\frac{k}{N}, & \theta_k&=2\arctan t_k,\\
+ c_k:=\cos\theta_k&=\frac{1-t_k^{2}}{1+t_k^{2}}, &
+ s_k:=\sin\theta_k&=\frac{2t_k}{1+t_k^{2}}.
+ \end{aligned}
+\end{equation}
+For $k\geq1$, set
+\begin{equation}\label{eq:step-trig}
+ c_k^{\Delta}=c_kc_{k-1}+s_ks_{k-1},
+ \qquad
+ s_k^{\Delta}=s_kc_{k-1}-c_ks_{k-1}.
+\end{equation}
+These are exactly the cosine and sine of $\theta_k-\theta_{k-1}$, and all quantities are rational.
+
+\begin{proposition}[Vertex chain]\label{prop:vertex-chain}
+Let $u_0\in\Sph$ satisfy $\rho(u_0)=R$, and let $R_{*}\leq R$. Suppose
+$\theta_{n_v}<\pi/2$ and
+\[
+ w_0=R_{*}>w_1>\cdots>w_{n_v}
+\]
+are rationals in $[1-R,R]$, and that for each $1\leq k\leq n_v$ the conditions \eqref{eq:C1}--\eqref{eq:C2} hold with
+\[
+ X=w_k,
+ \quad Y=w_{k-1},
+ \quad c_{\delta}=c_k^{\Delta},
+ \quad s_{\delta}=s_k^{\Delta}.
+\]
+Then
+\begin{equation}\label{eq:vertex-cap-bound}
+ \rho(v)\geq w_k
+ \qquad\text{whenever}\qquad
+ d(v,u_0)\leq\theta_k.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Proceed by induction. The assertion at the center follows from $\rho(u_0)=R\geq R_{*}$. Suppose the statement holds for $k-1$, and let $d(v,u_0)\leq\theta_k$. If $d(v,u_0)\leq\theta_{k-1}$, there is nothing to prove. Otherwise, let $v_{*}$ be the point at distance $\theta_{k-1}$ from $u_0$ on the minimizing geodesic to $v$, so
+$d(v,v_{*})\leq\theta_k-\theta_{k-1}$. If $\rho(v)<w_k$, then \cref{lem:plane-step,lem:rational-step} and the monotonicities of $N_m$ imply
+\[
+ w_{k-1}\leq\rho(v_{*})
+ \leq N_m(\rho(v),d(v,v_{*}))
+ <N_m(w_k,\theta_k-\theta_{k-1})
+ \leq w_{k-1},
+\]
+a contradiction.
+\end{proof}
+
+\begin{proposition}[Antipodal cap bound]\label{prop:antipodal-cap}
+Let $Ru_0\in K$, let $0<R_{*}\leq R$, let $k$ satisfy $\theta_k<\pi/2$, and suppose a rational $z_k$ satisfies
+\begin{align}
+ z_k+R_{*}c_k&\geq0, \label{eq:Z1}\\
+ (z_k+R_{*}c_k)^{2}&\geq1-R_{*}^{2}s_k^{2}. \label{eq:Z2}
+\end{align}
+Then
+\begin{equation}\label{eq:antipodal-cap-bound}
+ \rho(v)\leq z_k
+ \qquad\text{whenever}\qquad
+ d(v,-u_0)\leq\theta_k.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Conditions \eqref{eq:Z1}--\eqref{eq:Z2} are equivalent to
+\[
+ z_k\geq\Pi(R_{*},c_k).
+\]
+If $d(v,-u_0)\leq\theta_k$, then $-\ip{v}{u_0}\geq c_k$, and
+\cref{lem:ball-bound} gives
+\[
+ \rho(v)\leq\Pi(R_{*},-\ip{v}{u_0})\leq\Pi(R_{*},c_k)\leq z_k.
+\]
+\end{proof}
+
+\section{A divergence inequality}\label{sec:transport}
+
+We first prove the estimate for bodies with $C^{1}$ boundary; the general case follows by outer parallel regularization.
+
+\begin{proposition}[Transport inequality]\label{prop:transport}
+Let $K$ have constant width $1$, let the origin be its circumcenter, and assume $\partial K$ is $C^{1}$. If $0<m\leq1-R^{2}$, then
+\begin{align}
+ 3V&=\int_{\Sph}\rho(u)^{3}\,\dd\sigma(u), \label{eq:radial-volume}\\
+ S&\leq\int_{\Sph}\frac{2\rho(u)^{3}}{\rho(u)^{2}+m}\,\dd\sigma(u). \label{eq:transport}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+The first identity is spherical integration over the star-shaped set $K$.
+
+For the second, define
+\[
+ F_m(x)=\frac{2x}{|x|^{2}+m}.
+\]
+By \eqref{eq:key-pointwise}, at every $x\in\partial K$ with outer unit normal $n$,
+\[
+ \ip{F_m(x)}{n}
+ =\frac{2\ip{x}{n}}{|x|^{2}+m}\geq1.
+\]
+The divergence theorem therefore gives
+\[
+ S\leq\int_{\partial K}\ip{F_m}{n}\,\dd\mathcal H^{2}
+ =\int_K\operatorname{div}F_m\,\dd x.
+\]
+Since
+\[
+ \operatorname{div}F_m(x)
+ =\frac{2(|x|^{2}+3m)}{(|x|^{2}+m)^{2}}
+\]
+and
+\[
+ \frac{\dd}{\dd r}\left(\frac{2r^{3}}{r^{2}+m}\right)
+ =r^{2}\frac{2(r^{2}+3m)}{(r^{2}+m)^{2}},
+\]
+spherical integration gives \eqref{eq:transport}.
+\end{proof}
+
+\begin{lemma}[Regularization]\label{lem:regularization}
+For $\eps>0$, define
+\[
+ K_{\eps}=\frac{K+\eps B}{1+2\eps}.
+\]
+Then $K_{\eps}$ has constant width $1$, its boundary is $C^{1}$, and
+$\Vol(K_{\eps})\to\Vol(K)$ as $\eps\downarrow0$.
+\end{lemma}
+
+\begin{proof}
+The support function satisfies
+\[
+ h_{K_{\eps}}(u)=\frac{h_K(u)+\eps}{1+2\eps},
+\]
+so $h_{K_{\eps}}(u)+h_{K_{\eps}}(-u)=1$. The outer parallel body $K+\eps B$ has a unique outer normal at every boundary point: the metric projection onto the closed convex set $K$ is unique, and the outer normal is the normalized displacement from the nearest point. Locally the boundary is the graph of an everywhere differentiable convex function, hence is $C^{1}$; see \cite[Theorem~25.5]{Rockafellar1970}. Finally, Hausdorff convergence of $K+\eps B$ to $K$ implies convergence of volume; see \cite{Schneider2014}.
+\end{proof}
+
+Consequently, any uniform lower bound proved using \cref{prop:transport} passes to arbitrary convex bodies of constant width.
+
+\section{The tangent majorant and an analytic bound}\label{sec:majorant}
+
+For $m>0$, define
+\[
+ \phi_m(X)=\frac{2X}{X^{2/3}+m},\qquad X>0.
+\]
+A direct computation gives
+\begin{equation}\label{eq:phi-second}
+ \phi_m''(X)
+ =-\frac{4(X^{2/3}+5m)}{9X^{1/3}(X^{2/3}+m)^{3}}<0.
+\end{equation}
+Thus $\phi_m$ is strictly concave.
+
+Fix a rational tangency radius $s_0=p/q>0$ and set
+\begin{equation}\label{eq:a-b}
+ a=\phi_m'(s_0^{3})
+ =\frac{2(s_0^{2}+3m)}{3(s_0^{2}+m)^{2}},
+ \qquad
+ b=\phi_m(s_0^{3})-as_0^{3}.
+\end{equation}
+Define the tangent gap
+\begin{equation}\label{eq:G-def}
+ G_{m,s_0}(s)=as^{3}+b-\frac{2s^{3}}{s^{2}+m}.
+\end{equation}
+
+\begin{lemma}\label{lem:gap}
+For $s>0$,
+\[
+ G_{m,s_0}(s)\geq0,
+\]
+with equality if and only if $s=s_0$. Moreover, $G_{m,s_0}$ is strictly decreasing on $(0,s_0]$ and strictly increasing on $[s_0,\infty)$.
+\end{lemma}
+
+\begin{proof}
+In the variable $X=s^{3}$, the function $aX+b$ is the tangent line to the strictly concave function $\phi_m$ at $X=s_0^{3}$, hence lies above it. Since $\phi_m'$ is strictly decreasing, the derivative of the tangent gap has the sign of $X-s_0^{3}$, proving the monotonicity.
+\end{proof}
+
+Let
+\begin{equation}\label{eq:deficit}
+ E=\int_{\Sph}G_{m,s_0}(\rho(u))\,\dd\sigma(u)\geq0.
+\end{equation}
+
+\begin{proposition}[Master inequality]\label{prop:master}
+Assume $m\leq1-R^{2}$ and $3a-2>0$. Then
+\begin{equation}\label{eq:master}
+ V\geq\frac{2\pi/3-4\pi b+E}{3a-2}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+By \eqref{eq:G-def}, \eqref{eq:radial-volume}, and \eqref{eq:transport},
+\[
+ S\leq\int_{\Sph}\bigl(a\rho^{3}+b-G_{m,s_0}(\rho)\bigr)\,\dd\sigma
+ =3aV+4\pi b-E.
+\]
+Using $S=2V+2\pi/3$ and rearranging proves \eqref{eq:master}.
+\end{proof}
+
+\begin{proof}[Proof of \cref{thm:analytic-intro}]
+Normalize $w=1$. By \cref{cor:Jung}, one may take $m=5/8$. Choose $s_0=11/24$. Exact arithmetic gives
+\[
+ a=\frac{461184}{231361},
+ \qquad
+ b=\frac{161051}{4164498},
+ \qquad
+ 3a-2=\frac{920830}{231361}>0.
+\]
+Discarding $E$ in \eqref{eq:master},
+\[
+ V\geq\frac{(2/3-4b)\pi}{3a-2}
+ =\frac{533032}{4143735}\pi.
+\]
+Apply \cref{lem:regularization} and then rescale to width $w$.
+\end{proof}
+
+\section{Recovering the deficit on eight spherical caps}\label{sec:caps}
+
+Fix numbers
+\begin{equation}\label{eq:R-interval}
+ R_{*}\leq R\leq R^{+},
+ \qquad
+ R_{*}^{2}>\frac13,
+ \qquad
+ m:=1-(R^{+})^{2}\geq\frac58,
+\end{equation}
+where $R_{*}$ is rational and $m$ is rational. In the top interval we allow $R^{+}=\sqrt6/4$, so $m=5/8$. Fix a rational tangency radius $s_0\in(1-R_{*},R_{*})$ and write $G=G_{m,s_0}$.
+
+By \cref{cor:Jung}, there are exactly four contact directions $u_1,\dots,u_4$. Put
+\begin{equation}\label{eq:eta-star}
+ \eta_{*}=\frac{1}{2R_{*}^{2}}-1,
+ \qquad
+ T_{*}=\frac{4\eta_{*}^{2}}{1-\eta_{*}}-1.
+\end{equation}
+Since $R\geq R_{*}$, the actual $\eta$ is at most $\eta_{*}$, and $t_{\max}(\eta)$ is increasing for $0<\eta<1$. Hence
+\begin{equation}\label{eq:pair-upper-star}
+ \ip{u_i}{u_j}\leq T_{*}\qquad(i\neq j).
+\end{equation}
+
+Let $w_0=R_{*}>w_1>\cdots>w_{n_v}>s_0$ satisfy the exact step certificates of \cref{lem:rational-step}, and let $z_1,\dots,z_{n_a}\leq s_0$ satisfy the exact ball certificates \eqref{eq:Z1}--\eqref{eq:Z2}. Define
+\[
+ C_i^{+}=\{v\in\Sph:d(v,u_i)\leq\theta_{n_v}\},
+ \qquad
+ C_i^{-}=\{v\in\Sph:d(v,-u_i)\leq\theta_{n_a}\}.
+\]
+
+\begin{lemma}[Disjointness]\label{lem:cap-disjointness}
+Assume $\theta_{n_v},\theta_{n_a}<\pi/2$ and
+\begin{equation}\label{eq:D1D2}
+ \cos(2\theta_{n_v})>T_{*},
+ \qquad
+ \cos(2\theta_{n_a})>T_{*}.
+\end{equation}
+Then the eight caps $C_i^{\pm}$ are pairwise disjoint.
+\end{lemma}
+
+\begin{proof}
+For $i\neq j$, \eqref{eq:pair-upper-star} and the first inequality in \eqref{eq:D1D2} imply
+$d(u_i,u_j)>2\theta_{n_v}$, so the four positive caps are pairwise disjoint. The same argument applies to the four negative caps.
+
+If $v\in C_i^{+}$, then \cref{prop:vertex-chain} gives
+$\rho(v)\geq w_{n_v}>s_0$. If $v\in C_j^{-}$, then \cref{prop:antipodal-cap} gives
+$\rho(v)\leq z_{n_a}\leq s_0$. Thus a positive and a negative cap cannot intersect, even when $i\neq j$.
+\end{proof}
+
+The area of the spherical ring
+$\theta_{k-1}\leq d(v,u)\leq\theta_k$ is
+$2\pi(c_{k-1}-c_k)$. Using the monotonicity of $G$ on either side of $s_0$ yields the following quantitative estimate.
+
+\begin{proposition}[Eight-cap deficit]\label{prop:eight-cap}
+Under the hypotheses above, define
+\begin{equation}\label{eq:Delta}
+ \Delta=4\left[
+ \sum_{k=1}^{n_v}(c_{k-1}-c_k)G(w_k)
+ +\sum_{k=1}^{n_a}(c_{k-1}-c_k)G(z_k)
+ \right].
+\end{equation}
+Then
+\begin{equation}\label{eq:E-Delta}
+ E\geq2\pi\Delta,
+\end{equation}
+and consequently
+\begin{equation}\label{eq:interval-bound}
+ V\geq
+ \pi\frac{2/3-4b+2\Delta}{3a-2}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+On the $k$th ring about $u_i$, \cref{prop:vertex-chain} gives $\rho\geq w_k>s_0$, so \cref{lem:gap} gives $G(\rho)\geq G(w_k)$. On the $k$th ring about $-u_i$, \cref{prop:antipodal-cap} gives $\rho\leq z_k\leq s_0$, and the decreasing branch of $G$ gives $G(\rho)\geq G(z_k)$. Integrate over the rings and sum over the eight disjoint caps. This proves \eqref{eq:E-Delta}; substituting in \eqref{eq:master} gives \eqref{eq:interval-bound}.
+\end{proof}
+
+\section{The exact rational certificate}\label{sec:certificate}
+
+This section reduces the remaining proof to a finite exact computation. Every quantity below is an explicit rational number, and every comparison is an integer comparison, so the verification requires only exact rational arithmetic.
+
+\subsection{What is verified}
+
+For each circumradius interval $[R_{*},R^{+}]$ in \cref{tab:certificate-coarse,tab:certificate-fine}, the verification performs the following steps.
+
+\begin{algorithm}\label{alg:certificate}
+\leavevmode
+\begin{enumerate}[label=\textup{(\roman*)}]
+\item Set $m=1-(R^{+})^{2}$, with $m=5/8$ in the top interval, and set the rational tangency radius $s_0=p/q$ listed in the table. Compute $a,b$ from \eqref{eq:a-b} and verify $3a-2>0$.
+\item Form the rational angles \eqref{eq:angular-grid}--\eqref{eq:step-trig} with the listed $N$.
+\item Construct a decreasing sequence $w_0=R_{*}>w_1>\cdots>w_{n_v}>s_0$ on the grid $D^{-1}\mathbb Z$. Every accepted step is rechecked by the exact inequalities \eqref{eq:C1}--\eqref{eq:C2}.
+\item Construct upper bounds $z_k\in D^{-1}\mathbb Z$ for the antipodal caps. Every accepted value is rechecked by the exact inequalities \eqref{eq:Z1}--\eqref{eq:Z2}, and the retained sequence satisfies $z_k\leq s_0$.
+\item Verify the range and monotonicity conditions, $n_v,n_a<N$ (hence $\theta_{n_v},\theta_{n_a}<\pi/2$), $w_{n_v}>s_0\geq z_{n_a}$, and the two exact disjointness inequalities \eqref{eq:D1D2}.
+\item Evaluate the two sums in \eqref{eq:Delta} using exact fractions. After each addition, round downward to a multiple of $10^{-18}$; this can only decrease the certified deficit. Evaluate the right-hand side of \eqref{eq:interval-bound} and round its coefficient of $\pi$ downward to a multiple of $10^{-15}$.
+\end{enumerate}
+\end{algorithm}
+
+Floating-point arithmetic appears only in the search for nearby candidate grid integers in steps (iii) and (iv). It is not used in any comparison supporting the theorem. A candidate that is inaccurate is moved until the corresponding exact inequalities pass; a candidate that is unnecessarily conservative merely weakens the bound.
+
+The interval $R\leq3/5$ needs no cap certificate. There one takes $m=16/25$, $s_0=37/80$, and $E\geq0$ in \eqref{eq:master}, obtaining
+\begin{equation}\label{eq:case-zero}
+ V\geq\frac{76439431}{575385750}\pi
+ =0.417357494296971\ldots.
+\end{equation}
+
+\subsection{Certified partition}
+
+The following two tables give the complete gap-free partition of
+$[1/2,\sqrt6/4]$. The displayed final volume bounds are decimal renderings only; the verification stores and compares exact rational coefficients of $\pi$. Here $D$ is the common denominator of the $w_k$ and $z_k$ grids.
+
+\begin{table}[H]
+\centering
+\caption{Coarser part of the exact certificate. All endpoints and tangency radii are rational.}\label{tab:certificate-coarse}
+\scriptsize
+\setlength{\tabcolsep}{3.1pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}c c c c c r r r@{}}
+\toprule
+Case & $[R_{*},R^{+}]$ & $s_0$ & $N$ & $D$ & $n_v$ & $n_a$ & certified $V$ \\
+\midrule
+0  & $[1/2,3/5]$ & $37/80$ & -- & -- & -- & -- & $0.417357494296971$ \\
+O1 & $[3/5,3047/5000]$ & $59/125$ & $38400$ & $10^9$ & $7922$ & $14954$ & $0.411496539437612$ \\
+O2 & $[3047/5000,30549/50000]$ & $61/125$ & $38400$ & $10^9$ & $6981$ & $17485$ & $0.411755637432267$ \\
+O3 & $[30549/50000,24469/40000]$ & $123/250$ & $38400$ & $10^9$ & $6723$ & $17997$ & $0.411346798844895$ \\
+O4 & $[24469/40000,6121/10000]$ & $247/500$ & $38400$ & $10^9$ & $6595$ & $18245$ & $0.411138407971101$ \\
+O5 & $[6121/10000,24491/40000]$ & $249/500$ & $38400$ & $10^9$ & $6315$ & $18630$ & $0.411062159522339$ \\
+O6 & $[24491/40000,244937/400000]$ & $1/2$ & $38400$ & $10^9$ & $6177$ & $18819$ & $0.411041517359710$ \\
+A1 & $[244937/400000,15309/25000]$ & $5001359/10^7$ & $38400$ & $10^9$ & $6170$ & $18837$ & $0.411043738157074$ \\
+A2 & $[15309/25000,122473/200000]$ & $500213/10^6$ & $38400$ & $10^9$ & $6165$ & $18845$ & $0.411043774241325$ \\
+A3 & $[122473/200000,38273/62500]$ & $500231/10^6$ & $38400$ & $10^9$ & $6164$ & $18847$ & $0.411041898741644$ \\
+A4 & $[38273/62500,1224739/2000000]$ & $250121/500000$ & $38400$ & $10^9$ & $6163$ & $18848$ & $0.411041134307505$ \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+\begin{table}[H]
+\centering
+\caption{Refined part of the exact certificate near the Jung endpoint.}\label{tab:certificate-fine}
+\scriptsize
+\setlength{\tabcolsep}{2.8pt}
+\resizebox{\textwidth}{!}{%
+\begin{tabular}{@{}c c c c c r r r@{}}
+\toprule
+Case & $[R_{*},R^{+}]$ & $s_0$ & $N$ & $D$ & $n_v$ & $n_a$ & certified $V$ \\
+\midrule
+B1 & $[1224739/2000000,1224741/2000000]$ & $5002481/10^7$ & $76800$ & $10^9$ & $12326$ & $37698$ & $0.411041098837742$ \\
+C1 & $[1224741/2000000,1224743/2000000]$ & $1000501/2000000$ & $153600$ & $10^9$ & $24651$ & $75397$ & $0.411040501761867$ \\
+C2 & $[1224743/2000000,3061859/5000000]$ & $2501279/5000000$ & $153600$ & $10^9$ & $24650$ & $75399$ & $0.411040483688246$ \\
+D1 & $[3061859/5000000,153093/250000]$ & $15633/31250$ & $307200$ & $10^{12}$ & $49306$ & $150800$ & $0.411040702618581$ \\
+D2 & $[153093/250000,3061861/5000000]$ & $1000513/2000000$ & $307200$ & $10^{12}$ & $49306$ & $150800$ & $0.411040531599784$ \\
+D3 & $[3061861/5000000,6123723/10^7]$ & $1250643/2500000$ & $307200$ & $10^{12}$ & $49306$ & $150801$ & $0.411040480663395$ \\
+E1 & $[6123723/10^7,1530931/2500000]$ & $200103/400000$ & $614400$ & $10^{13}$ & $98612$ & $301603$ & $0.411040482016165$ \\
+E2 & $[1530931/2500000,\sqrt6/4]$ & $25013/50000$ & $614400$ & $10^{13}$ & $98609$ & $301607$ & $0.411040473721189$ \\
+\bottomrule
+\end{tabular}%
+}
+\end{table}
+
+The exact coefficient of $\pi$ in the last row is
+\begin{equation}\label{eq:exact-minimum}
+ \frac{130838246407123}{10^{15}}.
+\end{equation}
+Every other row has a strictly larger certified coefficient. The endpoints in the tables match exactly, so the listed cases cover the entire Jung interval without gaps.
+
+\section{Assembly of the proof}\label{sec:assembly}
+
+\begin{proof}[Proof of \cref{thm:main-intro}]
+Normalize $w=1$ and apply \cref{lem:regularization}; it is enough to prove the bound for a $C^{1}$ body. Let $R$ be the circumradius. By \cref{cor:Jung},
+\[
+ \frac12\leq R\leq\frac{\sqrt6}{4}.
+\]
+If $R\leq3/5$, \eqref{eq:case-zero} applies. Otherwise $R$ lies in exactly one of the nonzero intervals of \cref{tab:certificate-coarse,tab:certificate-fine}. The exact verification described in \cref{alg:certificate} establishes every hypothesis of \cref{prop:eight-cap} on that interval and therefore proves the corresponding row bound. The smallest exact coefficient is \eqref{eq:exact-minimum}, attained in case E2. Hence
+\[
+ V\geq \frac{130838246407123}{10^{15}}\pi.
+\]
+The certified decimal inequality is proved in \cref{app:pi}. Finally, dilation by $w$ multiplies volume by $w^{3}$.
+\end{proof}
+
+\begin{remark}[Scope of the result]\label{rem:scope}
+The theorem does not identify a minimizer and does not prove the Meissner conjecture. It narrows the universal interval to
+\[
+ 0.411040473721188
+ < \frac{m_3(w)}{w^{3}}
+ \leq 0.419860045965080\ldots.
+\]
+The difficult branch is the near-Jung regime $R\approx\sqrt6/4$, where the four circumsphere contact directions are forced to be nearly tetrahedral. This structural localization is independent of any assumption that an extremizer has Meissner geometry.
+\end{remark}
+
+\appendix
+
+\section{A certified rational lower bound for \texorpdfstring{$\pi$}{pi}}\label{app:pi}
+
+The Taylor series of $\arcsin$ at $1/2$ has positive terms:
+\[
+ \pi=6\arcsin\frac12
+ =6\sum_{k=0}^{\infty}
+ \frac{\binom{2k}{k}}{(2k+1)2^{4k+1}}.
+\]
+Therefore the $40$-term partial sum
+\begin{equation}\label{eq:pi40}
+ \pi_{40}:=
+ 6\sum_{k=0}^{39}
+ \frac{\binom{2k}{k}}{(2k+1)2^{4k+1}}
+ <\pi
+\end{equation}
+provides an exact rational lower bound. Reducing this fraction to lowest terms, the following comparison holds by integer cross-multiplication:
+
+\[
+ \frac{130838246407123}{10^{15}}\pi_{40}
+ >\frac{411040473721188}{10^{15}}.
+\]
+Together with \eqref{eq:pi40}, this proves the strict decimal inequality in \eqref{eq:main-bound-intro} without relying on a floating-point value of $\pi$.
+
+\section{A purely algebraic form of the tangent gap}\label{app:algebraic-gap}
+
+Although concavity gives the shortest proof of \cref{lem:gap}, the gap also admits a polynomial factorization, which gives an independent exact proof. For $s_0=p/q$ with positive integers $p<q$, define
+\[
+ P(s)=(8p^{2}q+24mq^{3})s^{3}
+ +(16p^{3}+48mpq^{2})s^{2}
+ +32mp^{2}qs+16mp^{3}.
+\]
+Then
+\begin{align*}
+&12q^{5}(s_0^{2}+m)^{2}
+ \left[(as^{3}+b)(s^{2}+m)-2s^{3}\right]\\
+&\hspace{45mm}=(qs-p)^{2}P(s).
+\end{align*}
+All coefficients of $P$ are positive, so the factorization gives a second exact proof that $G(s)\geq0$ for $s\geq0$. Differentiating and simplifying yields
+\begin{align*}
+&2qP(s)(s^{2}+m)+(qs-p)\left(P'(s)(s^{2}+m)-2sP(s)\right)\\
+&\quad=24qs^{2}(p+qs)
+ \left(5m^{2}q^{2}+3mp^{2}+(3mq^{2}+p^{2})s^{2}\right),
+\end{align*}
+which certifies the monotonicity of the gap using rational polynomial identities alone.
+
+\begin{thebibliography}{99}
+
+\bibitem{ArmanEtAl2024}
+A.~Arman, A.~Bondarenko, A.~Prymak, and D.~Radchenko,
+\emph{Small volume bodies of constant width with tetrahedral symmetries},
+arXiv:2406.18428 (2024).
+
+\bibitem{Blaschke1915}
+W.~Blaschke,
+\emph{Konvexe Bereiche gegebener konstanter Breite und kleinsten Inhalts},
+Math. Ann. \textbf{76} (1915), 504--513.
+
+\bibitem{Bogosel2026}
+B.~Bogosel,
+\emph{Volume computation for Meissner polyhedra and applications},
+Discrete Comput. Geom. \textbf{75} (2026), no.~1, 48--72.
+
+\bibitem{BonnesenFenchel1934}
+T.~Bonnesen and W.~Fenchel,
+\emph{Theorie der konvexen K\"orper},
+Springer-Verlag, Berlin, 1934.
+
+\bibitem{Chakerian1966}
+G.~D.~Chakerian,
+\emph{Sets of constant width},
+Pacific J. Math. \textbf{19} (1966), no.~1, 13--21.
+
+\bibitem{Jung1901}
+H.~Jung,
+\emph{Ueber die kleinste Kugel, die eine r\"aumliche Figur einschliesst},
+J. Reine Angew. Math. \textbf{123} (1901), 241--257.
+
+\bibitem{KawohlWeber2011}
+B.~Kawohl and C.~Weber,
+\emph{Meissner's mysterious bodies},
+Math. Intelligencer \textbf{33} (2011), no.~3, 94--101.
+
+\bibitem{Lebesgue1914}
+H.~Lebesgue,
+\emph{Sur le probl\`eme des isop\'erim\`etres et sur les domaines de largeur constante},
+Bull. Soc. Math. France \textbf{42} (1914), 72--76.
+
+\bibitem{MeissnerSchilling1912}
+E.~Meissner and F.~Schilling,
+\emph{Drei Gipsmodelle von Fl\"achen konstanter Breite},
+Z. Math. Phys. \textbf{60} (1912), 92--94.
+
+\bibitem{Nishioka2026}
+A.~Nishioka,
+\emph{An improved lower bound for the three-dimensional Blaschke--Lebesgue problem from spectral and dual perspectives},
+arXiv:2606.01754 (2026).
+
+\bibitem{Rockafellar1970}
+R.~T.~Rockafellar,
+\emph{Convex Analysis},
+Princeton Mathematical Series, vol.~28,
+Princeton University Press, Princeton, NJ, 1970.
+
+\bibitem{Schneider2014}
+R.~Schneider,
+\emph{Convex Bodies: The Brunn--Minkowski Theory},
+expanded ed., Encyclopedia of Mathematics and its Applications, vol.~151,
+Cambridge University Press, Cambridge, 2014.
+
+\end{thebibliography}
+
+\end{document}

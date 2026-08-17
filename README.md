@@ -11,6 +11,23 @@ artifact and, where relevant, the self-contained scripts that reproduce it.
 
 ## News
 
+- **2026-08-17** — 📐 **A new certified lower bound for the three-dimensional
+  Blaschke–Lebesgue problem.** Every convex body `K ⊂ ℝ³` of constant width `w`
+  now provably satisfies
+  `Vol(K) ≥ (130838246407123/10¹⁵)·π·w³ > 0.411040473721188 w³`,
+  improving the previous best `4π/33 · w³ ≈ 0.380799109526 w³` (Nishioka,
+  [arXiv:2606.01754](https://arxiv.org/abs/2606.01754)) by **7.94%**. This closes
+  **77.4%** of the remaining gap to the conjectured Meissner optimum
+  `≈ 0.419860045965080 w³`, reaching **97.899%** of it. The proof combines the
+  contact geometry of a minimum circumscribed ball, a divergence estimate for the
+  radial function, and a tangent-line majorant whose nonnegative deficit is
+  recovered on eight disjoint spherical caps; the final step is a finite
+  verification in exact rational arithmetic, with floating point used only to
+  propose candidates that are then rechecked exactly. The same method also yields
+  a fully analytic, computer-free bound
+  `533032π/4143735 · w³ ≈ 0.404120778796972 w³`. Paper:
+  **[`AI4Science/3d_blaschke_lebesgue/`](AI4Science/3d_blaschke_lebesgue/)**.
+
 - **2026-07-29** — 🎉 **The sum-vs-difference problem is settled.** Going beyond
   the concrete `sums_diffs` record below, we now have a *complete, machine-checked*
   resolution of the optimal exponent
@@ -41,6 +58,7 @@ system or leaderboard) against **Hyra**. Arrows mark the better direction
 | | [`parp1_docking`](AI4Science/parp1_docking/) | objective ↓ | −9.77 <sup>d</sup> | **−10.60** |
 | | [`qubit_routing`](AI4Science/qubit_routing/) | CNOTs added ↓ | 269,037 <sup>b</sup> | **258,369** |
 | | [`sunspot_symbolic`](AI4Science/sunspot_symbolic/) | forecast R² ↑ | 0.47 <sup>g</sup> | **0.78** |
+| | [`3d_blaschke_lebesgue`](AI4Science/3d_blaschke_lebesgue/) | Vol/w³ bound ↑ | 0.380799 <sup>h</sup> | **0.411040** |
 
 **Prev-best sources.** 
 
@@ -62,6 +80,11 @@ Hyra's record-improving packings are credited there as "Found by Haowei Lin":
 best.
 - <sup>g</sup> Baseline: a "copy last frame" (persistence) forecast. Hyra's score is
 the forecast R² on a fully-held-out, half-century-long segment of the record.
+- <sup>h</sup> Nishioka: *An improved lower bound for the three-dimensional
+Blaschke–Lebesgue problem from spectral and dual perspectives*
+([arXiv:2606.01754](https://arxiv.org/abs/2606.01754)), which gives `4π/33 ≈
+0.380799109526`. Hyra's certified bound is `(130838246407123/10¹⁵)·π >
+0.411040473721188`.
 
 Metrics are as defined by each benchmark; comparisons are against the cited
 published results.
@@ -77,8 +100,12 @@ published results.
 - **CNOTs added**: extra CNOTs inserted by SWAP routing (minimize; 1 SWAP = 3 CNOTs).
 - **forecast R²**: rolling-origin, free-running (24-month) forecast R² for monthly
   sunspot numbers (maximize).
+- **Vol/w³ bound**: largest proven universal lower bound on `Vol(K)/w³` over all
+  convex bodies `K ⊂ ℝ³` of constant width `w` (maximize; the conjectured
+  optimum is `≈ 0.419860`).
 
-> **Note.** The results above are current as of **2026-07-10**. Several of these
+> **Note.** The results above were current as of **2026-07-10**, except
+> `3d_blaschke_lebesgue`, added **2026-08-17**. Several of these
 > problems live on public, continuously-updated leaderboards; later entries there
 > may *warm-start from Hyra's published solutions* to reach still-better numbers.
 
