@@ -11,62 +11,35 @@ artifact and, where relevant, the self-contained scripts that reproduce it.
 
 ## News
 
-- **2026-08-19**: 🧾 **Three new results, with Lean 4 formalizations.**
-  - **A better uniform constant for the Beurling–Ahlfors transform.** The
-    singular integral `Bf(z) = −(1/π)·p.v.∫ f(w)/(z−w)² dm(w)` now satisfies
-    `‖B‖_{Lᵖ(ℂ)→Lᵖ(ℂ)} ≤ 1.523958·(p*−1)` for every `1 < p < ∞`, where
-    `p* = max{p, p/(p−1)}`, improving the previous uniform coefficient `1.575`
-    (Bañuelos and Janakiraman, 2008) by **3.2%** and narrowing the gap to
-    Iwaniec's conjectured sharp value `p*−1`. The proof builds Bellman profiles
-    at `p = 16/3` and `p = 15/2`, giving `‖B‖_{16/3} ≤ 22830^(3/16)` and
-    `‖B‖_{15/2} ≤ 22865000^(2/15)`, then interpolates. Lean certifies the `L²`
-    multiplier and its Plancherel isometry, the kinematic and drift reduction,
-    both endpoint profile certificates, and every interval bound behind the
-    constant; the Brownian/Bellman limit and Riesz–Thorin step remain prose.
-    Paper: **[`AI4Science/beurling_ahlfors_bellman/`](AI4Science/beurling_ahlfors_bellman/)**.
-  - **Counting partial Hadamard matrices past the cubic barrier.** For
-    `m ≡ 0 (mod 4)`, the number `N(n,m)` of `n × m` sign matrices with pairwise
-    orthogonal rows satisfies `N(n,m) = [1+o(1)]·A(n,m)·R(n,m)`, where
-    `A(n,m) = 2^(nm+(n−1)²)·(2πm)^(−n(n−1)/4)` and
-    `R(n,m) = exp(−n(n−1)(2n−1)/24m)`, uniformly whenever `m/(n²·log 2πm) → ∞`.
-    This lowers the infimum of admissible power-law exponents from **3**
-    ([arXiv:2603.30013](https://arxiv.org/abs/2603.30013)) to **2**; the
-    endpoint exponent `2` itself is not claimed. Both directions of the
-    exponent statement are machine-checked. Paper:
+- **2026-08-19**: 🧾 **Three new results, each with a Lean 4 formalization of its
+  finite and numerical core.**
+  - **Beurling–Ahlfors transform.** Iwaniec's 1982 conjecture predicts the sharp
+    `Lᵖ` operator norm `p*−1`; the best proven uniform coefficient drops from
+    `1.575` (Bañuelos and Janakiraman, 2008) to **1.523958**. Paper:
+    **[`AI4Science/beurling_ahlfors_bellman/`](AI4Science/beurling_ahlfors_bellman/)**.
+  - **Partial Hadamard matrices.** Their asymptotic count is now known
+    throughout every power-law range above `n²`, not just the cubic range
+    `m ≫ n³`, lowering the critical exponent from **3**
+    ([arXiv:2603.30013](https://arxiv.org/abs/2603.30013)) to **2**. Paper:
     **[`AI4Science/partial_hadamard_counting/`](AI4Science/partial_hadamard_counting/)**.
-  - **A cubic logarithmic bound for commutators close to the identity.** For
-    `m(ε) = inf{‖D‖·‖X‖ : ‖[D,X] − 1‖ ≤ ε}` on an infinite-dimensional Hilbert
-    space, `m(ε) ≤ 5.3×10⁶·(log 1/ε)³` for all `0 < ε ≤ 1/2`, i.e.
-    `m(ε) = O(log³(1/ε))`, improving Tao's `O(log⁵)` and the subsequent
-    `O(log⁴)` refinement. Popa's lower bound `½·log(1/ε)` is untouched, so the
-    logarithmic exponent is now pinned between `1` and `3`. The proof keeps
-    Tao's operator-matrix template but replaces the worst-case norm of its
-    linear right inverse by an entrywise supersolution tuned to the endpoint
-    forcing. Lean covers the sharp `2×2` norm estimate, the supersolution core,
-    and the final constants, but not the operator-valued fixed-point steps.
-    Paper: **[`AI4Science/commutator_log_cubed/`](AI4Science/commutator_log_cubed/)**.
+  - **Commutators close to the identity.** The identity is never a commutator,
+    but comes within `ε` at a price: the least `‖D‖·‖X‖` needed falls from Tao's
+    `O(log⁵(1/ε))`, since refined to `O(log⁴)`, to **O(log³(1/ε))**, against
+    Popa's `log(1/ε)` lower bound. Paper:
+    **[`AI4Science/commutator_log_cubed/`](AI4Science/commutator_log_cubed/)**.
 
-- **2026-08-17**: 📐 **A new certified lower bound for the three-dimensional
-  Blaschke–Lebesgue problem.** Every convex body `K ⊂ ℝ³` of constant width `w`
-  now provably satisfies
-  `Vol(K) ≥ (130838246407123/10¹⁵)·π·w³ > 0.411040473721188 w³`, improving the
-  previous best `4π/33 · w³ ≈ 0.380799109526 w³` (Nishioka,
-  [arXiv:2606.01754](https://arxiv.org/abs/2606.01754)) by **7.94%** and closing
-  **77.4%** of the remaining gap to the conjectured Meissner optimum
-  `≈ 0.419860045965080 w³`. The final step is a finite verification in exact
-  rational arithmetic, with floating point used only to propose candidates that
-  are then rechecked exactly; the same method also yields a fully analytic,
-  computer-free bound `533032π/4143735 · w³ ≈ 0.404120778796972 w³`. Paper:
+- **2026-08-17**: 📐 **Blaschke–Lebesgue in three dimensions.** The least volume
+  of a convex body of constant width `w` is conjectured to be Meissner's
+  `≈ 0.419860 w³`; the best certified lower bound rises from
+  `4π/33 · w³ ≈ 0.380799 w³` (Nishioka,
+  [arXiv:2606.01754](https://arxiv.org/abs/2606.01754)) to **> 0.411040 w³**,
+  closing **77.4%** of the remaining gap. Paper:
   **[`AI4Science/3d_blaschke_lebesgue/`](AI4Science/3d_blaschke_lebesgue/)**.
 
-- **2026-07-29**: 🎉 **The sum-vs-difference problem is settled.** Going beyond
-  the concrete `sums_diffs` record below, we now have a *complete, machine-checked*
-  resolution of the optimal exponent
-  `C(A) = log(|A+A|/|A|) / log(|A−A|/|A|)`: over all finite `A ⊆ ℤ` with `|A| ≥ 2`
-  its supremum is **exactly 2**: the bound `C(A) < 2` holds universally, and `2`
-  is approached arbitrarily closely (to within `10⁻⁹⁹⁹` by an explicit set) but
-  never attained. The construction at the heart of the matching
-  lower bound was developed with Hyra. Paper, proof, and reproduction scripts are in this repo:
+- **2026-07-29**: 🎉 **The sum-vs-difference problem is settled.** For finite
+  `A ⊆ ℤ`, the optimal exponent relating `|A+A|` to `|A−A|` has supremum
+  **exactly 2**, approached arbitrarily closely but never attained: a complete,
+  machine-checked resolution going beyond the `sums_diffs` record below. Proof:
   **[sum-diff-proof](https://github.com/linhaowei1/sum-diff-proof)**.
 
 ## Results
