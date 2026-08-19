@@ -1,0 +1,1079 @@
+\documentclass[11pt,reqno]{amsart}
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+\usepackage{amssymb}
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage[english]{babel}
+\usepackage{placeins}
+
+\frenchspacing
+\allowdisplaybreaks
+\linespread{1.2}
+\usepackage[a4paper, lmargin=0.15\paperwidth, rmargin=0.15\paperwidth,
+            tmargin=0.1\paperheight, bmargin=0.1\paperheight]{geometry}
+\usepackage[colorlinks = true,
+            linkcolor = blue,
+            urlcolor  = blue,
+            citecolor = blue,
+            anchorcolor = blue]{hyperref}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+
+\newcommand{\T}{\mathbb T}
+\newcommand{\Z}{\mathbb Z}
+\newcommand{\R}{\mathbb R}
+\newcommand{\N}{\mathbb N}
+\DeclareMathOperator{\dist}{dist}
+\DeclareMathOperator{\tr}{tr}
+\DeclareMathOperator{\Var}{Var}
+
+\title[Counting Partial Hadamard Matrices in the Near-Quadratic Regime]
+{Counting Partial Hadamard Matrices\\in the Near-Quadratic Regime}
+
+\author{Haowei Lin}
+\address{Tencent Hunyuan}
+\email{linhaowei@pku.edu.cn}
+
+\date{}
+
+\begin{document}
+
+\begin{abstract}
+Let \(N_{n,m}\) denote the number of \(n\times m\) matrices with entries in
+\(\{\pm1\}\) whose rows are pairwise orthogonal, and suppose that \(m\) is a
+multiple of four. We prove an explicit, uniform asymptotic formula in a
+near-quadratic range. Writing
+\[
+  A_{n,m}=2^{nm+(n-1)^2}(2\pi m)^{-n(n-1)/4},\qquad
+  R_{n,m}=\exp\Bigl(-\frac{n(n-1)(2n-1)}{24m}\Bigr),
+\]
+we show that \(N_{n,m}=[1+o(1)]A_{n,m}R_{n,m}\) uniformly whenever
+\(m/(n^2\log(2\pi m))\to\infty\). In particular, for every fixed \(\eta>0\) the
+formula holds uniformly in the regime \(m/n^{2+\eta}\to\infty\). The correction
+factor \(R_{n,m}\) is essential below the cubic scale and resums the leading
+cubic-scale correction. Consequently the infimum of the admissible power-law
+exponents is at most \(2\), improving the previous bound \(3\); validity at the
+endpoint exponent \(2\) is not claimed.
+
+The proof proceeds by adjoining rows one at a time. For a fixed \(k\)-row
+partial Hadamard matrix, the number of admissible next rows is a
+\(k\)-dimensional Fourier integral. Exact orthogonality identities give a
+uniform central expansion for every partial Hadamard matrix. Away from the
+universal saddle lattice, a scale-adapted truncation and a Bernstein bound show
+exponential decay for all but an exponentially small set of sign matrices. A
+quantitative induction then shows that this exceptional set is negligible among
+partial Hadamard matrices as soon as \(m\gg n^2\log m\). We also give a
+closed-form error bound valid for every integer pair \(n\ge2\) and
+\(m\in4\N\).
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+A real partial Hadamard matrix is a rectangular sign matrix whose rows are
+pairwise orthogonal. These objects interpolate between elementary orthogonal
+sign systems and square Hadamard matrices, and their counting problem is
+naturally linked to lattice random walks and Fourier inversion. De Launey and
+Levin introduced a Fourier-analytic framework for this problem and obtained
+asymptotic counting results for fixed row dimension and, implicitly, in a
+high-dimensional range \cite{deLauneyLevin2010}. Subsequent work reduced the
+required separation between the width and the number of rows. In particular,
+Davis proved a precise expansion at and above the cubic scale \(m\asymp n^3\),
+extending an unpublished estimate of Canfield \cite{Canfield2011,Davis2026}.
+
+The standard leading term is
+\[
+  A_{n,m}=2^{nm+(n-1)^2}(2\pi m)^{-n(n-1)/4}.
+\]
+At the cubic scale this term alone is no longer asymptotically exact. The first
+correction found in \cite{Davis2026} is of order \(n^3/m\). The main point of
+the present argument is that the whole correction can be resummed into the
+elementary factor
+\[
+  R_{n,m}=\exp\Bigl(-\frac{n(n-1)(2n-1)}{24m}\Bigr).
+\]
+Once this factor is retained, the central part of the Fourier integral remains
+stable down to the near-quadratic scale. The remaining obstacle is not the
+local expansion but the possibility of additional, highly structured far-field
+peaks. Such peaks do occur for exceptional partial Hadamard matrices, so a
+uniform pointwise bound for every matrix is false; see
+Remark~\ref{rem:exceptional}. Instead, we prove that the exceptional matrices
+are exponentially rare among all sign matrices, and then compare this rarity
+with a quantitative lower bound for the density of partial Hadamard matrices.
+
+Our natural asymptotic condition is
+\[
+  \frac{m}{n^2\log(2\pi m)}\longrightarrow\infty.
+\]
+This implies the formula in every power-law regime \(m/n^{2+\eta}\to\infty\)
+with fixed \(\eta>0\). It does not settle the endpoint condition
+\(m/n^2\to\infty\): for example, \(m=n^2\log\log n\) does not force
+\(m/(n^2\log m)\to\infty\). The endpoint remains outside the reach of the
+present exceptional-set argument.
+
+\subsection*{Relation to the cubic expansion}
+If \(m=4t\) and \(t=\Theta n^3\) with fixed \(\Theta>0\), then
+\[
+  R_{n,4t}\longrightarrow e^{-1/(48\Theta)}.
+\]
+For large \(\Theta\) this gives
+\(e^{-1/(48\Theta)}=1-\tfrac1{48\Theta}+O(\Theta^{-2})\), which agrees with the
+leading correction in \cite{Davis2026}. Thus the present formula is consistent
+with the known cubic expansion while also predicting the full limiting
+correction factor.
+
+\section{Main results}
+
+Throughout the paper, \(m=4t\ge4\) and
+\[
+  L:=\log(2\pi m)=\log(8\pi t).
+\]
+For integers \(n\ge2\) and \(t\ge1\), define
+\begin{equation}\label{eq:B}
+  B_{n,m}:=2^{nm+(n-1)^2}(2\pi m)^{-n(n-1)/4}
+    \exp\Bigl(-\frac{n(n-1)(2n-1)}{24m}\Bigr),\qquad(m=4t),
+\end{equation}
+\begin{multline}\label{eq:E}
+  E(n,t):=\frac{n^4}{4m^2}+2ne^{-m/(4n)}+2ne^{2n-m/(86n)}
+    +3ne^{(n/2)L-m/32}\\
+    +2n\exp\Bigl(2n^2L+2n\log(200n^2)-\frac m{1024}\Bigr),
+\end{multline}
+\begin{equation}\label{eq:S}
+  S(n,t):=\Bigl(\frac{n^2L}4+\frac{n^3}{12m}\Bigr)
+    \Bigl(\frac{20000\,n^2L}{m}\Bigr)^{n^2},
+\end{equation}
+\begin{equation}\label{eq:eps}
+  \varepsilon(n,t):=\exp\bigl(E(n,t)+S(n,t)\bigr)-1.
+\end{equation}
+
+\begin{theorem}[Explicit all-parameter estimate]\label{thm:explicit}
+For every pair of integers \(n\ge2\) and \(t\ge1\),
+\[
+  \Bigl|\frac{N_{n,4t}}{B_{n,4t}}-1\Bigr|\le\varepsilon(n,t).
+\]
+\end{theorem}
+
+The closed form in \eqref{eq:eps} is intentionally conservative. Its purpose is
+to make the statement valid without side conditions, including parameter pairs
+for which no \(n\times4t\) partial Hadamard matrix can exist.
+
+\begin{theorem}[Near-quadratic uniform asymptotic]\label{thm:uniform}
+Let \((n_i,t_i)\) be any sequence with \(n_i\ge2\), \(t_i\ge1\), and put
+\(m_i=4t_i\). If
+\[
+  \frac{m_i}{n_i^2\log(2\pi m_i)}\longrightarrow\infty,
+\]
+then \(N_{n_i,m_i}/B_{n_i,m_i}\to1\). The convergence is uniform in the
+displayed regime.
+\end{theorem}
+
+\begin{corollary}[Every exponent strictly larger than two]\label{cor:exponent}
+For every fixed \(u>2\),
+\[
+  N_{n,4t}=[1+o(1)]B_{n,4t}
+\]
+uniformly whenever \(t/n^u\to\infty\).
+\end{corollary}
+
+If a critical exponent is defined as the infimum of the admissible power
+exponents, Corollary~\ref{cor:exponent} gives an upper bound of \(2\). This
+infimal statement must not be confused with validity at the endpoint \(u=2\),
+which is not proved here. Section~\ref{sec:asymptotic} makes the infimum
+statement precise, and Section~\ref{sec:limits} records what is not proved.
+
+\section{Fourier representation and row extension}
+
+Write \(\T=\R/(2\pi\Z)\), with total Lebesgue measure \(2\pi\). For a
+\(k\times m\) sign matrix \(H\), let \(h_1,\dots,h_k\in\{\pm1\}^m\) be its rows
+and \(H_1,\dots,H_m\in\{\pm1\}^k\) its columns. Let \(\mathcal P_k\) be the set
+of \(k\)-row partial Hadamard matrices of width \(m\), so that
+\(|\mathcal P_k|=N_{k,m}\) and \(N_{1,m}=2^m\).
+
+For \(\theta\in\T^k\), define
+\[
+  \Phi_H(\theta):=\prod_{C=1}^m\cos(\theta\cdot H_C),
+\]
+and let \(X(H):=\#\{x\in\{\pm1\}^m:Hx=0\}\). Every \((k+1)\)-row partial
+Hadamard matrix is uniquely obtained by adjoining one such row, hence
+\begin{equation}\label{eq:recursion}
+  N_{k+1,m}=\sum_{H\in\mathcal P_k}X(H).
+\end{equation}
+
+\begin{lemma}[Fourier representation]\label{lem:fourier}
+For every \(k\times m\) sign matrix \(H\),
+\[
+  X(H)=2^m(2\pi)^{-k}\int_{\T^k}\Phi_H(\theta)\,d\theta.
+\]
+\end{lemma}
+
+\begin{proof}
+For an integer \(z\), \(\mathbf 1_{\{z=0\}}=(2\pi)^{-1}\int_\T e^{iz\theta}\,
+d\theta\). Apply this identity to each coordinate of \(Hx\), sum over
+\(x\in\{\pm1\}^m\), and factor the resulting product:
+\[
+  X(H)=(2\pi)^{-k}\int_{\T^k}\prod_{C=1}^m
+    \Bigl(\sum_{x_C=\pm1}e^{ix_C(\theta\cdot H_C)}\Bigr)d\theta
+  =2^m(2\pi)^{-k}\int_{\T^k}\Phi_H(\theta)\,d\theta. \qedhere
+\]
+\end{proof}
+
+\section{The universal saddle lattice}
+
+Define
+\[
+  \Lambda_k:=\Bigl\{\tfrac\pi2c\ (\mathrm{mod}\ 2\pi):c\in\Z^k,\
+    \textstyle\sum_{j=1}^kc_j\equiv0\ (\mathrm{mod}\ 2)\Bigr\}\subset\T^k.
+\]
+We call \(\Lambda_k\) the universal saddle lattice. It is universal because
+every partial Hadamard integrand is exactly periodic under its translations. It
+need not contain every point where a particular integrand has modulus one;
+exceptional matrices can have additional far-field maxima, as shown in
+Remark~\ref{rem:exceptional}.
+
+\begin{lemma}\label{lem:lattice}
+One has \(|\Lambda_k|=2^{2k-1}\), and distinct points of \(\Lambda_k\) are at
+least \(\pi/\sqrt2\) apart in \(\T^k\).
+\end{lemma}
+
+\begin{proof}
+Modulo \(2\pi\), take \(c\in\{0,1,2,3\}^k\). Exactly half of the \(4^k\)
+classes have even coordinate sum. For the distance statement, let
+\(c''\not\equiv0\ (\mathrm{mod}\ 4)\) be the difference of two even-sum
+representatives. If some coordinate of \(c''\) is congruent to \(2\) modulo
+\(4\), the distance is at least \(\pi\). Otherwise every coordinate is odd or
+\(\equiv0\), the number of odd coordinates is positive and even, hence at least
+two, giving distance at least \(\sqrt{2(\pi/2)^2}=\pi/\sqrt2\).
+\end{proof}
+
+\begin{lemma}[Exact periodicity]\label{lem:periodic}
+Let \(H\) be a \(k\)-row partial Hadamard matrix and suppose \(4\mid m\). Then
+for every \(\omega\in\Lambda_k\) and \(\beta\in\T^k\),
+\(\Phi_H(\omega+\beta)=\Phi_H(\beta)\).
+\end{lemma}
+
+\begin{proof}
+Write \(\omega=(\pi/2)c\) with \(\sum_jc_j\) even. For each column \(C\),
+\(\sum_jc_jH_{jC}\) is even, and therefore \(\omega\cdot H_C\in\pi\Z\). Thus
+\[
+  \cos((\omega+\beta)\cdot H_C)=\epsilon_C\cos(\beta\cdot H_C),
+  \qquad\epsilon_C\in\{\pm1\}.
+\]
+Let \(s_j=\sum_CH_{jC}\) be the \(j\)th row sum. Then
+\(\prod_C\epsilon_C=(-1)^{\frac12\sum_jc_js_j}\). It remains to prove
+\(\sum_jc_js_j\equiv0\ (\mathrm{mod}\ 4)\). Every \(s_j\) is even. Moreover, if
+\(j\ne\ell\) and the two rows are orthogonal, then
+\begin{equation}\label{eq:rowsum}
+  s_j+s_\ell\equiv0\ (\mathrm{mod}\ 4).
+\end{equation}
+Indeed, if \(a,b,c,d\) count the four sign patterns of the two rows, then
+orthogonality gives \(a+d=m/2\), which is even, and \(s_j+s_\ell=2(a-d)\) is
+divisible by four. Let \(T=\{j:c_j\text{ is odd}\}\). Since \(\sum_jc_j\) is
+even, \(|T|\) is even. Terms with even \(c_j\) vanish modulo four, while for
+\(j\in T\) one has \(c_js_j\equiv s_j\ (\mathrm{mod}\ 4)\). Pair the indices in
+\(T\) and apply \eqref{eq:rowsum}. Hence the product of the signs is \(1\).
+\end{proof}
+
+Put \(\rho_k=k^{-1/2}\). By Lemma~\ref{lem:lattice}, the closed balls
+\(B(\omega,\rho_k)\) are pairwise disjoint. Define
+\[
+  \mathrm{Near}_k:=\bigcup_{\omega\in\Lambda_k}B(\omega,\rho_k),\qquad
+  \mathrm{Far}_k:=\T^k\setminus\mathrm{Near}_k.
+\]
+For a \(k\)-row partial Hadamard matrix set
+\[
+  I(H):=\int_{\|\beta\|\le\rho_k}\Phi_H(\beta)\,d\beta,\qquad
+  J(H):=\int_{\mathrm{Far}_k}\Phi_H(\theta)\,d\theta.
+\]
+Then Lemmas~\ref{lem:fourier} and~\ref{lem:periodic} give
+\begin{equation}\label{eq:split}
+  X(H)=2^m(2\pi)^{-k}\bigl[2^{2k-1}I(H)+J(H)\bigr].
+\end{equation}
+
+\section{The central region}
+
+Throughout this section \(H\) is a \(k\)-row partial Hadamard matrix and
+\(y_C=\beta\cdot H_C\).
+
+\begin{lemma}[Exact orthogonality identities]\label{lem:orth}
+For every \(\beta\in\R^k\),
+\[
+  \sum_{C=1}^m(\beta\cdot H_C)^2=m\|\beta\|^2,\qquad
+  \|H_C\|^2=k,\qquad
+  \sum_{C,C'=1}^m(H_C\cdot H_{C'})^2=m^2k.
+\]
+\end{lemma}
+
+\begin{proof}
+The partial Hadamard condition is exactly \(HH^{\mathsf T}=mI_k\). The first
+identity is \(\beta^{\mathsf T}HH^{\mathsf T}\beta=m\|\beta\|^2\), and the
+second is immediate. For the third,
+\(\sum_{C,C'}(H_C\cdot H_{C'})^2=\tr((HH^{\mathsf T})^2)=m^2k\).
+\end{proof}
+
+\begin{lemma}[Taylor bound]\label{lem:taylor}
+For \(|y|\le1\),
+\[
+  -\log\cos y=\frac{y^2}2+\frac{y^4}{12}+s(y),\qquad
+  0\le s(y)\le\frac{y^6}{30}.
+\]
+\end{lemma}
+
+\begin{proof}
+The power series of \(-\log\cos y\) on \(|y|<\pi/2\) has positive even
+coefficients, beginning with \(y^2/2+y^4/12\). Hence \(s(y)/y^6\) is
+nondecreasing in \(|y|\) on \([0,1]\). The numerical inequality
+\(-\log(\cos1)-\tfrac7{12}<\tfrac1{30}\) then gives the claim. This inequality
+may be verified, for example, by alternating-series bounds for \(\cos1\) and a
+positive-term truncation of the exponential series.
+\end{proof}
+
+Let \(\gamma\) denote the Gaussian law \(N(0,I_k/m)\) on \(\R^k\), and define
+\(Q(\beta):=\sum_{C=1}^my_C^4\) and \(Y_6(\beta):=\sum_{C=1}^my_C^6\).
+
+\begin{lemma}[Gaussian moments]\label{lem:moments}
+One has
+\[
+  \mathbb E_\gamma Q=\frac{3k^2}m,\qquad
+  \Var_\gamma(Q)\le\frac{96k^3}{m^2},\qquad
+  \mathbb E_\gamma Y_6=\frac{15k^3}{m^2}.
+\]
+\end{lemma}
+
+\begin{proof}
+The vector \((y_1,\dots,y_m)\) is centered Gaussian with
+\(\Var(y_C)=k/m\) and \(\mathrm{Cov}(y_C,y_{C'})=(H_C\cdot H_{C'})/m\). The
+first and third identities follow from the fourth and sixth moments of a
+centered Gaussian. For the variance, if \((Y,Z)\) is centered jointly Gaussian
+with variances \(a,b\) and covariance \(r\), Wick's formula gives
+\(\mathbb E[Y^4Z^4]=9a^2b^2+72abr^2+24r^4\). Summing this identity and using
+Lemma~\ref{lem:orth} yields
+\[
+  \mathbb EQ^2\le\frac{9k^4}{m^2}+\frac{72k^3}{m^2}+\frac{24k^3}{m^2}.
+\]
+Subtracting \((\mathbb EQ)^2=9k^4/m^2\) proves the variance bound.
+\end{proof}
+
+\begin{lemma}[Chi-square tail]\label{lem:chi2}
+If \(Z\sim\chi^2_k\) and \(\lambda\ge1\), then
+\(\mathbb P(Z\ge\lambda k)\le\exp\bigl(-\tfrac k2(\lambda-1-\log\lambda)\bigr)\).
+If \(\lambda\ge6\), then \(\mathbb P(Z\ge\lambda k)\le e^{-k\lambda/4}\).
+\end{lemma}
+
+\begin{proof}
+Apply the exponential Markov inequality and optimize the moment generating
+function \((1-2s)^{-k/2}\) at \(s=(1-1/\lambda)/2\). The second claim follows
+from \(\lambda-1-\log\lambda\ge\lambda/2\) for \(\lambda\ge6\).
+\end{proof}
+
+\begin{proposition}[Uniform central contribution]\label{prop:central}
+Assume \(m\ge6k^2\). For every \(k\)-row partial Hadamard matrix \(H\),
+\[
+  I(H)=\Bigl(\frac{2\pi}m\Bigr)^{k/2}e^{-k^2/(4m)}(1+\eta_H),\qquad
+  |\eta_H|\le\frac{k^3}{m^2}+2e^{-m/(4k)}.
+\]
+\end{proposition}
+
+\begin{proof}
+On \(A=\{\|\beta\|\le k^{-1/2}\}\), Cauchy--Schwarz gives \(|y_C|\le1\). By
+Lemmas~\ref{lem:orth} and~\ref{lem:taylor},
+\[
+  \Phi_H(\beta)=\exp\Bigl(-\frac{m\|\beta\|^2}2-\frac{Q(\beta)}{12}
+    -S_6(\beta)\Bigr),\qquad 0\le S_6(\beta)\le\frac{Y_6(\beta)}{30}.
+\]
+Therefore \(I(H)=(2\pi/m)^{k/2}\mathbb E_\gamma[\mathbf 1_Ae^{-Q/12-S_6}]\).
+Put \(\mu=\mathbb EQ/12=k^2/(4m)\le1/24\) and \(W=Q-\mathbb EQ\). Since
+\(W/12\ge-\mu\), Taylor's theorem gives
+\[
+  \mathbb Ee^{-W/12}\le1+e^\mu\frac{\Var(Q)}{288}\le1+0.35\frac{k^3}{m^2}.
+\]
+This yields the required upper bound. For the lower bound, Jensen's inequality
+gives \(\mathbb Ee^{-Q/12}\ge e^{-\mu}\). Also
+\(\mathbb E[\mathbf 1_AS_6]\le\tfrac1{30}\mathbb EY_6=k^3/(2m^2)\). Finally
+\(m\|\beta\|^2\sim\chi^2_k\), and \(m/k^2\ge6\), so Lemma~\ref{lem:chi2} gives
+\(\mathbb P(A^c)\le e^{-m/(4k)}\). Combining these estimates and using
+\(e^{1/24}<1.043\) gives
+\[
+  \mathbb E[\mathbf 1_Ae^{-Q/12-S_6}]\ge e^{-\mu}
+    \Bigl(1-0.53\frac{k^3}{m^2}-1.05e^{-m/(4k)}\Bigr).
+\]
+The stated symmetric bound follows after harmless rounding.
+\end{proof}
+
+\section{The far field}
+
+The estimates in this section apply first to arbitrary sign matrices, without
+orthogonality assumptions. For \(0<\tau\le2\), define
+\[
+  g_\tau(y):=\min\{1-\cos(2y),\tau\},\qquad
+  G_\tau(\theta,H):=\sum_{C=1}^mg_\tau(\theta\cdot H_C).
+\]
+
+\begin{lemma}[Product bound]\label{lem:product}
+For every \(\theta\in\T^k\),
+\(|\Phi_H(\theta)|\le\exp\bigl(-\tfrac14G_\tau(\theta,H)\bigr)\).
+\end{lemma}
+
+\begin{proof}
+Since \(\cos^2z=1-\tfrac{1-\cos2z}2\le1-\tfrac{g_\tau(z)}2\), we have
+\(\Phi_H(\theta)^2\le\prod_C\bigl(1-\tfrac{g_\tau(\theta\cdot H_C)}2\bigr)
+\le e^{-G_\tau(\theta,H)/2}\). Take square roots.
+\end{proof}
+
+For \(\theta\in\T^k\), let
+\[
+  \mu(\theta):=1-\prod_{j=1}^k\cos(2\theta_j),\qquad
+  \sigma(\theta)^2:=\sum_{j=1}^k\dist(\theta_j,(\pi/2)\Z)^2,\qquad
+  r(\theta):=\dist(\theta,\Lambda_k).
+\]
+
+\begin{lemma}[Geometry of the mean]\label{lem:geometry}
+Let \(v\) be uniform on \(\{\pm1\}^k\). Then
+\begin{enumerate}
+\item \(\mathbb E_v[1-\cos(2\theta\cdot v)]=\mu(\theta)\);
+\item \(\mu(\theta)\ge\min\{1/2,r(\theta)^2\}\);
+\item if \(\mu(\theta)<1/2\), the nearest point of the full grid
+  \((\pi/2)\Z^k\) is unique, belongs to \(\Lambda_k\), and has distance
+  \(\sigma(\theta)<1/\sqrt2\).
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The first identity follows from
+\(\mathbb E_ve^{2i\theta\cdot v}=\prod_j\cos(2\theta_j)\). Choose a nearest
+grid point \(\omega=(\pi/2)c\) and write \(\theta=\omega+\beta\) with
+\(|\beta_j|\le\pi/4\), so that \(\sigma(\theta)=\|\beta\|\). If
+\(\sum_jc_j\) is odd, then \(\prod_j\cos(2\theta_j)\le0\) and
+\(\mu(\theta)\ge1\ge\min\{1/2,r(\theta)^2\}\).
+
+Suppose instead that \(\sum_jc_j\) is even, so that \(\omega\in\Lambda_k\). We
+claim \(\sigma(\theta)=r(\theta)\). Indeed \(\Lambda_k\subset(\pi/2)\Z^k\), and
+the distance to a subset is at least the distance to the ambient set, so
+\(\sigma(\theta)\le r(\theta)\); conversely \(\omega\in\Lambda_k\) gives
+\(r(\theta)\le\|\theta-\omega\|=\sigma(\theta)\). (The inclusion alone would
+give the inequality in the wrong direction, which is why the parity case
+matters here.) Now \(\cos(2\beta_j)\le e^{-2\beta_j^2}\) for
+\(|\beta_j|\le\pi/4\), so \(\prod_j\cos(2\beta_j)\le e^{-2\sigma(\theta)^2}\)
+and
+\[
+  \mu(\theta)\ge1-e^{-2\sigma(\theta)^2}
+  \ge\min\{1/2,\sigma(\theta)^2\}=\min\{1/2,r(\theta)^2\},
+\]
+where the middle step holds because \(1-e^{-2s}\ge s\) on \([0,1/2]\) and
+\(1-e^{-2s}\ge1-e^{-1}>1/2\) for \(s\ge1/2\).
+
+If \(\mu<1/2\), no coordinate can lie halfway between two grid points, since
+that would give \(\cos(2\theta_j)=0\) and hence \(\mu=1\); so the nearest grid
+point is unique. The odd-parity case is impossible, and the preceding bound
+forces \(\sigma^2<1/2\).
+\end{proof}
+
+\begin{lemma}[A truncated mean on dyadic shells]\label{lem:shells}
+Suppose \(\theta=\omega+\beta\), where \(\omega\in\Lambda_k\),
+\(|\beta_j|\le\pi/4\), and \(\sigma=\|\beta\|\). Let \(p\ge1\) satisfy
+\(2^{-p-1}<\sigma^2\le2^{-p}\le\tfrac12\), and put
+\(\tau_p=\min\{2,48\cdot2^{-p}\}\). Then
+\[
+  W_p(\theta):=\mathbb E_vg_{\tau_p}(\theta\cdot v)\ge\tfrac382^{-p},
+  \qquad \frac{W_p(\theta)}{\tau_p}\ge\frac1{128}.
+\]
+\end{lemma}
+
+\begin{proof}
+Set \(A(v)=1-\cos(2\theta\cdot v)\). Since \(\sum_jc_j\) is even and
+\(v\in\{\pm1\}^k\), we have \(c\cdot v\equiv\sum_jc_j\equiv0\pmod2\), so
+\(\omega\cdot v\in\pi\Z\) and \(A(v)=1-\cos(2\beta\cdot v)\): translation by
+\(\omega\in\Lambda_k\) does not change \(A\). By Lemma~\ref{lem:geometry} and
+\(\sigma^2\le1/2\), \(\mathbb EA\ge\sigma^2\). Moreover
+\(1-\cos2x=2\sin^2x\le2x^2\) gives \(A\le2(\beta\cdot v)^2\), and the fourth
+moment of a Rademacher sum, \(\mathbb E(\beta\cdot v)^4\le3\sigma^4\), gives
+\(\mathbb EA^2\le4\mathbb E(\beta\cdot v)^4\le12\sigma^4\).
+If \(p\le4\), then \(48\cdot2^{-p}\ge3>2\), so \(\tau_p=2\), the truncation is
+inactive, and the conclusion follows from
+\(W_p=\mathbb EA>2^{-p-1}\ge\tfrac382^{-p}\). If \(p\ge5\), then using
+\(\sigma^2\le2^{-p}\) and \(\mathbb EA\ge\sigma^2\),
+\[
+  W_p\ge\mathbb EA-\mathbb E[A\mathbf 1_{\{A>\tau_p\}}]
+  \ge\mathbb EA-\frac{\mathbb EA^2}{\tau_p}
+  \ge\mathbb EA-\frac{12\sigma^4}{48\cdot2^{-p}}
+  \ge\mathbb EA-\frac{\sigma^2}4
+  \ge\frac34\mathbb EA>\frac382^{-p}.
+\]
+Dividing by \(\tau_p\) gives the second bound, since
+\(\tfrac38/48=\tfrac1{128}\).
+\end{proof}
+
+\begin{lemma}[Lipschitz estimate]\label{lem:lipschitz}
+For all \(\theta,\theta'\in\T^k\),
+\(|G_\tau(\theta,H)-G_\tau(\theta',H)|\le2m\sqrt k\,\|\theta-\theta'\|\).
+\end{lemma}
+
+\begin{proof}
+The function \(g_\tau\) is \(2\)-Lipschitz, while
+\(|\langle\theta-\theta',H_C\rangle|\le\sqrt k\|\theta-\theta'\|\). Sum over
+\(C\).
+\end{proof}
+
+\subsection{Shells and nets}
+Put \(P:=\max\{0,\lceil\log_2k\rceil-1\}\). Decompose \(\mathrm{Far}_k\) into
+\begin{align*}
+  F_A&:=\{\theta\in\mathrm{Far}_k:\mu(\theta)\ge1/2\},\\
+  F_p&:=\{\theta\in\mathrm{Far}_k:\mu(\theta)<1/2,\
+    2^{-p-1}<\sigma(\theta)^2\le2^{-p}\},\qquad1\le p\le P.
+\end{align*}
+By Lemma~\ref{lem:geometry}, these sets cover \(\mathrm{Far}_k\). Set
+\(\eta_A=\tfrac1{16\sqrt k}\) and \(\eta_p=\tfrac{3\cdot2^{-p}}{64\sqrt k}\),
+and choose nets \(\mathcal N_A\subset F_A\) and \(\mathcal N_p\subset F_p\)
+that are maximal subject to having all pairwise distances \emph{greater than}
+the corresponding scale. Maximality then gives covering radius at most that
+scale, which is what Proposition~\ref{prop:pointwise} uses.
+
+\begin{lemma}[Net cardinalities]\label{lem:nets}
+For all relevant \(p\),
+\(|\mathcal N_A|\le e^{k\log(200k^2)}\) and
+\(|\mathcal N_p|\le e^{k\log(200k^2)}\).
+\end{lemma}
+
+\begin{proof}
+Partition \(\T^k\) into axis-parallel cells of side \(h\). A cell has diameter
+\(h\sqrt k\), so a set with pairwise distances \emph{greater than} \(\eta\) has
+at most one point in each cell when \(h=\eta/\sqrt k\). This gives
+\(|\mathcal N_A|\le(1+2\pi\sqrt k/\eta_A)^k=(1+32\pi k)^k\le(102k)^k\),
+using \(32\pi<100.54\).
+
+For \(F_p\), every point lies in one of the \(2^{2k-1}\) cubes
+\(\omega+[-\pi/4,\pi/4]^k\), \(\omega\in\Lambda_k\), by
+Lemma~\ref{lem:geometry}(c). An interval of length \(\pi/2\) on the circle
+intersects at most \(\pi/(2h)+2\) cells of side \(h\). Here
+\(h=\eta_p/\sqrt k\) and, whenever \(F_p\) is present, \(k\ge3\) and
+\(2^p\le k\). Hence
+\[
+  \frac\pi{2h}+2=\frac{32\pi}3k2^p+2\le34k^2,
+\]
+since \(32\pi/3<33.52\) and \(0.48k^2\ge2\) for \(k\ge3\). Consequently
+\(|\mathcal N_p|\le2^{2k-1}(34k^2)^k\le(136k^2)^k\le(200k^2)^k\). This
+corrected endpoint count is the reason for the harmless numerical constant
+\(200\).
+\end{proof}
+
+\begin{lemma}[Bernstein-type lower tail]\label{lem:bernstein}
+Let \(X_1,\dots,X_m\) be i.i.d.\ random variables in \([0,\tau]\) with mean
+\(W>0\). Then
+\[
+  \mathbb P\Bigl(\sum_{C=1}^mX_C\le\frac{mW}2\Bigr)
+  \le\exp\Bigl(-\frac{mW}{8\tau}\Bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+Take \(\lambda=1/(2\tau)\). Since \(e^{-z}\le1-z+z^2/2\) for \(z\ge0\) and
+\(X_C^2\le\tau X_C\),
+\(\mathbb Ee^{-\lambda X_C}\le1-\lambda W+\tfrac{\lambda^2\tau W}2
+\le e^{-3\lambda W/4}\). Markov's inequality applied to
+\(e^{-\lambda\sum X_C}\) gives the result.
+\end{proof}
+
+A uniformly random \(k\times m\) sign matrix has independent uniform columns in
+\(\{\pm1\}^k\).
+
+\begin{definition}[Good matrices]\label{def:good}
+A \(k\times m\) sign matrix \(H\) is \emph{good} if
+\[
+  G_2(\theta',H)\ge m/4\quad\text{for every }\theta'\in\mathcal N_A,\qquad
+  G_{\tau_p}(\theta',H)\ge(3/16)m2^{-p}\quad\text{for every }
+    \theta'\in\mathcal N_p,\ 1\le p\le P.
+\]
+\end{definition}
+
+\begin{lemma}[Good matrices are typical]\label{lem:typical}
+For a uniform random \(k\times m\) sign matrix,
+\[
+  \mathbb P(H\text{ is not good})\le
+    \exp\Bigl(k\log(200k^2)+\log(P+1)-\frac m{1024}\Bigr).
+\]
+\end{lemma}
+
+\begin{proof}
+At a point of \(\mathcal N_A\subset F_A\), the truncation at \(\tau=2\) is
+inactive, so \(W=\mu(\theta')\ge1/2\) by the definition of \(F_A\); apply
+Lemma~\ref{lem:bernstein} to get failure probability at most \(e^{-m/32}\). At
+a point of \(\mathcal N_p\), Lemmas~\ref{lem:shells} and~\ref{lem:bernstein}
+give failure probability at most \(e^{-m/1024}\). A union bound over the at
+most \(P+1\) nets, each of size at most \(e^{k\log(200k^2)}\) by
+Lemma~\ref{lem:nets}, with the weaker per-point bound \(e^{-m/1024}\), proves
+the claim. For \(k\le2\) one has \(P=0\) and \(\log(P+1)=0\); the bound remains
+valid, and in that range \(\mathrm{Far}_k=F_A\), since a point with
+\(\mu<1/2\) would need \(\sigma^2=r^2>1/k\ge1/2\) while \(\mu<1/2\) forces
+\(\sigma^2<1/2\).
+\end{proof}
+
+\begin{proposition}[Pointwise far-field decay]\label{prop:pointwise}
+If \(H\) is good, then
+\[
+  |\Phi_H(\theta)|\le\exp\Bigl(-\frac{3m}{128}\sigma(\theta)^2\Bigr),
+    \quad\theta\in F_p,\qquad
+  |\Phi_H(\theta)|\le e^{-m/32},\quad\theta\in F_A.
+\]
+\end{proposition}
+
+\begin{proof}
+For \(\theta\in F_p\), choose \(\theta'\in\mathcal N_p\) with
+\(\|\theta-\theta'\|\le\eta_p\). By Definition~\ref{def:good} and
+Lemma~\ref{lem:lipschitz},
+\[
+  G_{\tau_p}(\theta,H)\ge\frac{3m}{16}2^{-p}-2m\sqrt k\eta_p
+  =\frac{3m}{32}2^{-p}.
+\]
+Apply Lemma~\ref{lem:product} and use \(\sigma(\theta)^2\le2^{-p}\). The
+argument on \(F_A\) is identical:
+\(G_2(\theta,H)\ge m/4-2m\sqrt k\eta_A=m/8\).
+\end{proof}
+
+\begin{corollary}[Far integral]\label{cor:far}
+If \(H\) is good and \(m\ge128k^2\), then
+\[
+  |J(H)|\le2^{2k-1}\Bigl(\frac{2\pi}m\Bigr)^{k/2}
+    \exp\Bigl(1.54k-\frac{3m}{256k}\Bigr)+(2\pi)^ke^{-m/32}.
+\]
+\end{corollary}
+
+\begin{proof}
+The contribution of \(F_A\) is at most \((2\pi)^ke^{-m/32}\). On the union of
+the dyadic shells, use the unique nearest \(\omega\in\Lambda_k\) and
+Proposition~\ref{prop:pointwise} to obtain
+\[
+  \sum_p\int_{F_p}|\Phi_H|\le|\Lambda_k|
+    \int_{\|\beta\|>k^{-1/2}}e^{-3m\|\beta\|^2/128}\,d\beta.
+\]
+The integral is the normalizing constant for a Gaussian with covariance
+\(64I_k/(3m)\), multiplied by the tail probability
+\(\mathbb P(\chi^2_k>3m/(64k))\). Writing the threshold as \(\lambda k\) gives
+\(\lambda=3m/(64k^2)\ge6\). Apply Lemma~\ref{lem:chi2}. Finally
+\((64/3)^{k/2}\le e^{1.54k}\).
+\end{proof}
+
+\begin{remark}[Why an exceptional set is necessary]\label{rem:exceptional}
+There is no uniform estimate \(|\Phi_H(\theta)|\le e^{-cm}\) on all of
+\(\mathrm{Far}_k\) for every partial Hadamard matrix. Take \(k=4\),
+\(8\mid m\), and use each of the eight vectors \(v\in\{\pm1\}^4\) with
+\(v_1v_2v_3v_4=1\) exactly \(m/8\) times as a column. The resulting matrix is a
+\(4\)-row partial Hadamard matrix. At \(\theta^*=(\pi/4)(1,1,1,1)\), every
+column satisfies \(\theta^*\cdot v\in\pi\Z\), so \(|\Phi_H(\theta^*)|=1\). Yet
+\(\dist(\theta^*,\Lambda_4)=\pi/2>1/2=\rho_4\), so
+\(\theta^*\in\mathrm{Far}_4\).
+\end{remark}
+
+\section{One inductive step}
+
+Fix \(n\ge2\) and \(1\le k\le n-1\). Assume
+\begin{equation}\label{eq:regime}
+  m\ge20000\,n^2L.
+\end{equation}
+Then \(m\ge64000n^2\), so all hypotheses of the central and far-field estimates
+hold. Define
+\begin{equation}\label{eq:V}
+  V_k:=2^m2^{2k-1}(2\pi m)^{-k/2}e^{-k^2/(4m)}.
+\end{equation}
+Since \(2\pi m>16\), one has \(0<V_k\le2^m\).
+
+\begin{proposition}[Extension count for a good partial Hadamard matrix]
+\label{prop:extension}
+If \(H\) is a good \(k\)-row partial Hadamard matrix, then
+\(\bigl|\tfrac{X(H)}{V_k}-1\bigr|\le\delta_k\), where
+\[
+  \delta_k:=\frac{k^3}{m^2}+2e^{-m/(4k)}
+    +1.01e^{1.54k-3m/(256k)}+2.02e^{(k/2)L-m/32}.
+\]
+\end{proposition}
+
+\begin{proof}
+Insert Proposition~\ref{prop:central} and Corollary~\ref{cor:far} into
+\eqref{eq:split}. The central main term is exactly \(V_k\). After division by
+\(V_k\), the first far-field term is multiplied by \(e^{k^2/(4m)}\le1.01\). The
+second is bounded by
+\(2e^{kL/2}e^{k^2/(4m)}e^{-m/32}\le2.02e^{kL/2-m/32}\).
+\end{proof}
+
+Set \(M_j:=2^m\prod_{i=1}^{j-1}V_i\), with \(M_1=2^m\). Also define
+\[
+  \psi_k:=2\exp\Bigl(2n^2L+2n\log(200n^2)-\frac m{1024}\Bigr),\qquad
+  e_k:=\delta_k+\psi_k.
+\]
+
+\begin{proposition}[One-step induction]\label{prop:onestep}
+Assume \eqref{eq:regime} and \(N_{k,m}\ge M_k/2\). Then
+\[
+  \Bigl|\frac{N_{k+1,m}}{N_{k,m}V_k}-1\Bigr|\le e_k.
+\]
+\end{proposition}
+
+\begin{proof}
+Let \(B_k\) be the number of bad \(k\)-row partial Hadamard matrices. By
+Lemma~\ref{lem:typical}, the number of bad \(k\times m\) sign matrices is at
+most \(2^{km}q_k\), where
+\(q_k:=\exp\bigl(2k\log(200k^2)-\tfrac m{1024}\bigr)\), so
+\(B_k\le2^{km}q_k\). From \eqref{eq:recursion},
+Proposition~\ref{prop:extension}, and \(X(H),V_k\le2^m\),
+\[
+  \Bigl|\frac{N_{k+1,m}}{N_{k,m}V_k}-1\Bigr|
+  \le\delta_k+\frac{B_k2^m}{N_{k,m}V_k}.
+\]
+It remains to bound the exceptional contribution. Put
+\(\Pi_k:=M_k/2^{km}=\prod_{i=1}^{k-1}V_i/2^m\). Since
+\(V_i/2^m=2^{2i-1}(2\pi m)^{-i/2}e^{-i^2/(4m)}\), we obtain
+\[
+  \Pi_k\ge\exp\Bigl(-\frac{k^2L}4-\frac{k^3}{12m}\Bigr)\ge e^{-0.28k^2L}.
+\]
+Similarly \(V_k/2^m\ge e^{-kL}\). Therefore
+\[
+  \frac{N_{k,m}V_k}{2^{(k+1)m}}\ge\frac12e^{-0.28k^2L-kL}
+  \ge\frac12e^{-2k^2L}.
+\]
+Consequently
+\[
+  \frac{B_k2^m}{N_{k,m}V_k}
+  \le2\exp\Bigl(2k^2L+2k\log(200k^2)-\frac m{1024}\Bigr)\le\psi_k. \qedhere
+\]
+\end{proof}
+
+\begin{lemma}[Summed one-step error]\label{lem:summed}
+Under \eqref{eq:regime}, \(\sum_{k=1}^{n-1}e_k\le E(n,t)\).
+\end{lemma}
+
+\begin{proof}
+Each family of summands is increasing in \(k\). Thus
+\begin{gather*}
+  \sum_{k<n}\frac{k^3}{m^2}\le\frac{n^4}{4m^2},\qquad
+  \sum_{k<n}2e^{-m/(4k)}\le2ne^{-m/(4n)},\\
+  \sum_{k<n}1.01e^{1.54k-3m/(256k)}\le2ne^{2n-m/(86n)},\qquad
+  \sum_{k<n}2.02e^{(k/2)L-m/32}\le3ne^{(n/2)L-m/32},\\
+  \sum_{k<n}\psi_k\le2n\exp\Bigl(2n^2L+2n\log(200n^2)-\frac m{1024}\Bigr).
+\end{gather*}
+Adding the bounds gives \eqref{eq:E}.
+\end{proof}
+
+\section{Elementary parameter bounds}
+
+Put \(\Theta:=\tfrac m{n^2L}\). Condition \eqref{eq:regime} is
+\(\Theta\ge20000\).
+
+\begin{lemma}[Control of \(E\)]\label{lem:controlE}
+If \(\Theta\ge20000\), then \(E(n,t)\le F(\Theta)\), where
+\[
+  F(x):=\frac1x+2e^{-0.4x}+82e^{-0.009x}+23e^{-0.05x}+471e^{-0.0015x}.
+\]
+The function \(F\) is decreasing, tends to zero, and satisfies
+\(F(20000)<10^{-4}<\tfrac12\).
+\end{lemma}
+
+\begin{proof}
+Use \(m=n^2L\Theta\), \(L>3.2\), and the elementary estimate
+\begin{equation}\label{eq:elem}
+  xe^{-axy}\le\frac2{ea}e^{-ay/2},\qquad x,y\ge1,
+\end{equation}
+which follows from \(xy\ge(x+y)/2\) and optimization in \(x\). The five terms
+of \(E\) are bounded respectively by
+\(\tfrac1\Theta\), \(2e^{-0.4\Theta}\), \(82e^{-0.009\Theta}\),
+\(23e^{-0.05\Theta}\), \(471e^{-0.0015\Theta}\). For the final term, note that
+under \(\Theta\ge20000\), \(\log(200n^2)\le3.66L\) and hence
+\(2n^2L+2n\log(200n^2)-m/1024\le-m/2048\). The remaining estimates are direct
+substitutions into \eqref{eq:elem}. Monotonicity is immediate, and the
+numerical value at \(20000\) is less than \(5.001\times10^{-5}\).
+\end{proof}
+
+\begin{lemma}[Control of the safety term]\label{lem:controlS}
+If \(\Theta\ge40000\), then \(S(n,t)\le G(\Theta)\), where
+\(G(x):=\bigl(\tfrac{20000}x\bigr)^4(13+4\log x)\). The function \(G\) is
+decreasing on \([40000,\infty)\) and tends to zero.
+\end{lemma}
+
+\begin{proof}
+Let \(x=20000/\Theta\le1/2\). The prefactor in \eqref{eq:S} is at most
+\(n^2L/2\). Since
+\(L=\log(2\pi)+2\log n+\log L+\log\Theta\le3.68+4\log n+2\log\Theta\), we get
+\[
+  S(n,t)\le\frac{n^2}2(3.68+4\log n)x^{n^2}+n^2(\log\Theta)x^{n^2}.
+\]
+Because \(x\le1/2\) and \(n^2\ge4\), \(x^{n^2}\le2^{4-n^2}x^4\). Elementary
+maximization over integers \(n\ge2\) gives
+\(n^2(3.68+4\log n)2^{4-n^2}<25.89\) and \(n^22^{4-n^2}\le4\). Thus
+\(S\le x^4(13+4\log\Theta)\). Differentiation proves monotonicity.
+\end{proof}
+
+\section{Proof of the explicit theorem}
+
+\begin{proof}[Proof of Theorem~\ref{thm:explicit}]
+First compute the product of the row factors. Using
+\[
+  \sum_{k=1}^{n-1}(2k-1)=(n-1)^2,\qquad
+  \sum_{k=1}^{n-1}k=\frac{n(n-1)}2,\qquad
+  \sum_{k=1}^{n-1}k^2=\frac{n(n-1)(2n-1)}6,
+\]
+we find
+\[
+  M_n=2^m\prod_{k=1}^{n-1}V_k
+  =2^{mn+(n-1)^2}(2\pi m)^{-n(n-1)/4}
+    \exp\Bigl(-\frac{n(n-1)(2n-1)}{24m}\Bigr)=B_{n,4t}.
+\]
+Suppose first that \eqref{eq:regime} fails. Then \(20000n^2L/m>1\), and hence
+\(S(n,t)>\tfrac{n^2L}4+\tfrac{n^3}{12m}\). The trivial bound
+\(N_{n,m}\le2^{nm}\) gives
+\[
+  \frac{N_{n,m}}{B_{n,m}}\le2^{-(n-1)^2}(2\pi m)^{n(n-1)/4}
+    \exp\Bigl(\frac{n(n-1)(2n-1)}{24m}\Bigr)
+  \le\exp\Bigl(\frac{n^2L}4+\frac{n^3}{12m}\Bigr)<e^{S(n,t)}
+  \le1+\varepsilon(n,t).
+\]
+On the other side, \(N_{n,m}/B_{n,m}\ge0\), so
+\(1-N_{n,m}/B_{n,m}\le1\). Since \(S(n,t)>3.2\),
+\(\varepsilon(n,t)>e^{3.2}-1>1\). The theorem follows in this case.
+
+Now assume \eqref{eq:regime}. By Lemma~\ref{lem:controlE},
+\(E(n,t)<1/2\). We prove inductively that
+\[
+  N_{k,m}=M_k\prod_{j=1}^{k-1}(1+\xi_j),\qquad|\xi_j|\le e_j,\qquad
+  \prod_{j=1}^{k-1}(1+\xi_j)\ge\frac12.
+\]
+The statement is trivial at \(k=1\). If it holds at \(k\), then
+\(N_{k,m}\ge M_k/2\), so Proposition~\ref{prop:onestep} defines \(\xi_k\) with
+\(|\xi_k|\le e_k\). By Lemma~\ref{lem:summed},
+\(\sum_{j=1}^{n-1}e_j\le E(n,t)\le\tfrac12\). Therefore
+\[
+  \prod_{j=1}^k(1+\xi_j)\ge\prod_{j=1}^k(1-e_j)
+  \ge1-\sum_{j=1}^ke_j\ge\frac12.
+\]
+The induction closes. Finally,
+\[
+  \Bigl|\frac{N_{n,m}}{M_n}-1\Bigr|
+  =\Bigl|\prod_{j=1}^{n-1}(1+\xi_j)-1\Bigr|
+  \le e^{\sum_j|\xi_j|}-1\le e^{E(n,t)}-1\le\varepsilon(n,t).
+\]
+Since \(M_n=B_{n,4t}\), the proof is complete.
+\end{proof}
+
+\section{Asymptotic consequences}\label{sec:asymptotic}
+
+\begin{proof}[Proof of Theorem~\ref{thm:uniform}]
+If \(\Theta=m/(n^2L)\to\infty\), then eventually \(\Theta\ge40000\). By
+Lemmas~\ref{lem:controlE} and~\ref{lem:controlS},
+\(E(n,t)+S(n,t)\le F(\Theta)+G(\Theta)\to0\). Thus
+Theorem~\ref{thm:explicit} gives the claimed uniform convergence.
+\end{proof}
+
+\begin{lemma}[Power laws imply the natural regime]\label{lem:powerlaw}
+Let \(0<\delta\le1/2\), put \(u=2+2\delta\) and \(K=6+2u/\delta\). If
+\(\omega:=t/n^u\ge1\) and \(n\ge2\), then
+\[
+  \frac m{n^2\log(2\pi m)}\ge\frac2K\omega^{1/2}.
+\]
+\end{lemma}
+
+\begin{proof}
+Since \(m=4n^u\omega\),
+\(L=\log(8\pi n^u\omega)=\log(8\pi)+u\log n+\log\omega\). Using
+\(\log x\le x^a/a\) for \(x\ge1\), first with \(a=\delta/2\) and then with
+\(a=1/2\), gives \(\log n\le(2/\delta)n^{\delta/2}\) and
+\(\log\omega\le2\omega^{1/2}\). Since \(\log(8\pi)\le6\) and
+\(n^{\delta/2},\omega^{1/2}\ge1\), we get
+\(L\le K(n^{\delta/2}+\omega^{1/2})\). Therefore, writing
+\(n^u=n^2n^{2\delta}\),
+\[
+  \frac m{n^2L}\ge\frac{4n^{2\delta}\omega}{K(n^{\delta/2}+\omega^{1/2})}.
+\]
+Finally \(n^{\delta/2}\le n^{2\delta}\) and \(\omega^{1/2}\le\omega\), so
+\(\omega^{1/2}(n^{\delta/2}+\omega^{1/2})\le2n^{2\delta}\omega\), which is the
+claim.
+\end{proof}
+
+\begin{proof}[Proof of Corollary~\ref{cor:exponent}]
+Given an exponent \(u>2\), put \(\delta=\min\{(u-2)/2,1/2\}\) and
+\(u_0=2+2\delta\le u\). The assumption \(t/n^u\to\infty\) implies
+\(t/n^{u_0}\to\infty\). Hence Lemma~\ref{lem:powerlaw} shows that
+\(m/(n^2L)\to\infty\). Apply Theorem~\ref{thm:uniform}.
+\end{proof}
+
+Lemma~\ref{lem:powerlaw} is sharp, in the following precise sense.
+
+\begin{lemma}[No exponent at most two suffices]\label{lem:negative}
+Let \(1\le u\le2\). For all \(N\ge2\) and \(\omega\ge1\), writing
+\(m=4N^u\omega\),
+\begin{equation}\label{eq:negative}
+  \frac m{N^2\log(2\pi m)}\le\frac{4\omega}{\log N}.
+\end{equation}
+Consequently there is a family with \(\omega\to\infty\) along which the left
+side stays bounded by \(1/2\): take \(\omega=j\) and \(N=e^{8j}\), \(j\ge1\).
+\end{lemma}
+
+\begin{proof}
+Since \(u\le2\) and \(N\ge2\), we have \(N^u\le N^2\); and since \(u\ge1\),
+\(\omega\ge1\), \(\log(2\pi m)=\log(8\pi)+u\log N+\log\omega\ge\log N>0\).
+Hence
+\[
+  \frac m{N^2\log(2\pi m)}=\frac{4N^u\omega}{N^2\log(2\pi m)}
+  \le\frac{4N^2\omega}{N^2\log N}=\frac{4\omega}{\log N}.
+\]
+For the family, \(\log N=8j=8\omega\), so the bound is \(4\omega/(8\omega)=1/2\).
+\end{proof}
+
+The witness can be taken to consist of genuine \emph{integer} pairs, which is
+the domain of the counting problem; the relaxation to real parameters above is
+a convenience, not a load-bearing step.
+
+\begin{lemma}[Integer witness]\label{lem:intwitness}
+Let \(1\le u\le2\) and let \(j\ge1\) be an integer. Put
+\[
+  n_j:=\bigl\lceil e^{16j}\bigr\rceil,\qquad
+  t_j:=\bigl\lceil j\,n_j^u\bigr\rceil,\qquad m_j:=4t_j .
+\]
+Then \(n_j\ge2\), \(t_j\ge1\), \(t_j/n_j^u\ge j\), and
+\[
+  \frac{m_j}{n_j^2\log(2\pi m_j)}\le\frac12 .
+\]
+\end{lemma}
+
+\begin{proof}
+Clearly \(n_j\ge2\) and \(t_j\ge1\), and \(t_j\ge j\,n_j^u\) gives
+\(t_j/n_j^u\ge j\), which tends to infinity. Ceilings cost at most one, so
+\(t_j\le j\,n_j^u+1\); since \(u\le2\) and \(4\le4j\,n_j^2\),
+\[
+  m_j=4t_j\le4j\,n_j^u+4\le4j\,n_j^2+4j\,n_j^2=8j\,n_j^2 .
+\]
+Since \(u\ge1\) and \(j\ge1\) we have \(n_j\le n_j^u\le j\,n_j^u\le t_j\),
+whence \(2\pi m_j\ge n_j\) and \(\log(2\pi m_j)\ge\log n_j\ge16j\). Therefore
+\[
+  \frac{m_j}{n_j^2\log(2\pi m_j)}\le\frac{8j\,n_j^2}{n_j^2\cdot16j}=\frac12 .
+  \qedhere
+\]
+\end{proof}
+
+The family of Lemma~\ref{lem:negative} satisfies the power law with exponent
+\(u\) with room to spare, \(t/N^u=\omega=j\to\infty\), yet the
+near-quadratic quantity never exceeds \(1/2\). So no exponent \(u\le2\) forces
+the hypothesis of Theorem~\ref{thm:uniform}, while by
+Lemma~\ref{lem:powerlaw} every \(u>2\) does. The infimum of the exponents
+reachable by this argument is therefore exactly \(2\), and it is not attained.
+Both directions are formally verified; in the accompanying Lean development the
+positive direction is \texttt{bridges\_of\_two\_lt}, the negative direction
+\texttt{not\_forces\_of\_le\_two} with its integer form
+\texttt{exists\_int\_witness\_of\_le\_two}, and the conclusion
+\texttt{sInf\_admissibleExponents}.
+
+A remark on what ``forces'' must mean here. The relevant notion is the one used
+in Corollary~\ref{cor:exponent}: along every sequence of pairs \((n_i,t_i)\)
+with \(\omega_i=t_i/n_i^u\to\infty\), and with \(n_i\) free to vary, the
+quantity \(m_i/(n_i^2\log2\pi m_i)\) tends to infinity. The uniformity in \(n\)
+is essential, not a technical convenience: if instead \(n\) were held fixed
+while \(\omega\to\infty\), then \(m/(n^2\log2\pi m)\) would diverge like
+\(\omega/\log\omega\) for \emph{every} exponent \(u\), so every \(\alpha\ge1\)
+would count as admissible and the constant would carry no information. In the
+Lean development this equivalence is
+\texttt{forces\_iff\_sequential}, which shows the quantifier form used there
+agrees with the sequential premise above.
+
+We stress what the negative direction does and does not say. It shows that the
+\emph{implication} ``power law with exponent \(u\le2\) \(\Rightarrow\)
+near-quadratic hypothesis'' is false, which is precisely why the present method
+stops at \(2\). It does \emph{not} show that the asymptotic formula itself
+fails for such \(u\); whether it holds there is open, as recorded in
+Section~\ref{sec:limits}.
+
+\section{Exact low-dimensional checks}
+
+The correction factor can be checked against exact formulas. For
+\(m\in4\N\),
+\[
+  N_{2,m}=2^m\binom m{m/2},\qquad
+  N_{3,m}=2^m\frac{m!}{((m/4)!)^4},\qquad
+  N_{4,m}=2^m\sum_{a+b=m/4}\frac{m!}{(a!)^4(b!)^4}.
+\]
+For the last identity, normalize the first row to all \(+1\). The eight column
+types of the remaining three rows have multiplicities determined by a single
+third-order Fourier coefficient: the four types with product \(+1\) occur
+\(a\) times each and the four types with product \(-1\) occur \(b\) times each.
+
+\begin{table}[ht]
+\caption{Relative error with and without the correction factor.}
+\begin{tabular}{ccrr}
+\toprule
+\(n\) & \(m\) & \(N_{n,m}/B_{n,m}-1\) & \(N_{n,m}/A_{n,m}-1\)\\
+\midrule
+2 & 8   & \(+7.99\times10^{-5}\) & \(-3.069\times10^{-2}\)\\
+2 & 32  & \(+1.27\times10^{-6}\) & \(-7.781\times10^{-3}\)\\
+2 & 256 & \(+2.48\times10^{-9}\) & \(-9.761\times10^{-4}\)\\
+3 & 8   & \(+1.30\times10^{-3}\) & \(-1.435\times10^{-1}\)\\
+3 & 32  & \(+2.15\times10^{-5}\) & \(-3.829\times10^{-2}\)\\
+3 & 256 & \(+4.22\times10^{-8}\) & \(-4.871\times10^{-3}\)\\
+4 & 16  & \(+1.49\times10^{-3}\) & \(-1.953\times10^{-1}\)\\
+4 & 32  & \(-3.76\times10^{-4}\) & \(-1.039\times10^{-1}\)\\
+4 & 40  & \(-2.61\times10^{-4}\) & \(-8.402\times10^{-2}\)\\
+\bottomrule
+\end{tabular}
+\end{table}
+
+These calculations are consistency checks, not inputs to the proof.
+
+\section{Scope and limitations}\label{sec:limits}
+
+The local expansion in Proposition~\ref{prop:central} has accumulated relative
+error of order \(n^4/m^2\), which already tends to zero under
+\(m/n^2\to\infty\). The logarithmic loss comes entirely from comparing the
+exceptional set of far-field matrices, whose ambient density is
+\(e^{-\Omega(m)}\), with the density of partial Hadamard matrices, which is
+roughly \(e^{-\Theta(n^2\log m)}\). Removing the logarithm would require new
+information about the far field under the partial-Hadamard conditioning; a
+universal pointwise estimate is ruled out by Remark~\ref{rem:exceptional}.
+
+The proof establishes a corrected asymptotic formula. It does not imply
+\(N_{n,m}\sim A_{n,m}\) below the cubic scale, because \(R_{n,m}\) can tend to
+zero. Nor does it prove the endpoint regime \(m/n^2\to\infty\). In particular,
+the upper bound \(2\) for the critical exponent is an infimum over admissible
+power laws and is not attained by the present argument.
+
+\section{Use of AI tools}
+
+The proof strategy and an initial detailed draft were developed with the
+assistance of Hyra, a research agent \cite{hyra2026}. The present manuscript
+was subsequently subjected to an independent line-by-line mathematical audit,
+and local issues in the original draft were repaired, including the description
+of the universal saddle lattice and an endpoint term in the net-cardinality
+estimate. AI-generated judgments were not treated as certificates of
+correctness; the mathematical claims rest on the explicit argument above. This
+disclosure follows the general principle used in other Hyra-assisted
+mathematical work \cite{LinLi2026}.
+
+\appendix
+\section{Numerical constants}
+
+For convenience, we collect the nontrivial numerical inequalities used in the
+proof:
+\[
+  \log(8\pi)>3.2,\qquad
+  -\log(\cos1)-\tfrac7{12}<\tfrac1{30},\qquad
+  e^{1/24}<1.043,\qquad
+  \sqrt{64/3}<e^{1.54},
+\]
+\[
+  \tfrac3{256}>\tfrac1{86},\qquad
+  \tfrac14+\tfrac1{38}<0.28,\qquad
+  \log200<1.66\cdot3.2,\qquad
+  2\cdot5.66\cdot1024<20000.
+\]
+All remaining constants are exact rational quantities or are obtained by
+rounding in the safe direction.
+
+\bibliographystyle{amsplain}
+\bibliography{reference}
+
+\end{document}

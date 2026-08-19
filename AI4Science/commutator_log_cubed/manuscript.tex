@@ -1,0 +1,1087 @@
+\documentclass[11pt]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb,amsthm}
+\usepackage{aliascnt}
+\usepackage{microtype}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{
+  pdftitle={A cubic logarithmic upper bound for commutators close to the identity},
+  pdfauthor={Hyra},
+  pdfsubject={Quantitative commutators in operator algebras},
+  pdfkeywords={commutator, bounded operator, Cuntz isometries, supersolution}
+}
+\allowdisplaybreaks
+\numberwithin{equation}{section}
+
+\newtheorem{theorem}{Theorem}[section]
+
+\newaliascnt{proposition}{theorem}
+\newtheorem{proposition}[proposition]{Proposition}
+\aliascntresetthe{proposition}
+
+\newaliascnt{lemma}{theorem}
+\newtheorem{lemma}[lemma]{Lemma}
+\aliascntresetthe{lemma}
+
+\newaliascnt{corollary}{theorem}
+\newtheorem{corollary}[corollary]{Corollary}
+\aliascntresetthe{corollary}
+
+\theoremstyle{remark}
+\newaliascnt{remark}{theorem}
+\newtheorem{remark}[remark]{Remark}
+\aliascntresetthe{remark}
+
+\newcommand{\BH}{\mathcal B(H)}
+\newcommand{\one}{\mathbf 1}
+\newcommand{\norm}[1]{\left\lVert #1\right\rVert}
+\newcommand{\abs}[1]{\left\lvert #1\right\rvert}
+\newcommand{\ind}[1]{\mathbf 1_{\{#1\}}}
+\newcommand{\diag}{\operatorname{diag}}
+\newcommand{\id}{\operatorname{id}}
+\newcommand{\e}{\mathrm e}
+
+\title[A cubic logarithmic upper bound]{A cubic logarithmic upper bound for commutators close to the identity}
+\author{Hyra}
+\thanks{Hyra is an AI research-agent system.  The proof originated in Hyra
+search runs; the accompanying repository contribution records provenance and
+the exact scope of the Lean formalization.}
+\date{}
+
+\subjclass[2020]{Primary 47A63; Secondary 46L05, 47A20}
+\keywords{commutator, bounded operator, Cuntz isometries, nonlinear fixed point, discrete supersolution}
+
+\begin{document}
+
+\begin{abstract}
+Let $H$ be an infinite-dimensional complex Hilbert space and, for
+$0<\varepsilon<1$, define
+\[
+ m_H(\varepsilon)
+ :=\inf\bigl\{\norm D\norm X:
+ D,X\in\mathcal B(H),\ \norm{[D,X]-\one}\leq\varepsilon\bigr\}.
+\]
+Popa's lower bound is
+$m_H(\varepsilon)\geq \frac12\log(1/\varepsilon)$, while Tao proved the
+upper bound $m_H(\varepsilon)=O(\log^5(1/\varepsilon))$.  We retain Tao's
+operator-matrix template and replace the worst-case estimate for its linear
+right inverse by an entrywise supersolution argument adapted to the endpoint
+forcing in the nonlinear system.  The key input is a sharp norm estimate for
+matrices of the form $\bigl(\begin{smallmatrix}a&b\\c&a\end{smallmatrix}\bigr)$
+and a profile whose square has a controlled discrete concavity defect.  This
+produces solutions of size $O(\delta n)$ with $\delta\asymp n^{-3}$ and yields
+\[
+ m_H(\varepsilon)
+ \leq 5.3\times10^6\left(\log\frac1\varepsilon\right)^3,
+ \qquad 0<\varepsilon\leq\frac12.
+\]
+The proof is uniform in $\varepsilon$ and applies to arbitrary, not
+necessarily separable, infinite-dimensional Hilbert spaces.
+\end{abstract}
+
+\maketitle
+
+\section{Introduction}
+
+Throughout, $H$ is an infinite-dimensional complex Hilbert space,
+$\mathcal B(H)$ is the algebra of bounded operators on $H$ with its operator
+norm, $\one$ denotes the identity, and
+\[
+ [D,X]:=DX-XD.
+\]
+All logarithms without a subscript are natural.
+
+The Wintner--Wielandt theorem states that the identity of a unital Banach
+algebra cannot be a commutator of two bounded elements
+\cite{Wintner,Wielandt}.  For $\mathcal B(H)$, Brown and Pearcy showed that the
+identity can nevertheless be approximated arbitrarily well in norm by bounded
+commutators \cite{BrownPearcy}.  The quantitative problem is to determine the
+least possible growth of the product of the two operator norms.  For
+$0<\varepsilon<1$, set
+\begin{equation}\label{eq:def-m}
+ m_H(\varepsilon)
+ :=\inf\left\{\norm D\norm X:
+ D,X\in\mathcal B(H),\ \norm{[D,X]-\one}\leq\varepsilon\right\}.
+\end{equation}
+Popa proved the lower bound
+\begin{equation}\label{eq:popa}
+ m_H(\varepsilon)\geq\frac12\log\frac1\varepsilon;
+\end{equation}
+see \cite{Popa}, and \cite{Tao} for a short proof.  Tao refined the
+Brown--Pearcy construction and obtained
+\begin{equation}\label{eq:tao}
+ m_H(\varepsilon)
+ =O\!\left(\log^5\frac1\varepsilon\right),
+ \qquad 0<\varepsilon\leq\frac12,
+\end{equation}
+see \cite{Tao}.  Krishna and Johnson extended the same exponent to a class of
+unital $C^*$-algebras containing $\mathcal B(H)$ and the Cuntz algebra
+$\mathcal O_2$ \cite{KrishnaJohnson}.  A publicly available 2026 manuscript, accompanied by a Lean formalization,
+gives an $O(\log^4(1/\varepsilon))$ refinement
+\cite{Bilich}.  The argument below gives the following cubic logarithmic
+upper bound.
+
+\begin{theorem}\label{thm:main}
+Let $H$ be an infinite-dimensional complex Hilbert space.  For every
+$0<\varepsilon\leq\frac12$ there exist $D_\varepsilon,X_\varepsilon\in
+\mathcal B(H)$ such that
+\begin{equation}\label{eq:main-error}
+ \norm{[D_\varepsilon,X_\varepsilon]-\one}\leq\varepsilon
+\end{equation}
+and
+\begin{equation}\label{eq:main-norm}
+ \norm{D_\varepsilon}\norm{X_\varepsilon}
+ \leq 5.3\times10^6
+ \left(\log\frac1\varepsilon\right)^3.
+\end{equation}
+Consequently,
+\[
+ m_H(\varepsilon)
+ =O\!\left(\log^3\frac1\varepsilon\right)
+ \qquad(\varepsilon\downarrow0).
+\]
+\end{theorem}
+
+The algebraic template is Tao's.  For a matrix size $n$ and a small parameter
+$\delta$, one constructs $D,X\in M_n(\mathcal B(H))$ so that
+$[D,X]-\one$ is supported in the last column.  A nonlinear system is solved to
+annihilate rows $2,\ldots,n$ of that column, leaving only the $(1,n)$ corner.
+A diagonal similarity then multiplies this corner by $2^{-(n-1)}$, while the
+norm product is $O(\delta^{-1})$.
+
+The exponent is therefore governed by the largest admissible value of
+$\delta$.  The linear part of the nonlinear system has a right inverse
+$R=L(I-E)^{-1}$ whose global operator norm is $O(n^2)$.  A direct use of this
+worst-case norm loses two powers of $n$.  The actual forcing, however, is an
+endpoint spike.  We dominate the Neumann series entrywise by a scalar profile
+$\psi$ satisfying
+\begin{equation}\label{eq:intro-super}
+ s_i+\frac12\norm{
+ \begin{pmatrix}
+ \psi_i&\psi_{i-1}\\
+ \psi_{i+1}&\psi_i
+ \end{pmatrix}}
+ \leq\psi_i.
+\end{equation}
+The sharp two-by-two estimate in Lemma~\ref{lem:two-by-two} reduces
+\eqref{eq:intro-super} to a discrete concavity inequality for
+$\Psi_i:=\psi_i^2$.  The quadratic profile
+\begin{equation}\label{eq:intro-profile}
+ \Psi_i=144\delta^2 i(2n-i)
+\end{equation}
+has a constant interior concavity defect and a much larger defect at the right
+endpoint, exactly where the forcing is concentrated.  This gives
+$\norm{\beta_i}=O(\delta n)$, permits $\delta\asymp n^{-3}$, and hence yields
+the exponent three after taking $n\asymp\log(1/\varepsilon)$.
+
+The proof establishes an upper bound only.  In particular, it does not show
+that the exponent three is optimal; the lower and upper logarithmic exponents
+remain one and three, respectively.
+
+An accompanying Lean 4 project machine-checks the sharp two-by-two norm
+estimate, the concavity and supersolution core, the quadratic-profile
+arithmetic, and the final numerical constants.  It does not formalize the
+operator-valued Neumann-series convergence, the Banach fixed-point
+construction, or the complete existence theorem in $\mathcal B(H)$; those
+steps remain part of the proof below.
+
+\section{Operator-matrix preliminaries}
+
+For every finite $n$, an infinite-dimensional Hilbert space is unitarily
+isomorphic to its $n$-fold Hilbert direct sum.  Thus there is a unitary
+$V_n:H^{\oplus n}\to H$, and conjugation by $V_n$ identifies
+$M_n(\mathcal B(H))=\mathcal B(H^{\oplus n})$ isometrically and
+$*$-isomorphically with $\mathcal B(H)$.  We shall construct the operators in
+$M_n(\mathcal B(H))$ and use this identification at the end.
+
+We record the elementary norm estimates used below.
+
+\begin{lemma}\label{lem:matrix-norms}
+Let $M=(M_{ij})\in M_n(\mathcal B(H))$.
+\begin{enumerate}
+\item If $M$ has only one nonzero entry, at $(p,q)$, then
+$\norm M=\norm{M_{pq}}$.
+\item If $M_{ij}=0$ for $j\neq q$, then
+\[
+ \norm M\leq\sum_{i=1}^n\norm{M_{iq}}.
+\]
+\item If, for a fixed integer $k$ with $1-n\leq k\leq n-1$,
+$M_{ij}=c_i\ind{j=i+k}$, then
+\[
+ \norm M
+ =\max_{\substack{1\leq i\leq n\\1\leq i+k\leq n}}
+ \norm{c_i}.
+\]
+\item For $z_{11},z_{12},z_{21},z_{22}\in\mathcal B(H)$,
+\[
+ \norm{
+ \begin{pmatrix}
+ z_{11}&z_{12}\\z_{21}&z_{22}
+ \end{pmatrix}}_{M_2(\mathcal B(H))}
+ \leq
+ \norm{
+ \begin{pmatrix}
+ \norm{z_{11}}&\norm{z_{12}}\\
+ \norm{z_{21}}&\norm{z_{22}}
+ \end{pmatrix}}_{M_2(\mathbb R)}.
+\]
+\item The operator norm of a real $2\times2$ matrix with nonnegative entries
+is nondecreasing in each entry.
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+The first statement follows by testing on unit vectors supported in the
+$q$-th coordinate and using an approximating sequence for the norm of
+$M_{pq}$.  The second and third statements follow directly from the action of
+$M$ on $H^{\oplus n}$; in the third statement one tests on a single valid
+coordinate and an approximating sequence of unit vectors in $H$ to obtain the
+reverse inequality.
+
+For the fourth statement, if $h=(h_1,h_2)$, the triangle inequality bounds the
+norm of each component of $Mh$ by the corresponding component of the scalar
+matrix of entry norms applied to $(\norm{h_1},\norm{h_2})$.  The fifth statement follows from
+\[
+ \norm A_2=\sup_{\norm{x}_2=\norm{y}_2=1}\abs{y^{\mathsf T}Ax}
+\]
+and the observation that, for $A\geq0$ entrywise,
+\(
+ \abs{y^{\mathsf T}Ax}\leq |y|^{\mathsf T}A|x|
+\), where $|x|$ and $|y|$ denote coordinatewise absolute values.
+\end{proof}
+
+Because $H\cong H\oplus H$, there exist isometries $u,v\in\mathcal B(H)$ with
+orthogonal ranges whose range projections sum to the identity:
+\begin{equation}\label{eq:cuntz}
+ u^*u=v^*v=\one,
+ \qquad u^*v=v^*u=0,
+ \qquad uu^*+vv^*=\one.
+\end{equation}
+For example, choose a unitary $W:H\oplus H\to H$ and put
+$u\xi=W(\xi,0)$ and $v\xi=W(0,\xi)$.  This construction works equally in the
+nonseparable case.
+
+\begin{lemma}\label{lem:cuntz-block}
+The map $U:H\oplus H\to H$ given by
+$U(\xi,\eta)=u\xi+v\eta$ is unitary.  Consequently,
+\begin{align}
+&\norm{u z_{11}u^*+u z_{12}v^*+v z_{21}u^*+v z_{22}v^*}
+\notag\\
+&\hspace{45mm}=
+\norm{
+\begin{pmatrix}
+z_{11}&z_{12}\\z_{21}&z_{22}
+\end{pmatrix}}_{M_2(\mathcal B(H))}.
+\label{eq:block-identification}
+\end{align}
+In particular,
+\begin{equation}\label{eq:row-bound}
+ \norm{xv^*+yu^*}
+ \leq\bigl(\norm x^2+\norm y^2\bigr)^{1/2}.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The relations \eqref{eq:cuntz} show that $U$ is an onto isometry and that the
+operator on the left of \eqref{eq:block-identification} is
+$U\bigl(\begin{smallmatrix}z_{11}&z_{12}\\z_{21}&z_{22}\end{smallmatrix}\bigr)U^*$.
+For \eqref{eq:row-bound}, use
+\[
+ (xv^*+yu^*)(xv^*+yu^*)^*=xx^*+yy^*.
+\]
+\end{proof}
+
+\section{The commutator template and diagonal similarity}
+
+Fix an integer $n\geq3$, a number $\delta>0$, and operators
+$\beta_1,\ldots,\beta_n\in\mathcal B(H)$.  Set
+$\beta_0=\beta_{n+1}=0$.  Define $X,D\in M_n(\mathcal B(H))$ by
+\begin{align}
+ X_{ij}
+ &=\one\ind{i=j+1}+\beta_i\ind{j=n},
+ \label{eq:X-def}\\
+ D_{ij}
+ &=\delta^{-1}u\ind{i=j+1}
+ +\delta^{-1}v\ind{i=j}
+ +i\one\ind{j=i+1}
+ +\delta^{-1}\beta_i u\ind{j=n}.
+ \label{eq:D-def}
+\end{align}
+When two conditions in \eqref{eq:D-def} hold simultaneously, the corresponding
+terms are added.
+
+\begin{lemma}[Exact commutator identity]\label{lem:commutator}
+For $1\leq i,j\leq n$,
+\begin{align}
+ [D,X]_{ij}
+ &=\one\ind{i=j}
+ \notag\\
+ &\quad+
+ \left[
+ \delta^{-1}\bigl([v,\beta_i]+[u,\beta_{i-1}]
+ +\beta_i[u,\beta_n]\bigr)
+ +i\beta_{i+1}-n\one\ind{i=n}
+ \right]\ind{j=n}.
+ \label{eq:commutator}
+\end{align}
+Thus $[D,X]-\one$ is supported in the last column.
+\end{lemma}
+
+\begin{proof}
+Let $S_{ij}=\one\ind{i=j+1}$, let
+$B_{ij}=\beta_i\ind{j=n}$, and let
+$N_{ij}=i\one\ind{j=i+1}$.  Then $X=S+B$ and
+\begin{equation}\label{eq:D-compact}
+ D=\delta^{-1}\diag(v)+\delta^{-1}X\diag(u)+N.
+\end{equation}
+The commutator $[\diag(v),X]$ vanishes off the last column, where its row-$i$
+entry is $[v,\beta_i]$.  Moreover,
+\[
+ [X\diag(u),X]=X[\diag(u),X],
+\]
+which also vanishes off the last column, where its row-$i$ entry is
+$[u,\beta_{i-1}]+\beta_i[u,\beta_n]$.
+
+Finally, direct multiplication gives
+\[
+ [N,X]_{ij}
+ =\one\ind{i=j}
+ +\bigl(i\beta_{i+1}-n\one\ind{i=n}\bigr)\ind{j=n}.
+\]
+Adding the three contributions in \eqref{eq:D-compact} proves
+\eqref{eq:commutator}.
+\end{proof}
+
+We say that $\beta=(\beta_1,\ldots,\beta_n)$ solves the nonlinear system if
+\begin{equation}\label{eq:system}
+ [v,\beta_i]+[u,\beta_{i-1}]
+ +\beta_i[u,\beta_n]+\delta i\beta_{i+1}
+ =\delta n\one\ind{i=n},
+ \qquad 2\leq i\leq n.
+\end{equation}
+If \eqref{eq:system} holds, then $[D,X]-\one$ has only one
+possibly nonzero entry, namely
+\begin{equation}\label{eq:single-corner}
+ Z_{1n}=\delta^{-1}\bigl([v,\beta_1]+\beta_1[u,\beta_n]\bigr)+\beta_2.
+\end{equation}
+
+For $0<\mu\leq1$, put
+\begin{equation}\label{eq:Smu}
+ \begin{aligned}
+ S_\mu&=\diag(\mu^{n-1}\one,\mu^{n-2}\one,\ldots,\one),\\
+ D_\mu&=\mu^{-1}S_\mu D S_\mu^{-1},
+ &\qquad
+ X_\mu&=\mu S_\mu X S_\mu^{-1}.
+ \end{aligned}
+\end{equation}
+
+\begin{proposition}[Diagonal similarity]\label{prop:similarity}
+For arbitrary $\beta_1,\ldots,\beta_n$,
+\begin{equation}\label{eq:similarity-comm}
+ [D_\mu,X_\mu]=S_\mu[D,X]S_\mu^{-1},
+\end{equation}
+\begin{equation}\label{eq:Xmu-bound}
+ \norm{X_\mu}
+ \leq1+\sum_{i=1}^n\mu^{n-i+1}\norm{\beta_i},
+\end{equation}
+and
+\begin{equation}\label{eq:Dmu-bound}
+ \norm{D_\mu}
+ \leq\frac1{\mu\delta}+\frac1{\mu^2\delta}+(n-1)
+ +\frac1\delta\sum_{i=1}^n\mu^{n-i-1}\norm{\beta_i}.
+\end{equation}
+If $\beta$ solves \eqref{eq:system}, then
+\begin{equation}\label{eq:error-conjugated}
+ \norm{[D_\mu,X_\mu]-\one}
+ =\mu^{n-1}\norm{Z_{1n}}.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The scalar factors in \eqref{eq:Smu} cancel in the commutator, which gives
+\eqref{eq:similarity-comm}.  Conjugation by $S_\mu$ multiplies an $(i,j)$
+entry by $\mu^{j-i}$.  Hence $X_\mu$ is the unweighted subdiagonal shift plus
+a last column with row-$i$ entry $\mu^{n-i+1}\beta_i$, proving
+\eqref{eq:Xmu-bound} by Lemma~\ref{lem:matrix-norms}.
+
+Similarly, the four parts of $D_\mu$ are a diagonal of norm
+$(\mu\delta)^{-1}$, a subdiagonal of norm $(\mu^2\delta)^{-1}$, a weighted
+superdiagonal of norm $n-1$, and a last column with row-$i$ entry
+$\delta^{-1}\mu^{n-i-1}\beta_i u$.  This gives
+\eqref{eq:Dmu-bound}.  If \eqref{eq:system} holds, then
+\eqref{eq:single-corner} and the first part of Lemma~\ref{lem:matrix-norms} give
+\eqref{eq:error-conjugated}.
+\end{proof}
+
+\section{A right inverse for the linearized system}
+
+Let
+\[
+ Y:=\mathcal B(H)^{n-1},\qquad
+ Z:=\mathcal B(H)^n,
+\]
+where elements of $Y$ are indexed by $2,\ldots,n$, and both spaces carry the
+maximum norm.  For $x\in Y$ we use the boundary conventions
+$x_1=x_{n+1}=0$.  Define $T:Z\to Y$, $L:Y\to Z$, and $E:Y\to Y$ by
+\begin{align}
+ (Tb)_i&=[v,b_i]+[u,b_{i-1}],
+ &&2\leq i\leq n,
+ \label{eq:T-def}\\
+ (Lx)_i&=-\frac12\bigl(x_i v^*+x_{i+1}u^*\bigr),
+ &&1\leq i\leq n,
+ \label{eq:L-def}\\
+ (Ex)_i&=\frac12\bigl(vx_iv^*+vx_{i+1}u^*
+ +ux_{i-1}v^*+ux_iu^*\bigr),
+ &&2\leq i\leq n.
+ \label{eq:E-def}
+\end{align}
+
+\begin{lemma}\label{lem:TL}
+One has
+\begin{equation}\label{eq:TL}
+ TL=I_Y-E.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+For $2\leq i\leq n$, the Cuntz relations give
+\begin{align*}
+ [v,(Lx)_i]
+ &=-\frac12(vx_iv^*+vx_{i+1}u^*)+\frac12x_i,\\
+ [u,(Lx)_{i-1}]
+ &=-\frac12(ux_{i-1}v^*+ux_iu^*)+\frac12x_i.
+\end{align*}
+Their sum is $x_i-(Ex)_i$.
+\end{proof}
+
+\begin{lemma}[Weighted contraction]\label{lem:weighted-contraction}
+For $x\in Y$, define
+\begin{equation}\label{eq:prime-norm}
+ \norm x'
+ :=\max_{2\leq i\leq n}
+ \left(2-\frac{i^2}{n^2}\right)^{-1/2}\norm{x_i}.
+\end{equation}
+Then
+\begin{equation}\label{eq:norm-equivalence}
+ \frac1{\sqrt2}\norm x_Y\leq\norm x'\leq\norm x_Y
+\end{equation}
+and
+\begin{equation}\label{eq:E-contraction}
+ \norm{Ex}'
+ \leq\left(1-\frac1{8n^2}\right)\norm x'.
+\end{equation}
+\end{lemma}
+
+\begin{proof}
+The norm equivalence is immediate from
+$1\leq2-i^2/n^2\leq2$ for $2\leq i\leq n$.
+By homogeneity, assume $\norm x'\leq1$, so
+$\norm{x_i}^2\leq2-i^2/n^2$.  This inequality also holds for $i=1,n+1$
+because $x_1=x_{n+1}=0$; note that
+$2-(n+1)^2/n^2>0$ for $n\geq3$.
+
+By Lemma~\ref{lem:cuntz-block},
+\begin{equation}\label{eq:E-block}
+ \norm{(Ex)_i}
+ =\frac12\norm{
+ \begin{pmatrix}
+ x_i&x_{i-1}\\x_{i+1}&x_i
+ \end{pmatrix}}_{M_2(\mathcal B(H))}.
+\end{equation}
+Using Lemma~\ref{lem:matrix-norms} and then the Frobenius norm of the scalar matrix
+of entry norms,
+\begin{align*}
+ \norm{(Ex)_i}^2
+ &\leq\frac14\bigl(2\norm{x_i}^2+
+ \norm{x_{i-1}}^2+\norm{x_{i+1}}^2\bigr)\\
+ &\leq 2-\frac{i^2}{n^2}-\frac1{2n^2}\\
+ &\leq\left(1-\frac1{4n^2}\right)
+ \left(2-\frac{i^2}{n^2}\right)\\
+ &\leq\left(1-\frac1{8n^2}\right)^2
+ \left(2-\frac{i^2}{n^2}\right).
+\end{align*}
+Taking square roots and maximizing over $i$ proves
+\eqref{eq:E-contraction}.
+\end{proof}
+
+\begin{proposition}[Right inverse]\label{prop:right-inverse}
+The operator $I_Y-E$ is invertible, and
+\begin{equation}\label{eq:R-def}
+ R:=L(I_Y-E)^{-1}:Y\to Z
+\end{equation}
+is a right inverse for $T$.  Moreover,
+\begin{equation}\label{eq:R-global}
+ \norm R_{Y\to Z}\leq8\sqrt2\,n^2.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+The Neumann series converges in the primed norm by
+Lemma~\ref{lem:weighted-contraction}, and
+\[
+ \norm{(I_Y-E)^{-1}}'\leq8n^2.
+\]
+Thus Lemma~\ref{lem:TL} gives $TR=I_Y$.  If $\norm x_Y\leq1$ and
+$y=(I_Y-E)^{-1}x$, then
+$\norm{y_i}\leq8\sqrt2 n^2$.  By \eqref{eq:L-def} and
+\eqref{eq:row-bound},
+\[
+ \norm{(Rx)_i}
+ \leq\frac12\bigl(\norm{y_i}^2+\norm{y_{i+1}}^2\bigr)^{1/2}
+ \leq8n^2,
+\]
+which is stronger than \eqref{eq:R-global}.
+\end{proof}
+
+\begin{remark}
+The $n^2$ scale in \eqref{eq:R-global} agrees with the spectral-gap scale of
+the corresponding scalar Dirichlet averaging operator.  We do not need a
+matching lower bound for $R$; the improvement below comes from estimating the
+specific structured data fed into $R$, rather than its global norm.
+\end{remark}
+
+\section{A monotone supersolution principle}
+
+For a nonnegative vector $p=(p_1,\ldots,p_{n+1})$, define
+\begin{equation}\label{eq:A-def}
+ (Ap)_i
+ :=\frac12\norm{
+ \begin{pmatrix}
+ p_i&p_{i-1}\\p_{i+1}&p_i
+ \end{pmatrix}}_{M_2(\mathbb R)},
+ \qquad 2\leq i\leq n.
+\end{equation}
+By the last part of Lemma~\ref{lem:matrix-norms}, $A$ is monotone in every
+coordinate.
+
+\begin{lemma}[Majorant property]\label{lem:majorant}
+Let $x\in Y$ and put $p_j=\norm{x_j}$, with $p_1=p_{n+1}=0$.  Then
+\[
+ \norm{(Ex)_i}\leq(Ap)_i,
+ \qquad 2\leq i\leq n.
+\]
+\end{lemma}
+
+\begin{proof}
+Combine \eqref{eq:E-block} with the fourth part of
+Lemma~\ref{lem:matrix-norms}.
+\end{proof}
+
+The following elementary inequality is the key quantitative input.
+
+\begin{lemma}[Sharp two-by-two estimate]\label{lem:two-by-two}
+Let $a,b,c\geq0$ and assume $b^2+c^2\leq2a^2$.  Then
+\begin{equation}\label{eq:two-by-two}
+ \norm{
+ \begin{pmatrix}a&b\\c&a\end{pmatrix}}_{M_2(\mathbb R)}
+ \leq a+\sqrt{\frac{b^2+c^2}{2}}.
+\end{equation}
+Consequently, if $a>0$ and
+$d:=a^2-(b^2+c^2)/2\geq0$, then
+\begin{equation}\label{eq:two-by-two-defect}
+ \frac12\norm{
+ \begin{pmatrix}a&b\\c&a\end{pmatrix}}
+ \leq a-\frac d{4a}.
+\end{equation}
+Equality in \eqref{eq:two-by-two} is possible, for example when $b=c$.
+\end{lemma}
+
+\begin{proof}
+Put $P=a^2$, $Q=b^2$, and $R=c^2$.  A direct computation of the largest
+eigenvalue of $M^{\mathsf T}M$, where
+$M=\bigl(\begin{smallmatrix}a&b\\c&a\end{smallmatrix}\bigr)$, gives
+\begin{equation}\label{eq:Mnorm-exact}
+ \norm M^2
+ =P+\frac{Q+R}{2}
+ +\sqrt{\frac{(Q-R)^2}{4}+P(b+c)^2}.
+\end{equation}
+Let $W=(b+c)^2$ and $e=(b-c)^2$.  Then
+$W+e=2(Q+R)$ and $(Q-R)^2=eW$.  Since $Q+R\leq2P$, one has
+$W\leq4P$, and therefore
+\[
+ \frac{eW}{4}+PW\leq eP+PW=P(e+W)=2P(Q+R).
+\]
+Substitution into \eqref{eq:Mnorm-exact} gives
+\[
+ \norm M^2
+ \leq P+\frac{Q+R}{2}+\sqrt{2P(Q+R)}
+ =\left(\sqrt P+\sqrt{\frac{Q+R}{2}}\right)^2,
+\]
+which proves \eqref{eq:two-by-two}.
+
+For \eqref{eq:two-by-two-defect}, write
+$(Q+R)/2=P-d$ and use the tangent-line bound
+$\sqrt{P-d}\leq\sqrt P-d/(2\sqrt P)$.
+\end{proof}
+
+\begin{proposition}[Supersolution bound]\label{prop:supersolution}
+Let $s=(s_i)_{i=2}^n$ be nonnegative and let
+$\psi=(\psi_1,\ldots,\psi_{n+1})$ be nonnegative.  Suppose
+\begin{equation}\label{eq:supersolution}
+ s_i+(A\psi)_i\leq\psi_i,
+ \qquad 2\leq i\leq n.
+\end{equation}
+If $x\in Y$ satisfies $\norm{x_i}\leq s_i$, then
+\begin{equation}\label{eq:neumann-profile}
+ \norm{\left(\sum_{k=0}^{K}E^kx\right)_i}\leq\psi_i
+ \qquad(K\geq0,
+ \ 2\leq i\leq n),
+\end{equation}
+\begin{equation}\label{eq:resolvent-profile}
+ \norm{((I_Y-E)^{-1}x)_i}\leq\psi_i,
+\end{equation}
+and
+\begin{equation}\label{eq:R-profile}
+ \norm{(Rx)_i}
+ \leq\frac12\bigl(\psi_i^2+\psi_{i+1}^2\bigr)^{1/2},
+ \qquad 1\leq i\leq n.
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Set $y^{[K]}=\sum_{k=0}^K E^kx$.  The case $K=0$ follows from
+$s_i\leq\psi_i$.  If \eqref{eq:neumann-profile} holds for $K$, then
+$y^{[K+1]}=x+Ey^{[K]}$, and the majorant property together with the monotonicity
+of $A$ gives
+\[
+ \norm{y_i^{[K+1]}}
+ \leq s_i+(A\psi)_i\leq\psi_i.
+\]
+This proves \eqref{eq:neumann-profile} by induction.  Passing to the Neumann
+series limit proves \eqref{eq:resolvent-profile}.  Finally, apply
+\eqref{eq:row-bound} to $R=L(I_Y-E)^{-1}$.
+\end{proof}
+
+\begin{corollary}[Concavity criterion]\label{cor:concavity}
+Assume $\psi_i>0$ for $1\leq i\leq n$, put $\psi_{n+1}=0$, and define
+$\Psi_i=\psi_i^2$ and
+\begin{equation}\label{eq:defect}
+ d_i:=\Psi_i-\frac{\Psi_{i-1}+\Psi_{i+1}}2,
+ \qquad 2\leq i\leq n.
+\end{equation}
+If
+\begin{equation}\label{eq:concavity-criterion}
+ d_i\geq0
+ \qquad\text{and}\qquad
+ 4\psi_i s_i\leq d_i,
+ \qquad 2\leq i\leq n,
+\end{equation}
+then \eqref{eq:supersolution} holds, and all conclusions of
+Proposition~\ref{prop:supersolution} follow.
+\end{corollary}
+
+\begin{proof}
+Apply \eqref{eq:two-by-two-defect} with
+$a=\psi_i$, $b=\psi_{i-1}$, and $c=\psi_{i+1}$.  The first condition in
+\eqref{eq:concavity-criterion} is exactly
+$b^2+c^2\leq2a^2$, and it yields
+\[
+ (A\psi)_i\leq\psi_i-\frac{d_i}{4\psi_i}
+ \leq\psi_i-s_i.
+\]
+\end{proof}
+
+\section{Solving the nonlinear system}
+
+From now on let
+\begin{equation}\label{eq:delta-choice}
+ n\geq9,
+ \qquad
+ \delta:=\frac1{400n^3}.
+\end{equation}
+Define
+\begin{align}
+ \Psi_i&:=144\delta^2 i(2n-i),
+ &&1\leq i\leq n,
+ &\Psi_{n+1}&:=0,
+ \label{eq:Psi-profile}\\
+ \psi_i&:=\sqrt{\Psi_i}
+ =12\delta\sqrt{i(2n-i)},
+ &&1\leq i\leq n,
+ &\psi_{n+1}&:=0,
+ \label{eq:psi-profile}\\
+ \overline b_i&:=\frac12\sqrt{\Psi_i+\Psi_{i+1}},
+ &&1\leq i\leq n,
+ &\overline b_{n+1}&:=0,
+ \label{eq:bbar}\\
+ s_i&:=\delta n\ind{i=n}
+ +2\overline b_i\overline b_n
+ +\delta i\overline b_{i+1},
+ &&2\leq i\leq n.
+ \label{eq:s-def}
+\end{align}
+
+\begin{lemma}[Profile estimates]\label{lem:profile-estimates}
+The following estimates hold:
+\begin{align}
+ \psi_i&\leq12\delta n,
+ \label{eq:profile-p1}\\
+ \psi_i&\leq12\sqrt2\,\delta\sqrt{ni}
+ <17\delta\sqrt{ni},
+ \label{eq:profile-p2}\\
+ \overline b_i&\leq6\sqrt2\,\delta n,
+ \label{eq:profile-p3}\\
+ \overline b_i&\leq15\delta\sqrt{ni},
+ \qquad
+ \overline b_n=6\delta n,
+ \label{eq:profile-p4}\\
+ d_i&=144\delta^2,
+ \qquad 2\leq i\leq n-1,
+ \label{eq:profile-p5a}\\
+ d_n&=72\delta^2(n^2+1),
+ \label{eq:profile-p5b}\\
+ \overline b_1&\leq6\sqrt6\,\delta\sqrt n,
+ \qquad
+ \overline b_2\leq6\sqrt{10}\,\delta\sqrt n.
+ \label{eq:profile-p6}
+\end{align}
+\end{lemma}
+
+\begin{proof}
+The function $i(2n-i)=n^2-(n-i)^2$ is increasing on $[0,n]$ and bounded by
+$n^2$, giving \eqref{eq:profile-p1}.  Since
+$i(2n-i)\leq2ni$, one obtains \eqref{eq:profile-p2}.
+
+From $4\overline b_i^2=\Psi_i+\Psi_{i+1}\leq288\delta^2n^2$ one obtains
+\eqref{eq:profile-p3}.  For $i<n$,
+\[
+ 4\overline b_i^2
+ \leq144\delta^2\bigl(2ni+2n(i+1)\bigr)
+ \leq864\delta^2ni,
+\]
+which implies $\overline b_i\leq\sqrt{216}\,\delta\sqrt{ni}<15\delta\sqrt{ni}$.
+The formula for $\overline b_n$ follows from $\Psi_{n+1}=0$.
+
+For $2\leq i<n$, the second difference of $i(2n-i)$ is $-2$, hence
+$d_i=144\delta^2$.  At $i=n$,
+\[
+ d_n
+ =144\delta^2n^2-\frac12\,144\delta^2(n^2-1)
+ =72\delta^2(n^2+1).
+\]
+Finally,
+\[
+ \Psi_1+\Psi_2=144\delta^2(6n-5)
+ \leq864\delta^2n
+\]
+and
+\[
+ \Psi_2+\Psi_3=144\delta^2(10n-13)
+ \leq1440\delta^2n,
+\]
+which give \eqref{eq:profile-p6}.
+\end{proof}
+
+\begin{lemma}[Verification of the supersolution condition]\label{lem:profile-super}
+For every $2\leq i\leq n$,
+\begin{equation}\label{eq:profile-super}
+ 4\psi_i s_i\leq d_i.
+\end{equation}
+Consequently, the pair $(s,\psi)$ satisfies
+\eqref{eq:supersolution}.
+\end{lemma}
+
+\begin{proof}
+For $i=n$, \eqref{eq:s-def} and \eqref{eq:profile-p4} give
+\[
+ s_n=\delta n+72\delta^2n^2,
+ \qquad
+ \psi_n=12\delta n.
+\]
+Therefore
+\[
+ 4\psi_ns_n
+ =48\delta^2n^2+3456\delta^3n^3
+ =\left(48n^2+\frac{3456}{400}\right)\delta^2
+ \leq72(n^2+1)\delta^2=d_n.
+\]
+
+Now let $2\leq i\leq n-1$.  By
+\eqref{eq:profile-p4},
+\begin{align*}
+ s_i
+ &\leq2\bigl(15\delta\sqrt{ni}\bigr)(6\delta n)
+ +\delta i\bigl(15\sqrt2\,\delta\sqrt{ni}\bigr)\\
+ &\leq201.3\,\delta^2n\sqrt{ni}.
+\end{align*}
+Together with \eqref{eq:profile-p2}, this gives
+\[
+ 4\psi_i s_i
+ \leq13689\,\delta^3n^2i
+ \leq13689\,\delta^3n^3
+ =\frac{13689}{400}\delta^2
+ <144\delta^2=d_i.
+\]
+The conclusion follows from Corollary~\ref{cor:concavity}.
+\end{proof}
+
+\begin{proposition}[Nonlinear solution]\label{prop:nonlinear-solution}
+For every $n\geq9$ and $\delta=1/(400n^3)$, the system
+\eqref{eq:system} has a solution
+$\beta=(\beta_1,\ldots,\beta_n)\in\mathcal B(H)^n$ such that
+\begin{equation}\label{eq:beta-bounds}
+ \norm{\beta_i}\leq\overline b_i,
+ \qquad 1\leq i\leq n.
+\end{equation}
+In particular,
+\begin{equation}\label{eq:beta-consequences}
+ \begin{aligned}
+ \max_i\norm{\beta_i}&\leq6\sqrt2\,\delta n,
+ &\qquad \norm{\beta_n}&\leq6\delta n,\\
+ \norm{\beta_1}&\leq6\sqrt6\,\delta\sqrt n,
+ &\qquad \norm{\beta_2}&\leq6\sqrt{10}\,\delta\sqrt n.
+ \end{aligned}
+\end{equation}
+\end{proposition}
+
+\begin{proof}
+Let
+\[
+ Q:=\{y\in Y:\norm{y_i}\leq s_i\text{ for }2\leq i\leq n\}.
+\]
+This is a nonempty closed subset of the Banach space $Y$, hence complete.
+Define $\Phi:Y\to Y$ by
+\begin{equation}\label{eq:Phi}
+ \Phi(y)_i
+ :=\delta n\one\ind{i=n}
+ -(Ry)_i[u,(Ry)_n]
+ -\delta i(Ry)_{i+1},
+ \qquad 2\leq i\leq n,
+\end{equation}
+where $(Ry)_{n+1}=0$.
+
+If $y\in Q$ and $b=Ry$, then
+Lemma~\ref{lem:profile-super} and Proposition~\ref{prop:supersolution} give
+\[
+ \norm{b_i}
+ \leq\frac12\sqrt{\psi_i^2+\psi_{i+1}^2}
+ =\overline b_i.
+\]
+Hence
+\[
+ \norm{\Phi(y)_i}
+ \leq\delta n\ind{i=n}
+ +2\overline b_i\overline b_n
+ +\delta i\overline b_{i+1}
+ =s_i,
+\]
+so $\Phi(Q)\subseteq Q$.
+
+For $y,y'\in Q$, put $b=Ry$ and $b'=Ry'$.  Using the preceding
+profile estimate together with \eqref{eq:profile-p3} and
+$\overline b_n=6\delta n$, one obtains
+\begin{align*}
+ \norm{\Phi(y)-\Phi(y')}_Y
+ &\leq(12\delta n+12\sqrt2\,\delta n+\delta n)
+ \norm{b-b'}_Z\\
+ &\leq(13+12\sqrt2)\delta n\,
+ 8\sqrt2\,n^2\norm{y-y'}_Y\\
+ &=\frac{192+104\sqrt2}{400}\norm{y-y'}_Y
+ <0.85\norm{y-y'}_Y.
+\end{align*}
+Thus $\Phi$ is a contraction of $Q$.  Let $y^*\in Q$ be its unique fixed
+point and put $\beta=Ry^*$.  Since $TR=I_Y$,
+\[
+ T\beta=y^*=\Phi(y^*),
+\]
+which is exactly \eqref{eq:system}.  The bounds follow from the profile
+estimate above and Lemma~\ref{lem:profile-estimates}.
+\end{proof}
+
+\section{Norm estimates and completion of the proof}
+
+Take $\mu=1/2$ in Proposition~\ref{prop:similarity}, and let $D_\mu,X_\mu$ be built from
+the solution in Proposition~\ref{prop:nonlinear-solution}.
+
+\begin{proposition}\label{prop:final-estimates}
+For $n\geq9$ and $\delta=1/(400n^3)$,
+\begin{align}
+ \norm{X_\mu}&\leq1.00027,
+ \label{eq:final-X}\\
+ \norm{D_\mu}&\leq2401n^3,
+ \label{eq:final-D}\\
+ \norm{D_\mu}\norm{X_\mu}&\leq2402n^3,
+ \label{eq:final-product}\\
+ \norm{[D_\mu,X_\mu]-\one}&\leq59\sqrt n\,2^{-n}.
+ \label{eq:final-error}
+\end{align}
+\end{proposition}
+
+\begin{proof}
+Let $\overline b=\max_i\overline b_i$.  By
+\eqref{eq:profile-p3},
+$\overline b\leq6\sqrt2\,\delta n$.  Since
+$\sum_{i=1}^n2^{-(n-i+1)}<1$, \eqref{eq:Xmu-bound} gives
+\[
+ \norm{X_\mu}
+ \leq1+\overline b
+ \leq1+\frac{6\sqrt2}{400n^2}
+ \leq1.00027.
+\]
+
+For $D_\mu$, \eqref{eq:Dmu-bound} and
+$\sum_{i=1}^n2^{i+1-n}<4$ yield
+\begin{align*}
+ \norm{D_\mu}
+ &\leq\frac6\delta+(n-1)+\frac{4\overline b}{\delta}\\
+ &\leq2400n^3+(1+24\sqrt2)n\\
+ &<2400n^3+35n
+ \leq2401n^3.
+\end{align*}
+The product estimate follows because
+$2401\cdot1.00027<2402$.
+
+It remains to estimate the surviving corner in
+\eqref{eq:single-corner}.  By \eqref{eq:beta-consequences},
+\begin{align*}
+ \norm{Z_{1n}}
+ &\leq\frac2\delta\norm{\beta_1}
+ +\frac2\delta\norm{\beta_1}\norm{\beta_n}
+ +\norm{\beta_2}\\
+ &\leq\sqrt n\left(
+ 12\sqrt6+72\sqrt6\,\delta n+6\sqrt{10}\,\delta
+ \right).
+\end{align*}
+For $n\geq9$, one has
+$\delta n\leq1/32400$ and $\delta\leq1/291600$.  Using
+$\sqrt6<2.4495$ and $\sqrt{10}<3.1623$, the coefficient in parentheses is
+strictly less than $29.4$.  Hence, by \eqref{eq:error-conjugated},
+\[
+ \norm{[D_\mu,X_\mu]-\one}
+ \leq29.4\sqrt n\,2^{-(n-1)}
+ <59\sqrt n\,2^{-n}.
+\]
+\end{proof}
+
+\begin{proof}[Proof of Theorem~\ref{thm:main}]
+Let
+\[
+ t:=\log_2\frac1\varepsilon\geq1,
+ \qquad
+ n:=\max\left\{9,\,\lceil2t\rceil+6\right\}.
+\]
+Construct $D_\mu,X_\mu\in M_n(\mathcal B(H))$ as above and transport them to
+$\mathcal B(H)$ through any unitary $H^{\oplus n}\to H$.  This preserves
+norms, products, the identity, and commutators.
+
+We first prove the error bound.  If $n=9$, then
+$\lceil2t\rceil\leq3$, so $t\leq3/2$, and
+\[
+ 59\sqrt n\,2^{-n}
+ =\frac{177}{512}
+ <2^{-3/2}
+ \leq2^{-t}=\varepsilon.
+\]
+If $n\geq10$, then $n=\lceil2t\rceil+6$, so
+$t\leq(n-6)/2$.  Therefore
+\[
+ \frac{59\sqrt n\,2^{-n}}{\varepsilon}
+ =59\sqrt n\,2^{t-n}
+ \leq\frac{59\sqrt n}{8\,2^{n/2}}
+ \leq\frac{59\sqrt{10}}{256}<1,
+\]
+where the middle expression decreases for integers $n\geq10$.
+Thus \eqref{eq:main-error} follows from \eqref{eq:final-error}.
+
+For the norm product, note that $n\leq9t$: this is immediate when $n=9$, and
+otherwise
+$n\leq2t+7\leq9t$ because $t\geq1$.  Writing
+$L=\log(1/\varepsilon)=t\log2$, \eqref{eq:final-product} gives
+\begin{align*}
+ \norm{D_\varepsilon}\norm{X_\varepsilon}
+ &\leq2402n^3\\
+ &\leq2402\left(\frac9{\log2}\right)^3L^3\\
+ &<5.3\times10^6L^3.
+\end{align*}
+This proves \eqref{eq:main-norm} and completes the proof.
+\end{proof}
+
+\section{Further remarks}
+
+\begin{remark}[Finite-dimensional obstruction]
+If $\dim H=N<\infty$, then $\operatorname{tr}[D,X]=0$, so
+\[
+ \norm{[D,X]-\one}
+ \geq\frac1N\abs{\operatorname{tr}([D,X]-\one)}=1.
+\]
+Thus the approximation problem is genuinely infinite-dimensional.  The proof
+uses infinite dimensionality precisely through the identifications
+$H\cong H^{\oplus n}$ and the Cuntz relations \eqref{eq:cuntz}.
+\end{remark}
+
+\begin{remark}[Effectivity]
+The solution in Proposition~\ref{prop:nonlinear-solution} is obtained by a Neumann series
+and a Picard iteration with an explicit contraction factor below $0.85$.
+Truncating both procedures therefore gives finite noncommutative polynomials in
+$u,v,u^*,v^*$ with explicitly controlled residuals.  In particular, the
+construction is algorithmic; the limiting formulation is used only to keep the
+main proof concise.
+\end{remark}
+
+\begin{remark}[Source of the exponent]
+The profile estimate gives $\norm{\beta_i}=O(\delta n)$.  The quadratic and
+shift terms in \eqref{eq:system} are both of size $O(\delta^2n^2)$.  A profile
+of height $O(\delta n)$ over a chain of length $n$ has an interior concavity
+budget of order $\delta^2$, so absorption requires
+$\delta^3n^3\lesssim\delta^2$, equivalently $\delta\lesssim n^{-3}$.  Since
+$\norm D\norm X=O(\delta^{-1})$ and
+$n\asymp\log(1/\varepsilon)$, this produces the cubic logarithm.
+\end{remark}
+
+\begin{remark}[What remains open]
+Combining \eqref{eq:popa} with Theorem~\ref{thm:main} leaves
+\[
+ \frac12\log\frac1\varepsilon
+ \leq m_H(\varepsilon)
+ \leq C\left(\log\frac1\varepsilon\right)^3.
+\]
+No lower-bound improvement is claimed here.  Reaching the conjectural linear
+logarithmic scale would require a further structural gain beyond the present
+endpoint supersolution estimate.
+\end{remark}
+
+\begin{thebibliography}{10}
+
+\bibitem{Bilich}
+B. Bilich,
+\emph{An $O(\log^4(1/\varepsilon))$ refinement of Tao's construction of
+commutators close to the identity},
+unpublished manuscript and Lean formalization, 2026,
+\url{https://github.com/bilichboris/TaoCommutators}.
+
+\bibitem{BrownPearcy}
+A. Brown and C. Pearcy,
+\emph{Structure of commutators of operators},
+Ann. of Math. (2) \textbf{82} (1965), 112--127.
+
+\bibitem{KrishnaJohnson}
+K. M. Krishna and P. S. Johnson,
+\emph{Commutators close to the identity in unital $C^*$-algebras},
+Proc. Indian Acad. Sci. Math. Sci. \textbf{132} (2022), Paper No. 11.
+
+\bibitem{Popa}
+S. Popa,
+\emph{On commutators in properly infinite $W^*$-algebras},
+in \emph{Invariant Subspaces and Other Topics},
+Operator Theory: Advances and Applications, vol. 6,
+Birkh\"auser, Basel, 1982, pp. 195--207.
+
+\bibitem{Tao}
+T. Tao,
+\emph{Commutators close to the identity},
+J. Operator Theory \textbf{82} (2019), no. 2, 369--382.
+
+\bibitem{Wielandt}
+H. Wielandt,
+\emph{\"Uber die Unbeschr\"anktheit der Operatoren der Quantenmechanik},
+Math. Ann. \textbf{121} (1949/50), 21.
+
+\bibitem{Wintner}
+A. Wintner,
+\emph{The unboundedness of quantum-mechanical matrices},
+Phys. Rev. (2) \textbf{71} (1947), 738--739.
+
+\end{thebibliography}
+
+\end{document}

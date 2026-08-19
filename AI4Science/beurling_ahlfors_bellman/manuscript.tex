@@ -1,0 +1,1040 @@
+\documentclass[10pt,reqno]{amsart}
+
+\usepackage[T1]{fontenc}
+\usepackage{amsmath,amssymb}
+\usepackage{microtype}
+\usepackage[margin=1in]{geometry}
+\usepackage{calc}
+\usepackage{booktabs,longtable,array}
+\usepackage{enumitem}
+\usepackage[hidelinks]{hyperref}
+\usepackage[nameinlink,capitalise,noabbrev]{cleveref}
+\pdfstringdefDisableCommands{%
+  \def\({}\def\){}%
+  \def\frac#1#2{#1/#2}%
+  \def\ge{>=}\def\le{<=}%
+  \def\Delta{Delta}\def\sigma{sigma}\def\nu{nu}%
+}
+\hypersetup{
+  pdftitle={A Bellman-function bound for the Beurling--Ahlfors transform},
+  pdfauthor={Hyra},
+  pdfsubject={An explicit uniform Lp bound for the Beurling--Ahlfors transform},
+  pdfkeywords={Beurling--Ahlfors transform, Bellman function, conformal martingale}
+}
+
+\allowdisplaybreaks
+\emergencystretch=3em
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\newcommand{\C}{\mathbb C}
+\newcommand{\R}{\mathbb R}
+\newcommand{\E}{\mathbb E}
+\newcommand{\pv}{\operatorname{p.v.}}
+\newcommand{\artanh}{\operatorname{artanh}}
+
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\newtheorem*{maintheorem}{Main Theorem}
+\newtheorem*{bellmanprinciple}{Bellman principle}
+\newtheorem*{boundsummary}{Endpoint theorem}
+
+\title[A Bellman-function bound for the Beurling--Ahlfors transform]
+{A Bellman-function bound for the Beurling--Ahlfors transform}
+\author{Hyra}
+\date{August 18, 2026}
+\subjclass[2020]{Primary 42B20; Secondary 60G44}
+\keywords{Beurling--Ahlfors transform, Bellman function, conformal martingale,
+heat extension, singular integral, Riesz--Thorin interpolation}
+
+\begin{document}
+
+\begin{abstract}
+We prove the uniform estimate
+\[
+ \|B\|_{L^p(\mathbb C)\to L^p(\mathbb C)}
+ \le 1.523958\,(p^*-1),\qquad 1<p<\infty,
+\]
+for the Beurling--Ahlfors transform.  The argument combines a heat-extension
+representation with an explicit Bellman-function criterion adapted to the
+conformal martingale structure of the transform.  The principal new ingredients
+are a two-sided kinematic constraint that reduces the drift calculation to one
+negative-semidefinite \(2\times2\) matrix, and two explicit generalized
+polynomial Bellman profiles at \(p=16/3\) and \(p=15/2\).  Their drift and
+majorization properties are certified by exact polynomial identities and rational
+inequalities.  Interpolation with the \(L^2\) isometry and a self-contained
+Burkholder-type bound yields the stated constant.
+\end{abstract}
+
+\maketitle
+
+\section*{Introduction}
+The Beurling--Ahlfors transform is the singular integral
+\[
+ Bf(z)=-\frac1\pi\,\pv\!\int_{\mathbb C}
+       \frac{f(w)}{(z-w)^2}\,dm(w).
+\]
+For \(1<p<\infty\), write
+\(p^*=\max\{p,p/(p-1)\}\).  Iwaniec's conjecture asserts that
+\(\|B\|_p=p^*-1\); see \cite{Iwaniec82}.  Bañuelos and Janakiraman proved the
+uniform upper bound \(1.575(p^*-1)\) by exploiting conformal martingales
+\cite{BanuelosJanakiraman08}.  The present paper lowers that coefficient.
+
+\begin{maintheorem}\label{thm:main}
+For every \(1<p<\infty\),
+\[
+ \|B\|_{L^p(\mathbb C)\to L^p(\mathbb C)}
+ \le 1.523958\,(p^*-1).
+\]
+Consequently, if
+\[
+ C_{\mathrm{BA}}:=\sup_{1<p<\infty}
+ \frac{\|B\|_{L^p\to L^p}}{p^*-1},
+\]
+then \(C_{\mathrm{BA}}\le1.523958\).
+\end{maintheorem}
+
+The proof follows the heat-extension and space-time Brownian-motion framework
+of \cite{BanuelosMendez03}, but no quantitative martingale inequality is imported.
+Instead, the necessary martingale estimate is proved from an explicit radial
+Bellman function.  The structural step is a two-sided inequality
+\(|T-P|\le W\), which permits the angular variable to be eliminated without a
+case split.  This leads to a pointwise drift criterion expressed by a single
+\(2\times2\) matrix.  Generalized polynomial profiles with real exponents then
+produce the endpoint estimates
+\[
+ \|B\|_{16/3}\le22830^{3/16},\qquad
+ \|B\|_{15/2}\le22865000^{2/15}.
+\]
+Together with \(\|B\|_2=1\), a self-contained estimate
+\(\|B\|_p\le\sqrt{2p(p-1)}\) for \(p\ge2\), duality, and
+Riesz--Thorin interpolation, these endpoints imply the main theorem.
+
+All profile identities and all numerical comparisons used in the proof are exact.
+The only external inputs are standard results from Fourier analysis, functional
+analysis, and stochastic calculus, together with the classical multiplier
+identification of \(B\).  The use of compactly supported mollifiers below makes
+the regularization step entirely local and avoids any hidden tail estimate.
+
+\setcounter{section}{-1}
+\section{Notation and conventions}\label{sec:notation}
+
+\begin{itemize}
+\tightlist
+\item
+  \(m\) = Lebesgue measure on \(\mathbb C\simeq\mathbb R^2\); we write \(dx\) for it and identify \(z=x_1+ix_2\leftrightarrow x=(x_1,x_2)\). All functions are complex valued unless stated otherwise. \(\|f\|_q=(\int_{\mathbb R^2}|f|^q\,dx)^{1/q}\).
+\item
+  Fourier transform: \(\hat f(\xi)=\int_{\mathbb R^2}f(x)e^{-2\pi i x\cdot\xi}\,dx\), so that Plancherel reads \(\int f\bar g\,dx=\int\hat f\overline{\hat g}\,d\xi\) and \(\widehat{\partial_j f}(\xi)=2\pi i\xi_j\hat f(\xi)\). We also identify \(\xi=\xi_1+i\xi_2\in\mathbb C\) when convenient; \(\bar\xi=\xi_1-i\xi_2\), \(|\xi|^2=\xi_1^2+\xi_2^2\).
+\item
+  Heat semigroup: \(G_t(x)=(4\pi t)^{-1}e^{-|x|^2/(4t)}\) for \(t>0\) (a probability density on \(\mathbb R^2\)), and for \(f\in C_c^\infty(\mathbb R^2)\) \[U(x,t):=(e^{t\Delta}f)(x)=(f*G_t)(x),\qquad U(x,0)=f(x).\] Then \(\partial_tU=\Delta U\), \(\hat U(\xi,t)=e^{-4\pi^2|\xi|^2t}\hat f(\xi)\), \(U\in C^\infty(\mathbb R^2\times[0,\infty))\) (differentiation under the integral sign is legitimate because \(f\in C_c^\infty\) and \(\partial^\alpha U=(\partial^\alpha f)*G_t\)), and by Young's inequality \(\|\partial^\alpha U(\cdot,t)\|_q\le\|\partial^\alpha f\|_q\) for every multi-index \(\alpha\), every \(q\in[1,\infty]\) and every \(t\ge0\).
+\item
+  For \(v,w\in\mathbb C^2\) we write \(v\cdot w=\sum_j v_jw_j\) (\textbf{bilinear}, no conjugation) and \(|v|^2=\sum_j|v_j|^2\); thus \(|v\cdot w|\le|v|\,|w|\). For a real vector \(h\in\mathbb R^d\), \(|h|\) is the Euclidean norm and \(h\cdot k\) the real inner product.
+\item
+  \(\mathbb C\) is identified with \(\mathbb R^2\) as a real Euclidean space whenever a complex quantity is fed into a real function; the modulus of a complex number equals the Euclidean norm of the corresponding real vector, and for \(\zeta,\eta\in\mathbb C\) the real inner product is \(\zeta\cdot\eta=\operatorname{Re}(\zeta\bar\eta)\).
+\item
+  \(\operatorname{artanh}x=\frac12\ln\frac{1+x}{1-x}\) for \(|x|<1\).
+\end{itemize}
+
+\paragraph{The multiplier form of \(B\).}
+We use the classical identity
+\[\widehat{Bf}(\xi)=\frac{\bar\xi}{\xi}\,\widehat f(\xi)
+ =\frac{\bar\xi^{\,2}}{|\xi|^2}\widehat f(\xi),
+ \qquad \xi\ne0, \tag{0.1}\]
+initially for \(f\in C_c^\infty(\mathbb R^2)\).  In particular, Plancherel and
+\(|\bar\xi/\xi|=1\) give
+\[\|B\|_{L^2\to L^2}=1. \tag{0.2}\]
+All other \(L^p\)-extensions used below are obtained from the a priori estimates
+proved in this paper.  More precisely, an estimate on \(C_c^\infty\) gives a
+unique bounded extension by density.  If bounds are available at two exponents,
+the corresponding extensions agree on their intersection because
+\(C_c^\infty\) is dense there for the sum of the two norms.  Thus the compatible
+form of the Riesz--Thorin theorem applies without assuming qualitative
+\(L^q\)-boundedness in advance.
+
+\section{Reductions and the heat representation}\label{sec:heat}
+
+\subsection{Reduction to \(p\ge2\)}\label{subsec:duality}
+
+\begin{lemma}\label{lem:1-1}
+For \(f,g\in C_c^\infty(\mathbb R^2)\) one has \(\int (Bf)g\,dx=\int f\,(Bg)\,dx\).
+\end{lemma}
+
+\begin{proof}
+For \(F,G\in L^2\), Plancherel in the bilinear form reads \(\int FG\,dx=\int\hat F(\xi)\hat G(-\xi)\,d\xi\) (apply \(\int F\bar H=\int\hat F\overline{\hat H}\) with \(H=\bar G\), whose transform is \(\hat H(\xi)=\overline{\hat G(-\xi)}\)). Hence, with \(m(\xi)=\bar\xi/\xi\), \[\int (Bf)g\,dx=\int m(\xi)\hat f(\xi)\hat g(-\xi)\,d\xi,\qquad
+\int f\,(Bg)\,dx=\int \hat f(\xi)\,m(-\xi)\hat g(-\xi)\,d\xi .\] Since \(m(-\xi)=\overline{(-\xi)}/(-\xi)=\bar\xi/\xi=m(\xi)\), the two agree.
+\end{proof}
+
+\begin{lemma}[duality]\label{lem:1-2}
+Let \(1<q<\infty\), \(q'=q/(q-1)\), let \(h\in L^1_{\mathrm{loc}}(\mathbb R^2)\) and \(M<\infty\) be such that \(\big|\int h\bar g\,dx\big|\le M\|g\|_{q}\) for every \(g\in C_c^\infty\). Then \(h\in L^{q'}\) and \(\|h\|_{q'}\le M\).
+\end{lemma}
+
+\begin{proof}
+The map \(g\mapsto\int h\bar g\,dx\) is a conjugate-linear functional on the dense subspace \(C_c^\infty\) of \(L^{q}\), of norm \(\le M\); extend it continuously to \(L^{q}\). Since \(1<q<\infty\), the dual of \(L^{q}\) is \(L^{q'}\), so there is \(H\in L^{q'}\) with \(\|H\|_{q'}\le M\) and \(\int h\bar g=\int H\bar g\) for every \(g\in C_c^\infty\). Then \(h-H\in L^1_{\mathrm{loc}}\) annihilates \(C_c^\infty\), hence \(h=H\) a.e., and \(\|h\|_{q'}=\|H\|_{q'}\le M\).
+\end{proof}
+
+\begin{lemma}[transposition]\label{lem:1-3}
+Suppose \(\|Bg\|_{q}\le M_q\|g\|_q\) for all \(g\in C_c^\infty\) and some \(1<q<\infty\). Then \(\|Bf\|_{q'}\le M_q\|f\|_{q'}\) for all \(f\in C_c^\infty\), where \(1/q+1/q'=1\). Consequently \(\|B\|_{L^p\to L^p}=\|B\|_{L^{p'}\to L^{p'}}\) for all \(1<p<\infty\).
+\end{lemma}
+
+\begin{proof}
+Let \(f\in C_c^\infty\); then \(Bf\in L^2\subset L^1_{\mathrm{loc}}\). For every \(g\in C_c^\infty\) we also have \(\bar g\in C_c^\infty\), so Lemma 1.1 (applied to the pair \(f,\bar g\)) and Hölder give \[\Big|\int (Bf)\bar g\,dx\Big|=\Big|\int f\,(B\bar g)\,dx\Big|\le\|f\|_{q'}\|B\bar g\|_q\le M_q\|f\|_{q'}\|g\|_q .\] Lemma 1.2 (with \(h=Bf\), \(M=M_q\|f\|_{q'}\)) gives \(\|Bf\|_{q'}\le M_q\|f\|_{q'}\). By density \(\|B\|_{q'}\le\|B\|_q\), and by symmetry (replace \(q\) by \(q'\)) the reverse inequality holds as well.
+\end{proof}
+
+Since \(p^*-1=q-1\) both for \(p=q\ge 2\) and for \(p=q'\le2\), Lemma 1.3 shows:
+
+\begin{quote}
+\textbf{It suffices to prove \(\|Bf\|_p\le\Lambda(p)\|f\|_p\) for all \(f\in C_c^\infty\) and all \(p\ge2\)}, where \(\Lambda(p)\) is the desired bound; the case \(1<p<2\) then follows with \(\Lambda(p')\).
+\end{quote}
+
+For \(p\ge 2\) we write \(p'=p/(p-1)\in(1,2]\) and \(q:=p-1\ge1\).
+
+\subsection{The matrix \(A\) and conformality}\label{subsec:matrix}
+
+Let \[w:=(1,-i)\in\mathbb C^2,\qquad A:=w\,w^{T}=\begin{pmatrix}1&-i\\-i&-1\end{pmatrix}
+\in\mathbb C^{2\times2}.\] For a real vector \(\xi=(\xi_1,\xi_2)\), \[\langle A\xi,\xi\rangle:=\sum_{j,k}A_{jk}\xi_j\xi_k=(w\cdot\xi)^2=(\xi_1-i\xi_2)^2=\bar\xi^{\,2},\] so by (0.1) the symbol of \(B\) is exactly \(\langle A\xi,\xi\rangle/|\xi|^2\).
+
+\begin{lemma}[structure of \(A\)]\label{lem:1-4}
+Let \(v=(v_1,v_2)\in\mathbb C^2\) and put \(c:=w\cdot v=v_1-iv_2\in\mathbb C\). Then \[Av=(c,\,-ic),\qquad |Av|^2=2|c|^2\le 4|v|^2 . \tag{1.1}\] Moreover, identifying \(\mathbb C\simeq\mathbb R^2\), the two components \(k_1:=c\) and \(k_2:=-ic\) of \(Av\) satisfy, \textbf{for every unit vector \(\hat e\in\mathbb R^2\)}, \[\sum_{j=1}^2(k_j\cdot\hat e)^2=|c|^2=\tfrac12\sum_{j=1}^2|k_j|^2,\qquad
+\sum_{j=1}^2\big|k_j-(k_j\cdot\hat e)\hat e\big|^2=|c|^2 . \tag{1.2}\]
+\end{lemma}
+
+\begin{proof}
+\(Av=w(w\cdot v)=cw=(c,-ic)\), and \(|Av|^2=|c|^2+|-ic|^2=2|c|^2\); also \(|c|=|v_1-iv_2|\le|v_1|+|v_2|\le\sqrt2|v|\), whence \(|Av|^2\le4|v|^2\). For (1.2): write \(\hat e\in\mathbb R^2\) as a unit complex number \(e\), so that \(k\cdot\hat e=\operatorname{Re}(k\bar e)\) for \(k\in\mathbb C\). Then \[(k_1\cdot\hat e)^2+(k_2\cdot\hat e)^2
+=\big(\operatorname{Re}(c\bar e)\big)^2+\big(\operatorname{Re}(-ic\bar e)\big)^2
+=\big(\operatorname{Re}(c\bar e)\big)^2+\big(\operatorname{Im}(c\bar e)\big)^2=|c\bar e|^2=|c|^2 ,\] using \(\operatorname{Re}(-i\zeta)=\operatorname{Im}(\zeta)\) and \(|e|=1\). Since \(|k_j|^2=|c|^2\) for \(j=1,2\), we get \(\sum_j|k_j|^2=2|c|^2\) and \(\sum_j|k_j-(k_j\cdot\hat e)\hat e|^2=\sum_j\big(|k_j|^2-(k_j\cdot\hat e)^2\big)=2|c|^2-|c|^2=|c|^2\).
+\end{proof}
+
+The identity (1.2) expresses the fact that \(\{k_1,k_2\}\) is an \emph{orthogonal pair of equal length}: \(k_2=-ik_1\) is \(k_1\) rotated by \(-\pi/2\). Any such pair distributes its total energy \(2|c|^2\) \textbf{isotropically}: exactly half of it lies along any prescribed direction and half orthogonally to it. The inequality \(|Av|\le2|v|\) in (1.1) will be used only qualitatively (to know that certain \(L^2\)-quantities are finite); the \emph{quantitative} input is (1.2).
+
+\subsection{Heat representation of the bilinear form}\label{subsec:heat-rep}
+
+\begin{lemma}\label{lem:1-5}
+Let \(f,g\in C_c^\infty(\mathbb R^2)\), \(U=e^{t\Delta}f\), \(V=e^{t\Delta}g\). Then \[\int_{\mathbb R^2}(Bf)\,\bar g\,dx\;=\;2\int_0^\infty\!\!\int_{\mathbb R^2}
+\big(A\nabla U(x,t)\big)\cdot\overline{\nabla V(x,t)}\;dx\,dt , \tag{1.3}\] where \(\nabla U=(\partial_1U,\partial_2U)\in\mathbb C^2\) and the dot is the bilinear pairing of Section~0 (so the right side is \(\sum_{j,k}A_{jk}\int\!\!\int\partial_kU\,\overline{\partial_jV}\)). Moreover \(\int_0^\infty\!\int|\nabla U||\nabla V|\,dx\,dt<\infty\) and \[\int_0^\infty\!\!\int_{\mathbb R^2}|\nabla U|^2\,dx\,dt=\tfrac12\|f\|_2^2 . \tag{1.4}\]
+\end{lemma}
+
+\begin{proof}
+Fix \(t>0\). By Plancherel, for each \(j,k\), \[\int \partial_kU\,\overline{\partial_jV}\,dx=\int (2\pi i\xi_k\hat U)\overline{(2\pi i\xi_j\hat V)}\,d\xi
+=4\pi^2\int \xi_j\xi_k\,e^{-8\pi^2|\xi|^2t}\hat f\overline{\hat g}\,d\xi .\] Summing against \(A_{jk}\), \[\int (A\nabla U)\cdot\overline{\nabla V}\,dx=4\pi^2\int\langle A\xi,\xi\rangle e^{-8\pi^2|\xi|^2t}\hat f\overline{\hat g}\,d\xi .\] The double integral converges absolutely: \(|\langle A\xi,\xi\rangle|=|\bar\xi^2|=|\xi|^2\) and \(\int_0^\infty\!\int 4\pi^2|\xi|^2e^{-8\pi^2|\xi|^2t}|\hat f||\hat g|\,d\xi\,dt
+=\frac12\int|\hat f||\hat g|\,d\xi<\infty\) (Tonelli; \(\hat f,\hat g\) are Schwartz). Hence by Fubini and \(\int_0^\infty e^{-8\pi^2|\xi|^2t}dt=(8\pi^2|\xi|^2)^{-1}\), \[2\int_0^\infty\!\!\int (A\nabla U)\cdot\overline{\nabla V}\,dx\,dt
+=2\cdot\frac{4\pi^2}{8\pi^2}\int\frac{\langle A\xi,\xi\rangle}{|\xi|^2}\hat f\overline{\hat g}\,d\xi
+=\int\frac{\bar\xi^{\,2}}{|\xi|^2}\hat f\overline{\hat g}\,d\xi=\int(Bf)\bar g\,dx,\] the last step by (0.1) and Plancherel. For the final assertions, Plancherel gives \[\int_0^\infty\!\!\int|\nabla U|^2dx\,dt=\int_0^\infty\!\!\int4\pi^2|\xi|^2e^{-8\pi^2|\xi|^2t}|\hat f|^2d\xi\, dt=\tfrac12\|f\|_2^2<\infty,\] and similarly for \(V\); then Cauchy--Schwarz yields \(\int_0^\infty\!\int|\nabla U||\nabla V|\le\frac12\|f\|_2\|g\|_2<\infty\).
+\end{proof}
+
+Thus everything is reduced to estimates of the form \[\Big|2\int_0^\infty\!\!\int (A\nabla U)\cdot\overline{\nabla V}\,dx\,dt\Big|
+\ \le\ \Lambda\,\|f\|_p\|g\|_{p'} ,\qquad p\ge2, \tag{1.5}\] which are proved in Section~3--Section~4.
+
+
+\section{Admissible Bellman functions}\label{sec:bellman}
+
+Throughout this section \(p\ge2\) is a fixed real number.
+
+\subsection{The two-sided kinematic constraint}\label{subsec:kinematic}
+
+\begin{lemma}\label{lem:2-1}
+Let \(a,b\in\mathbb C\), put \(c:=a-ib\) and \(T:=|c|\), and let \(\hat e\in\mathbb R^2\) be a unit vector. Set \(h_1:=a\), \(h_2:=b\) (viewed in \(\mathbb R^2\)) and \[P:=\Big(\sum_{j=1}^2(h_j\cdot\hat e)^2\Big)^{1/2},\qquad
+W:=\Big(\sum_{j=1}^2\big|h_j-(h_j\cdot\hat e)\hat e\big|^2\Big)^{1/2} .\] Then \[|\,T-P\,|\ \le\ W ,\qquad\text{equivalently}\qquad T\le P+W\ \text{ and }\ P\le T+W. \tag{2.1}\]
+\end{lemma}
+
+\begin{proof}
+Let \(\varepsilon\in\mathbb C\), \(|\varepsilon|=1\), correspond to \(\hat e\), and set \(a':=a\bar\varepsilon=a_1+ia_2\), \(b':=b\bar\varepsilon=b_1+ib_2\) with \(a_i,b_i\in\mathbb R\). Since \(h\cdot\hat e=\operatorname{Re}(h\bar\varepsilon)\) and \(|h-(h\cdot\hat e)\hat e|=|\operatorname{Im}(h\bar\varepsilon)|\) for \(h\in\mathbb C\), \[P^2=a_1^2+b_1^2,\qquad W^2=a_2^2+b_2^2 .\] Moreover \(c\bar\varepsilon=a'-ib'=(a_1+b_2)+i(a_2-b_1)\), so, as vectors in \(\mathbb R^2\), \[T=|c|=|c\bar\varepsilon|=\big|(a_1+b_2,\;a_2-b_1)\big|=\big|\,\mathsf u+\mathsf v\,\big|,\qquad
+\mathsf u:=(a_1,-b_1),\quad \mathsf v:=(b_2,a_2),\] and \(|\mathsf u|=P\), \(|\mathsf v|=W\). The triangle inequality gives \(T=|\mathsf u+\mathsf v|\le|\mathsf u|+|\mathsf v|=P+W\) and \(P=|\mathsf u|=|(\mathsf u+\mathsf v)-\mathsf v|\le T+W\).
+\end{proof}
+
+\begin{quote}
+Only the first half of (2.1) is classical. The second half, \(P\le T+W\), is what allows us below to replace \(W^2\) by \((T-P)^2\) \textbf{without a case distinction}, and hence to reduce the whole drift condition to the negative semidefiniteness of a single \(2\times2\) matrix.
+\end{quote}
+
+\subsection{The drift criterion}\label{subsec:drift}
+
+Let \(\varphi:[0,\infty)^2\to\mathbb R\) be continuous, and set \[u(x,y):=\varphi(|x|,|y|),\qquad x,y\in\mathbb R^2 .\] Suppose \(\varphi\) is \(C^2\) on the open quadrant \(\{r>0,\ s>0\}\). There, with \(\hat x=x/|x|\), \(\hat y=y/|y|\), \(r=|x|\), \(s=|y|\), the classical Hessian of \(u\) is \[D^2_{xx}u=\varphi_{rr}\,\hat x\otimes\hat x+\frac{\varphi_r}{r}(I-\hat x\otimes\hat x),\quad
+D^2_{xy}u=\varphi_{rs}\,\hat x\otimes\hat y,\quad
+D^2_{yy}u=\varphi_{ss}\,\hat y\otimes\hat y+\frac{\varphi_s}{s}(I-\hat y\otimes\hat y)\] (these follow from \(\partial_{x_i}|x|=\hat x_i\) and \(\partial_{x_i}\hat x_j=(\delta_{ij}-\hat x_i\hat x_j)/r\), so that \(\partial_{x_i}\partial_{x_j}u=\varphi_{rr}\hat x_i\hat x_j+\varphi_r(\delta_{ij}-\hat x_i\hat x_j)/r\), and similarly in \(y\); the mixed block is \(\partial_{x_i}\partial_{y_j}u=\varphi_{rs}\hat x_i\hat y_j\)). Hence for \(h,k\in\mathbb R^2\), writing \(h_{\|}:=h\cdot\hat x\), \(h_\perp:=h-h_{\|}\hat x\), \(k_{\|}:=k\cdot\hat y\), \(k_\perp:=k-k_{\|}\hat y\), \[\big\langle D^2u(x,y)(h,k),(h,k)\big\rangle
+=\varphi_{rr}h_{\|}^2+2\varphi_{rs}h_{\|}k_{\|}+\varphi_{ss}k_{\|}^2
++\frac{\varphi_r}{r}|h_\perp|^2+\frac{\varphi_s}{s}|k_\perp|^2. \tag{2.2}\]
+
+\begin{definition}[the drift matrix]\label{def:drift-matrix}
+For \(r,s>0\) put \[\mathcal A:=\varphi_{rr}+\frac{\varphi_r}{r},\qquad
+\mathcal B:=|\varphi_{rs}|-\frac{\varphi_r}{r},\qquad
+\mathcal C:=\varphi_{ss}+\frac{\varphi_s}{s}+\frac{\varphi_r}{r},\] all evaluated at \((r,s)\), and call \(\mathcal Q:=\begin{pmatrix}\mathcal A&\mathcal B\\ \mathcal B&\mathcal C\end{pmatrix}\) the \emph{drift matrix} of \(\varphi\) at \((r,s)\).
+\end{definition}
+
+\begin{proposition}[drift inequality]\label{prop:2-3}
+Let \(x,y\in\mathbb R^2\) with \(x\ne0\ne y\), and let \(a,b\in\mathbb C\) be arbitrary. Put \(c:=a-ib\) and \[v_1:=(a,\,c),\qquad v_2:=(b,\,-ic)\ \in\ \mathbb R^2\times\mathbb R^2=\mathbb R^4 .\] Assume that at \((r,s)=(|x|,|y|)\) one has \[\varphi_r\le0 \tag{D0}\] and that the drift matrix is negative semidefinite, i.e. \[\mathcal A\le0,\qquad \mathcal C\le0,\qquad \mathcal B^2\le\mathcal A\,\mathcal C. \tag{D1}\] Then \[\sum_{j=1}^{2}\big\langle D^2u(x,y)\,v_j,\,v_j\big\rangle\ \le\ 0 . \tag{2.3}\]
+\end{proposition}
+
+\begin{proof}
+Write \(h_1=a,\ h_2=b,\ k_1=c,\ k_2=-ic\); the \(j\)-th vector is \(v_j=(h_j,k_j)\). Apply (2.2) to each \(j\) and sum. Let \(P,W\) be as in Lemma 2.1 with \(\hat e=\hat x\), so \(\sum_jh_{j\|}^2=P^2\) and \(\sum_j|h_{j\perp}|^2=W^2\); and let \(T=|c|\). Lemma 1.4, applied with \(\hat e=\hat y\), gives \[\sum_j k_{j\|}^2=T^2,\qquad \sum_j|k_{j\perp}|^2=T^2 .\] By Cauchy--Schwarz, \(\big|\sum_jh_{j\|}k_{j\|}\big|\le(\sum_jh_{j\|}^2)^{1/2}(\sum_jk_{j\|}^2)^{1/2}=PT\). Therefore \[\sum_{j}\big\langle D^2u\,v_j,v_j\big\rangle
+\ \le\ \varphi_{rr}P^2+2|\varphi_{rs}|\,PT+\Big(\varphi_{ss}+\frac{\varphi_s}{s}\Big)T^2
++\frac{\varphi_r}{r}\,W^2 .\] By (D0) the coefficient \(\varphi_r/r\) of \(W^2\) is \(\le0\), and by Lemma 2.1 \(W^2\ge(T-P)^2\); hence \(\frac{\varphi_r}{r}W^2\le\frac{\varphi_r}{r}(T-P)^2\) and \[\sum_{j}\big\langle D^2u\,v_j,v_j\big\rangle
+\ \le\ \Big(\varphi_{rr}+\frac{\varphi_r}{r}\Big)P^2
++2\Big(|\varphi_{rs}|-\frac{\varphi_r}{r}\Big)PT
++\Big(\varphi_{ss}+\frac{\varphi_s}{s}+\frac{\varphi_r}{r}\Big)T^2
+=\mathcal AP^2+2\mathcal BPT+\mathcal CT^2 .\] A real binary quadratic form \(\mathcal AP^2+2\mathcal BPT+\mathcal CT^2\) with \(\mathcal A\le0\), \(\mathcal C\le0\) and \(\mathcal B^2\le\mathcal A\mathcal C\) is negative semidefinite on all of \(\mathbb R^2\): indeed if \(\mathcal A<0\) then \(\mathcal AP^2+2\mathcal BPT+\mathcal CT^2
+=\mathcal A\big(P+\frac{\mathcal B}{\mathcal A}T\big)^2
++\frac{\mathcal A\mathcal C-\mathcal B^2}{\mathcal A}T^2\le0\), while if \(\mathcal A=0\) then \(\mathcal B^2\le0\) forces \(\mathcal B=0\) and the form is \(\mathcal CT^2\le0\). This proves (2.3).
+\end{proof}
+
+\subsection{Admissible functions}\label{subsec:admissible}
+
+\begin{definition}\label{def:admissible}
+Let \(p\ge2\) and \(\Lambda>0\). A function \(\varphi:[0,\infty)^2\to\mathbb R\) is called \textbf{\((p,\Lambda)\)-admissible} if:
+
+\begin{itemize}
+\tightlist
+\item
+  \textbf{(A1)} \(\varphi\) is continuous on \([0,\infty)^2\), positively homogeneous of degree \(p\) (i.e.~\(\varphi(\lambda r,\lambda s)=\lambda^p\varphi(r,s)\) for \(\lambda>0\)), and \(C^\infty\) on \(\{r>0,s>0\}\);
+\item
+  \textbf{(A2)} \emph{(growth)} there are \(M<\infty\) and \(\theta\in[0,1)\) with, for all \(r,s>0\) and \(\sigma:=r+s\), \[|\varphi|\le M\sigma^{p},\qquad
+  |\varphi_r|+|\varphi_s|\le M\sigma^{p-1}\Big(\frac\sigma s\Big)^{\theta},\] \[|\varphi_{rr}|+|\varphi_{rs}|+|\varphi_{ss}|+\Big|\frac{\varphi_r}{r}\Big|
+  +\Big|\frac{\varphi_s}{s}\Big|\ \le\ M\sigma^{p-2}\Big(\frac\sigma s\Big)^{1+\theta};\]
+\item
+  \textbf{(A3)} \emph{(drift)} (D0) and (D1) of Proposition 2.3 hold at every \((r,s)\) with \(r,s>0\);
+\item
+  \textbf{(A4)} \emph{(majorization)} \(\varphi(r,s)\ \ge\ s^p-\Lambda^p r^p\) for all \(r,s\ge0\);
+\item
+  \textbf{(A5)} \emph{(boundary sign)} \(\varphi(r,0)\le0\) for all \(r\ge0\).
+\end{itemize}
+\end{definition}
+
+Note \(\sigma/s=1+r/s\ge1\), so (A2) with \(\theta=0\) is the strongest form and reads \(|\varphi_r|+|\varphi_s|\le M\sigma^{p-1}\) and (second order) \(\le M\sigma^{p-2}(1+r/s)\); larger \(\theta<1\) makes (A2) weaker. The single purpose of \(\theta\) is to allow profiles whose \(s\)-derivatives blow up like \(s^{-\theta}\) at \(s=0\); everything in Section~2.4 and Section~3 goes through unchanged for any \(\theta<1\).
+
+We will prove in Section~3:
+
+\begin{bellmanprinciple}
+If \(\varphi\) is \((p,\Lambda)\)-admissible for some \(p\ge2\), then
+\[\|B\|_{L^p\to L^p}\le\Lambda.\]
+\end{bellmanprinciple}
+
+Three admissible functions are exhibited in Section~4.
+
+\subsection{Regularity and mollification}\label{subsec:mollification}
+
+Let \(\varphi\) be \((p,\Lambda)\)-admissible with growth parameters \((M,\theta)\), and let \(u(x,y)=\varphi(|x|,|y|)\) on \(\mathbb R^4\). We write \(z=(x,y)\) and \(s=|y|\).
+
+\begin{lemma}\label{lem:2-5}
+\(u\) is continuous on \(\mathbb R^4\), and for some \(M'=M'(M,p)\), \[|u(z)|\le M'|z|^p,\qquad
+|\nabla u(z)|\le M'\,|z|^{p-1}\Big(\frac{|z|}{|y|}\Big)^{\theta}\quad(y\ne0).
+\tag{2.4}\] The pointwise gradient and Hessian of \(u\) exist off the null set \(\mathcal N:=\{x=0\}\cup\{y=0\}\), belong to \(L^1_{\mathrm{loc}}(\mathbb R^4)\), and coincide with the distributional gradient and Hessian of \(u\).
+\end{lemma}
+
+\begin{proof}
+Continuity and the first bound in (2.4) are immediate from (A1)--(A2) (note \(\sigma=|x|+|y|\le\sqrt2\,|z|\) and \(|z|\le\sigma\)). Off \(\mathcal N\), \(u\) is smooth and \(|\nabla u|\le|\varphi_r|+|\varphi_s|\le M\sigma^{p-1}(\sigma/s)^\theta\), which is the second bound in (2.4).
+
+By (A2), \(|D^2u(z)|\le C_pM\sigma^{p-2}(\sigma/s)^{1+\theta}\) off \(\mathcal N\) (each entry of \(D^2u\) is a combination of \(\varphi_{rr},\varphi_{rs},\varphi_{ss},\varphi_r/r,\varphi_s/s\) with coefficients bounded by \(1\), by the display preceding (2.2)). Hence on the ball \(\{|z|<R\}\), \[|\nabla u(z)|\le C(R)\,|y|^{-\theta},\qquad |D^2u(z)|\le C(R)\,|y|^{-1-\theta}.\] Both are locally integrable on \(\mathbb R^4\): in polar coordinates in the \(y\)-variable, \(\int_{|y|<R}|y|^{-\alpha}dy=2\pi R^{2-\alpha}/(2-\alpha)<\infty\) whenever \(\alpha<2\), and here \(\alpha=\theta<1\) resp. \(\alpha=1+\theta<2\).
+
+Let \(\zeta\in C_c^\infty(\mathbb R^4)\), supported in \(\{|z|<R\}\), and let \(\mathsf a,\mathsf b\) be two of the four coordinates. Let \(\Omega_\delta:=\{(x,y):|x|>\delta,\ |y|>\delta\}\). On \(\Omega_\delta\) the function \(u\) is \(C^\infty\), so two integrations by parts give \[\int_{\Omega_\delta}u\,\partial_{\mathsf a}\partial_{\mathsf b}\zeta
+=\int_{\Omega_\delta}(\partial_{\mathsf a}\partial_{\mathsf b}u)\,\zeta+R_\delta,\] where \(R_\delta\) is a sum of boundary integrals over \(\partial\Omega_\delta\subset(\{|x|=\delta\}\times\mathbb R^2)\cup(\mathbb R^2\times\{|y|=\delta\})\) of terms \(u\,(\partial\zeta)\,n\) and \((\partial u)\,\zeta\,n\). We estimate the two pieces.
+
+\emph{On \(\{|x|=\delta\}\cap\operatorname{supp}\zeta\):} the surface measure is \(d\mathcal H^3=\delta\,d\vartheta\,dy\) with \(|y|<R\), of total mass \(O(\delta)\). There \(|u|\le C(R)\) and \(\int_{|y|<R}|\nabla u|\,dy\le C(R)\int_{|y|<R}|y|^{-\theta}dy<\infty\), so both kinds of terms are \(O(\delta)\).
+
+\emph{On \(\{|y|=\delta\}\cap\operatorname{supp}\zeta\):} the surface measure is \(O(\delta)\); there \(|u|\le C(R)\) and \(|\nabla u|\le C(R)\delta^{-\theta}\), so the terms are \(O(\delta)\) and \(O(\delta^{1-\theta})\) respectively.
+
+Since \(\theta<1\), \(R_\delta\to0\) as \(\delta\downarrow0\). Both integrands are dominated by \(L^1\) functions (\(|u|\,|\partial\partial\zeta|\) is bounded with compact support; \(|D^2u|\,|\zeta|\) is in \(L^1\) as shown), so the integrals converge to those over \(\mathbb R^4\). Thus the distributional Hessian is the pointwise one. The same argument with one integration by parts (only the terms \(u(\partial\zeta)n\) occur, of size \(O(\delta)\)) identifies the distributional gradient.
+\end{proof}
+
+\begin{lemma}[smoothed Bellman function]\label{lem:2-6}
+Let \(\rho\in C_c^\infty(\mathbb R^4)\) be nonnegative, supported in the unit
+ball, and normalized by \(\int_{\mathbb R^4}\rho=1\).  Set
+\(\rho_\varepsilon(z)=\varepsilon^{-4}\rho(z/\varepsilon)\) and
+\(u_\varepsilon=u*\rho_\varepsilon\).  Then:
+
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\item
+  \(u_\varepsilon\in C^\infty(\mathbb R^4)\); for some \(C=C(M,p)\),
+  \[|u_\varepsilon(z)|\le C\bigl(|z|^p+\varepsilon^p\bigr),\]
+  and \(\nabla u_\varepsilon\) is bounded on compact subsets of \(\mathbb R^4\).
+\item
+  For every \(z\in\mathbb R^4\) and every \(a,b\in\mathbb C\), with
+  \[v_1=(a,a-ib),\qquad v_2=(b,-i(a-ib)),\]
+  one has
+  \[\sum_{j=1}^2\big\langle D^2u_\varepsilon(z)v_j,v_j\big\rangle\le0. \tag{2.5}\]
+\item
+  \(u_\varepsilon\to u\) locally uniformly as \(\varepsilon\downarrow0\).
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+By Lemma 2.5, \(u\in W^{2,1}_{\mathrm{loc}}(\mathbb R^4)\) and has polynomial
+growth.  Standard properties of convolution therefore give
+\(u_\varepsilon\in C^\infty\),
+\[D^2u_\varepsilon=(D^2u)*\rho_\varepsilon,
+\qquad \nabla u_\varepsilon=(\nabla u)*\rho_\varepsilon.\]
+Because \(\rho_\varepsilon\) is supported in \(B(0,\varepsilon)\), the growth
+bound follows from
+\(|u(z-\omega)|\le C(|z|+|\omega|)^p\), and the local boundedness of the
+gradient is immediate from smoothness.
+
+Fix \(z,a,b\).  For almost every \(\omega\), the point \(z-\omega=(x',y')\)
+satisfies \(x'\ne0\ne y'\), so Proposition 2.3 gives
+\[\sum_{j=1}^2
+  \big\langle D^2u(z-\omega)v_j,v_j\big\rangle\le0.\]
+The vectors \(v_1,v_2\) do not depend on the base point.  Integrating the last
+inequality against the nonnegative kernel \(\rho_\varepsilon\) proves (2.5).
+Finally, continuity of \(u\) implies local uniform convergence under this
+compactly supported approximate identity.
+\end{proof}
+
+\subsection{The criterion in the variable \(t=r/s\)}\label{subsec:profile-criterion}
+
+It is convenient, for the explicit examples of Section~4, to record (A3) in terms of the profile of \(\varphi\) along \(s=1\). By homogeneity we may write \[\varphi(r,s)=s^{p}f(t),\qquad t:=\frac rs\in(0,\infty),\qquad f\in C^\infty(0,\infty). \tag{2.6}\]
+
+\begin{lemma}\label{lem:2-7}
+With (2.6) and \(r,s>0\), \[\varphi_r=s^{p-1}f',\qquad
+\varphi_{rr}=s^{p-2}f'',\qquad
+\frac{\varphi_r}{r}=s^{p-2}\frac{f'}{t},\] \[\varphi_{rs}=s^{p-2}\big[(p-1)f'-tf''\big],\qquad
+\frac{\varphi_s}{s}=s^{p-2}\big[pf-tf'\big],\qquad
+\varphi_{ss}=s^{p-2}\big[p(p-1)f-2(p-1)tf'+t^2f''\big],\] all evaluated at \(t=r/s\). Consequently \[\mathcal A=\frac{s^{p-2}}{t}\,\mathsf P_1,\qquad
+\mathcal C=\frac{s^{p-2}}{t}\,\mathsf P_2,\qquad
+\text{and }\ \mathcal B=\frac{s^{p-2}}{t}\,\mathsf P_3\ \text{ provided }\ \mathsf Q\ge0,\] where \[\mathsf P_1:=tf''+f',\qquad
+\mathsf P_2:=p^2tf-(2p-1)t^2f'+t^3f''+f',\qquad
+\mathsf P_3:=t^2f''-(p-1)tf'-f',\] \[\mathsf Q:=t^2f''-(p-1)tf' .\] Hence, if for all \(t>0\) \[f'\le0,\qquad \mathsf Q\ge0,\qquad \mathsf P_1\le0,\qquad \mathsf P_2\le0,\qquad
+\mathsf R:=\mathsf P_1\mathsf P_2-\mathsf P_3^2\ \ge\ 0, \tag{2.7}\] then (D0) and (D1) hold at every \((r,s)\) with \(r,s>0\).
+\end{lemma}
+
+\begin{proof}
+Differentiate (2.6), using \(\partial_r t=1/s\) and \(\partial_s t=-t/s\): \(\varphi_r=s^p f'\cdot\frac1s=s^{p-1}f'\) and \(\varphi_{rr}=s^{p-1}f''\cdot\frac1s=s^{p-2}f''\), giving also \(\varphi_r/r=s^{p-1}f'/(st)=s^{p-2}f'/t\). Next \[\varphi_s=ps^{p-1}f+s^pf'\cdot\Big(-\frac ts\Big)=s^{p-1}\big[pf-tf'\big],\] so \(\varphi_s/s=s^{p-2}[pf-tf']\). Differentiating \(\varphi_r=s^{p-1}f'\) in \(s\), \[\varphi_{rs}=(p-1)s^{p-2}f'+s^{p-1}f''\cdot\Big(-\frac ts\Big)=s^{p-2}\big[(p-1)f'-tf''\big].\] Differentiating \(\varphi_s=s^{p-1}[pf-tf']\) in \(s\) and using \(\partial_s\big(pf-tf'\big)=pf'\cdot(-\tfrac ts)+\tfrac ts f'-t f''\cdot(-\tfrac ts)
+=\tfrac1s\big[-(p-1)tf'+t^2f''\big]\), \[\varphi_{ss}=(p-1)s^{p-2}\big[pf-tf'\big]+s^{p-2}\big[-(p-1)tf'+t^2f''\big]
+=s^{p-2}\big[p(p-1)f-2(p-1)tf'+t^2f''\big].\] Now \[\mathcal A=\varphi_{rr}+\frac{\varphi_r}{r}=s^{p-2}\Big[f''+\frac{f'}{t}\Big]
+=\frac{s^{p-2}}{t}\big[tf''+f'\big]=\frac{s^{p-2}}{t}\mathsf P_1,\] \[\mathcal C=\varphi_{ss}+\frac{\varphi_s}{s}+\frac{\varphi_r}{r}
+=s^{p-2}\Big[p(p-1)f-2(p-1)tf'+t^2f''+pf-tf'+\frac{f'}{t}\Big]
+=\frac{s^{p-2}}{t}\big[p^2tf-(2p-1)t^2f'+t^3f''+f'\big],\] which is \(\frac{s^{p-2}}{t}\mathsf P_2\). Finally \(\mathsf Q\ge0\) means \(t^2f''-(p-1)tf'\ge0\), i.e.~(dividing by \(t>0\)) \(tf''-(p-1)f'\ge0\), i.e. \(\varphi_{rs}=s^{p-2}[(p-1)f'-tf'']\le0\); in that case \[\mathcal B=|\varphi_{rs}|-\frac{\varphi_r}{r}=s^{p-2}\Big[tf''-(p-1)f'-\frac{f'}{t}\Big]
+=\frac{s^{p-2}}{t}\big[t^2f''-(p-1)tf'-f'\big]=\frac{s^{p-2}}{t}\mathsf P_3 .\] Since \(s^{p-2}/t>0\), the conditions \(\mathcal A\le0\), \(\mathcal C\le0\), \(\mathcal B^2\le\mathcal A\mathcal C\) are equivalent to \(\mathsf P_1\le0\), \(\mathsf P_2\le0\), \(\mathsf P_3^2\le\mathsf P_1\mathsf P_2\), and (D0) is \(f'\le0\).
+\end{proof}
+
+\subsection{Generalized polynomial profiles}\label{subsec:polynomial-profiles}
+
+\begin{lemma}\label{lem:2-8}
+Let \(p\ge2\), let \(E\subset[2,p)\) be a finite set of \textbf{real} exponents, let \(b_k\ge0\) for \(k\in E\), let \(a_0>0\), and put \[f(t)=a_0-\sum_{k\in E} b_kt^k\qquad(t>0),\qquad
+\varphi(r,s):=s^pf(r/s)=a_0s^p-\sum_{k\in E}b_k\,r^ks^{p-k} .\] Then, with \(\mathsf P_i,\mathsf Q\) as in Lemma 2.7, \[\mathsf P_1=-\sum_{k}k^2b_k\,t^{k-1}\ \le\ 0,\qquad
+\mathsf P_3=\sum_{k}k\,b_k\,t^{k-1}+\sum_{k}k(p-k)\,b_k\,t^{k}\ \ge\ 0,\] \[\mathsf P_2=p^2a_0\,t-\sum_{k}k\,b_k\,t^{k-1}-\sum_{k}(p-k)^2b_k\,t^{k+1},\] \[\mathsf Q=\sum_{k}k(p-k)\,b_k\,t^{k}\ \ge\ 0 ,\qquad f'\le0 .\] Moreover \(\varphi\) extends continuously to \([0,\infty)^2\) with \(\varphi(r,0)=0\) (so (A5) holds), is positively homogeneous of degree \(p\), is \(C^\infty\) on \(\{r>0,s>0\}\) --- i.e.~(A1) holds --- and satisfies (A2) with \[\theta:=\max\Big\{0,\ \max_{k\in E}(k+1-p)\Big\}\ \in\ [0,1).\]
+\end{lemma}
+
+\begin{proof}
+\(f'=-\sum k b_kt^{k-1}\le0\) and \(f''=-\sum k(k-1)b_kt^{k-2}\). Hence \[\mathsf P_1=tf''+f'=-\sum k(k-1)b_kt^{k-1}-\sum kb_kt^{k-1}=-\sum k^2b_kt^{k-1},\] \[\mathsf P_3=t^2f''-(p-1)tf'-f'=-\sum k(k-1)b_kt^{k}+(p-1)\sum kb_kt^{k}+\sum kb_kt^{k-1},\] and \(-(k-1)+(p-1)=p-k\) gives the stated form; likewise \(\mathsf Q=t^2f''-(p-1)tf'=\sum k\big[(p-1)-(k-1)\big]b_kt^k=\sum k(p-k)b_kt^k\), which is \(\ge0\) because \(k<p\) for every \(k\in E\) (this is also why \(\mathsf P_3\ge0\)). For \(\mathsf P_2\), \[\mathsf P_2=p^2t\Big(a_0-\sum b_kt^k\Big)+(2p-1)\sum kb_kt^{k+1}-\sum k(k-1)b_kt^{k+1}-\sum kb_kt^{k-1},\] and \(-p^2+(2p-1)k-k(k-1)=-(p^2-2pk+k^2)=-(p-k)^2\), which gives the stated form.
+
+\emph{Continuity and (A5).} \(\varphi(r,s)=a_0s^p-\sum b_kr^ks^{p-k}\) and every exponent \(p-k>0\), so each term tends to \(0\) as \(s\downarrow0\) with \(r\) fixed; thus \(\varphi\) extends continuously by \(\varphi(r,0)=0\) and \(\varphi(0,s)=a_0s^p\). Homogeneity and smoothness on the open quadrant are clear (for \(r>0\), \(r\mapsto r^k\) is \(C^\infty\) for any real \(k\)).
+
+\emph{(A2).} Each of \(\varphi\), \(\varphi_r,\varphi_s\), \(\varphi_{rr},\varphi_{rs},\varphi_{ss},\varphi_r/r,\varphi_s/s\) is a finite linear combination, with coefficients depending only on \(p\), \(a_0\) and \(\max_kb_k\), of monomials \(r^\alpha s^\beta\) with \(\alpha\ge0\) and \(\alpha+\beta=p\), \(p-1\), \(p-2\) respectively. Explicitly: \[\varphi_r=-\sum kb_kr^{k-1}s^{p-k},\qquad
+\varphi_s=pa_0s^{p-1}-\sum(p-k)b_kr^ks^{p-k-1},\] \[\varphi_{rr}=-\sum k(k-1)b_kr^{k-2}s^{p-k},\qquad
+\frac{\varphi_r}{r}=-\sum kb_kr^{k-2}s^{p-k},\qquad
+\varphi_{rs}=-\sum k(p-k)b_kr^{k-1}s^{p-k-1},\] \[\varphi_{ss}=p(p-1)a_0s^{p-2}-\sum(p-k)(p-k-1)b_kr^ks^{p-k-2},\qquad
+\frac{\varphi_s}{s}=pa_0s^{p-2}-\sum(p-k)b_kr^ks^{p-k-2}.\] All exponents \(\alpha\) of \(r\) occurring above are \(\ge0\), because \(k\ge2\) for every \(k\in E\). The exponents \(\beta\) of \(s\) occurring are, listed by order \(m\):
+
+\begin{itemize}
+\tightlist
+\item
+  \(m=0\): \(\beta=p\) and \(\beta=p-k>0\). Hence \(\beta\ge0\).
+\item
+  \(m=1\): \(\beta=p-k>0\) (in \(\varphi_r\)), \(\beta=p-1>0\) and \(\beta=p-k-1\) (in \(\varphi_s\)). Since \(\theta\ge k+1-p\) for every \(k\in E\), we get \(p-k-1\ge-\theta\); hence \(\beta\ge-\theta\).
+\item
+  \(m=2\): \(\beta=p-k>0\) (in \(\varphi_{rr},\varphi_r/r\)), \(\beta=p-k-1\ge-\theta\) (in \(\varphi_{rs}\)), \(\beta=p-2\ge0\) and \(\beta=p-k-2\ge-1-\theta\) (in \(\varphi_{ss},\varphi_s/s\)). Hence \(\beta\ge-(1+\theta)\).
+\end{itemize}
+
+Note \(\theta<1\) because \(k<p\) for all \(k\in E\).
+
+Now let \(r^\alpha s^\beta\) with \(\alpha\ge0\), \(\alpha+\beta=p-m\) and \(\beta\ge-\gamma\) for some \(\gamma\ge0\). Since \(r\le\sigma\) and \(s\le\sigma\), \[r^\alpha s^\beta\le\sigma^\alpha s^\beta=
+\begin{cases}\sigma^{\alpha}s^{\beta}\le\sigma^{p-m}, &\beta\ge0,\\[2pt]
+\sigma^{p-m-\beta}s^{\beta}=\sigma^{p-m}\big(\tfrac\sigma s\big)^{-\beta}
+\le\sigma^{p-m}\big(\tfrac\sigma s\big)^{\gamma}, &\beta<0,\end{cases}\] using \(\sigma/s\ge1\). Applying this with \((m,\gamma)=(0,0)\), \((1,\theta)\) and \((2,1+\theta)\) gives exactly the three bounds of (A2), with \(M\) a constant depending only on \(p\), \(a_0\) and \(\{b_k\}\).
+\end{proof}
+
+\begin{remark}\label{rem:2-9}
+Lemma 2.8 permits exponents \(k\) in the whole range \(2\le k<p\); when \(k>p-1\) the derivative \(\varphi_s\) blows up like \(s^{-(k+1-p)}\) as \(s\downarrow0\), which is precisely what the parameter \(\theta\) in (A2) accommodates. This extra freedom is used at \(p=\frac{16}3\) in Section~4.2 (there \(E=\{2,3,4,5\}\) and \(5>p-1=\frac{13}3\), so \(\theta=\frac23\)); at \(p=\frac{15}2\) in Section~4.3 all exponents satisfy \(k\le p-1\) and \(\theta=0\).
+\end{remark}
+
+\begin{remark}[The quadratic coefficient]\label{rem:2-10} Assume \(b_2>0\).  As \(t\downarrow0\),
+\[\mathsf P_1=-4b_2t+o(t),\qquad
+  \mathsf P_2=(p^2a_0-2b_2)t+o(t),\qquad
+  \mathsf P_3=2b_2t+o(t),\]
+and hence
+\[\mathsf R=4b_2(b_2-p^2a_0)t^2+o(t^2).\]
+Thus \(\mathsf R\ge0\) near the origin forces
+\(b_2\ge p^2a_0\).  Both explicit profiles below saturate this necessary
+condition, \(b_2=p^2a_0\), which makes the leading term vanish.  This local
+observation is not, by itself, a global optimality statement.
+\end{remark}
+
+\begin{lemma}[majorization by weighted AM--GM]\label{lem:2-11}
+In the setting of Lemma 2.8, let \(t_0>0\), \(\lambda>0\) and \(\mathsf M>0\) satisfy the two inequalities \[\lambda\Big(a_0-\sum_{k\in E}b_k\Big(1-\frac kp\Big)t_0^{\,k}\Big)\ \ge\ 1,
+\tag{M1}\] \[\mathsf M\ \ge\ \frac{\lambda}{p}\sum_{k\in E}k\,b_k\,t_0^{\,k-p}. \tag{M2}\] Then \(\lambda\varphi\) satisfies (A4) with \(\Lambda:=\mathsf M^{1/p}\), i.e. \(\lambda\varphi(r,s)\ge s^p-\Lambda^pr^p\) for all \(r,s\ge0\).
+\end{lemma}
+
+\begin{proof}
+Step 1 (Young's inequality). For \(0<\vartheta\le1\) and \(X\ge0\), \[X^{\vartheta}\ \le\ \vartheta X+1-\vartheta .\] Indeed \(h(X):=\vartheta X+1-\vartheta-X^\vartheta\) satisfies \(h(1)=0\) and \(h'(X)=\vartheta(1-X^{\vartheta-1})\), which is \(\le0\) for \(0<X\le1\) and \(\ge0\) for \(X\ge1\) (because \(\vartheta-1\le0\)); so \(h\) attains its minimum on \([0,\infty)\) at \(X=1\), where it vanishes. (At \(X=0\): \(h(0)=1-\vartheta\ge0\).)
+
+Step 2. Let \(k\in E\), so \(0<k<p\). Apply Step 1 with \(\vartheta=k/p\in(0,1)\) and \(X=(t/t_0)^p\), noting \(X^\vartheta=(t/t_0)^k\): \[\Big(\frac t{t_0}\Big)^{k}\ \le\ \frac kp\Big(\frac t{t_0}\Big)^{p}+1-\frac kp
+\qquad\Longrightarrow\qquad
+t^{k}\ \le\ \frac kp\,t_0^{\,k-p}\,t^{p}+\Big(1-\frac kp\Big)t_0^{\,k}
+\qquad(t\ge0). \tag{2.8}\]
+
+Step 3. Set \(G(t):=\mathsf Mt^p+\lambda f(t)-1\). By (2.8) and \(b_k\ge0\), \[\lambda\sum_kb_kt^k\ \le\
+\Big(\frac{\lambda}{p}\sum_kk\,b_k\,t_0^{\,k-p}\Big)t^p
++\lambda\sum_kb_k\Big(1-\frac kp\Big)t_0^{\,k},\] hence for all \(t\ge0\) \[G(t)=\mathsf Mt^p+\lambda a_0-\lambda\sum_kb_kt^k-1
+\ \ge\ \Big[\mathsf M-\frac{\lambda}{p}\sum_kk\,b_kt_0^{\,k-p}\Big]t^p
++\Big[\lambda\Big(a_0-\sum_kb_k\Big(1-\tfrac kp\Big)t_0^{\,k}\Big)-1\Big]\ \ge\ 0\] by (M2) and (M1).
+
+Step 4. For \(s>0\), dividing \(\lambda\varphi(r,s)\ge s^p-\Lambda^pr^p\) by \(s^p\) and putting \(t=r/s\) turns it into \(\lambda f(t)\ge1-\mathsf Mt^p\), i.e.~\(G(t)\ge0\). For \(s=0\) it reads \(0=\lambda\varphi(r,0)\ge-\Lambda^pr^p\), which is true.
+\end{proof}
+
+Finally note that if \(\varphi\) satisfies (A1)--(A3) then so does \(\lambda\varphi\) for any \(\lambda>0\) (all of (D0), (D1) are positively homogeneous in \(\varphi\): \(\mathcal A\), \(\mathcal B\), \(\mathcal C\) scale by \(\lambda\), so \(\mathcal B^2\le\mathcal A\mathcal C\) scales by \(\lambda^2\); and (A2) holds with \(\lambda M\) and the same \(\theta\)).
+
+
+\section{The probabilistic model and the Bellman principle}\label{sec:probabilistic}
+
+Fix \(p\ge2\), \(f,g\in C_c^\infty(\mathbb R^2;\mathbb C)\) and \(T>0\); write \(U=e^{t\Delta}f\), \(V=e^{t\Delta}g\) as in Section~0. Recall that \(U,V\) and all their space derivatives are bounded and continuous on \(\mathbb R^2\times[0,T]\), with \(\|\partial^\alpha U(\cdot,t)\|_q\le\|\partial^\alpha f\|_q\).
+
+\subsection{Brownian motion with generator \(\Delta\) and the \(\sigma\)-finite measure \(\nu\)}\label{subsec:wiener}
+
+Let \(\Omega=C([0,T];\mathbb R^2)\) with the coordinate process \(B_s(\omega)=\omega(s)\), the (augmented, right-continuous) filtration \((\mathcal F_s)_{0\le s\le T}\), and for \(x\in\mathbb R^2\) let \(P_x\) be the law of \(x+\sqrt2\,W\), \(W\) a standard planar Brownian motion. Thus under \(P_x\) \[d\langle B^i,B^j\rangle_s=2\delta_{ij}\,ds,\qquad
+P_x(B_s\in dy)=G_s(y-x)\,dy , \tag{3.1}\] so the transition semigroup of \(B\) is exactly the heat semigroup \(e^{s\Delta}\) and the generator is \(\Delta\). The map \(x\mapsto E_x[\Phi]\) is Borel measurable for every bounded measurable \(\Phi\) (standard for this Feller family).
+
+Define the \textbf{\(\sigma\)-finite} measure on \((\Omega,\mathcal F_T)\) \[\nu(F):=\int_{\mathbb R^2}P_x(F)\,dx,\qquad
+E_\nu[\Phi]:=\int_{\mathbb R^2}E_x[\Phi]\,dx\] (defined for \(\Phi\ge0\) measurable, and for \(\Phi\in L^1(\nu)\)). It is \(\sigma\)-finite because \(\nu(\{B_0\in B_R\})=|B_R|<\infty\) and these sets exhaust \(\Omega\).
+
+\begin{lemma}[stationarity]\label{lem:3-1}
+For every \(s\in[0,T]\) and every Borel \(\phi\ge0\) on \(\mathbb R^2\), \(E_\nu[\phi(B_s)]=\int_{\mathbb R^2}\phi\,dx\).
+\end{lemma}
+
+\begin{proof}
+By (3.1) and Tonelli, \(\int E_x[\phi(B_s)]dx=\int\!\!\int\phi(y)G_s(y-x)\,dy\,dx=\int\phi(y)\big(\int G_s(y-x)dx\big)dy=\int\phi\,dy\), since \(G_s\) is a probability density. (For \(s=0\) this is trivial.)
+\end{proof}
+
+\subsection{The two martingales}\label{subsec:martingales}
+
+Since \(U\in C^{2,1}(\mathbb R^2\times[0,T])\) and \(\partial_tU=\Delta U\), Itô's formula applied under \(P_x\) to the real and imaginary parts of \(U\) gives, for \(s\in[0,T]\), \[X_s:=U(B_s,T-s)=U(x,T)+\int_0^s\nabla U(B_r,T-r)\cdot dB_r , \tag{3.2}\] because the drift is \(\big(-\partial_tU+\Delta U\big)dr=0\) (the Itô second-order term is \(\frac12\sum_{ij}\partial_i\partial_jU\,d\langle B^i,B^j\rangle=\Delta U\,dr\) by (3.1)). Similarly \(N_s:=V(B_s,T-s)=V(x,T)+\int_0^s\nabla V(B_r,T-r)\cdot dB_r\). Define the \textbf{transformed} martingale \[Y_s:=\int_0^s\big(A\nabla U\big)(B_r,T-r)\cdot dB_r,\qquad Y_0=0 . \tag{3.3}\] All integrands are bounded continuous, so (3.2)--(3.3) are genuine \(L^2(P_x)\) martingales for each \(x\).
+
+We record the complex Itô isometry: if \(\mathsf a,\mathsf b:[0,T]\times\Omega\to\mathbb C^2\) are bounded adapted continuous, then by (3.1) \[E_x\Big[\Big(\int_0^T\mathsf a\cdot dB\Big)\overline{\Big(\int_0^T\mathsf b\cdot dB\Big)}\Big]
+=2\,E_x\int_0^T \mathsf a\cdot\overline{\mathsf b}\,dr,\qquad
+\mathsf a\cdot\overline{\mathsf b}=\sum_{j}\mathsf a_j\overline{\mathsf b_j}. \tag{3.4}\] (Expand into real and imaginary parts and use the real Itô isometry \(E[\int \mathsf a\,dB\int \mathsf b\,dB]=2E\int \mathsf a\cdot \mathsf b\), valid by (3.1).)
+
+Combining (3.4) with Lemma 3.1 and Tonelli, and using \(|A\nabla U|^2\le4|\nabla U|^2\) from (1.1) together with (1.4), \[E_\nu|Y_T|^2=2\int_0^T\!\!\int_{\mathbb R^2}|A\nabla U|^2dx\,dt\le
+8\int_0^\infty\!\!\int|\nabla U|^2dx\,dt=4\|f\|_2^2<\infty , \tag{3.5}\] likewise \(E_\nu|N_T-N_0|^2\le\|g\|_2^2<\infty\) and \(E_\nu|N_0|^2=\|V(\cdot,T)\|_2^2\le\|g\|_2^2<\infty\). So \(Y_T,\;N_0,\;N_T\in L^2(\nu)\).
+
+\textbf{The columns.} Set, for \(r\in[0,T]\), \[\mathsf a:=\partial_1U(B_r,T-r),\quad \mathsf b:=\partial_2U(B_r,T-r),\quad
+\mathsf c:=\mathsf a-i\mathsf b .\] By Lemma 1.4, \(A\nabla U=(\mathsf c,-i\mathsf c)\). Hence, identifying \(\mathbb C\simeq\mathbb R^2\), the \(\mathbb R^4\)-valued continuous semimartingale \[Z_s:=(X_s,\,Y_s)\in\mathbb R^2\times\mathbb R^2\] satisfies \(Z_s=Z_0+\int_0^s\mathbb M_r\,dB_r\) with \(Z_0=(U(x,T),0)\), where the \(j\)-th column of the real \(4\times2\) matrix \(\mathbb M_r\) is \[v_1=(\mathsf a,\ \mathsf c),\qquad v_2=(\mathsf b,\ -i\mathsf c),
+\qquad \mathsf c=\mathsf a-i\mathsf b . \tag{3.6}\] \textbf{This is exactly the family appearing in Proposition 2.3 and Lemma 2.6(2).}
+
+\subsection{The Bellman estimate}\label{subsec:bellman-estimate}
+
+\begin{proposition}\label{prop:3-2}
+Let \(p\ge2\) and let \(\varphi\) be \((p,\Lambda)\)-admissible in the sense of Definition 2.4. Then for every \(T>0\) and every \(f\in C_c^\infty\), \[\Big(E_\nu|Y_T|^p\Big)^{1/p}\ \le\ \Lambda\,\|f\|_p . \tag{3.7}\]
+\end{proposition}
+
+\begin{proof}
+Let \(u(x,y)=\varphi(|x|,|y|)\), fix \(\varepsilon>0\) and let \(u_\varepsilon\) be as in Lemma 2.6. Choose \(N>\|f\|_\infty\) and set \(\tau_N:=\inf\{s\in[0,T]:|Z_s|\ge N\}\wedge T\).  Then continuity gives \(|Z_{T\wedge\tau_N}|\le N\).  Itô's formula for \(u_\varepsilon(Z_s)\) gives, \(P_x\)-a.s., \[u_\varepsilon(Z_{T\wedge\tau_N})=u_\varepsilon(Z_0)
++\underbrace{\int_0^{T\wedge\tau_N}\!\!\nabla u_\varepsilon(Z_r)\cdot dZ_r}_{=:\,\mathcal M}
++\int_0^{T\wedge\tau_N}\!\!\sum_{j=1}^2\big\langle D^2u_\varepsilon(Z_r)v_j(r),v_j(r)\big\rangle\,dr ,\] where we used \(d\langle Z^{\mathsf a},Z^{\mathsf b}\rangle_r
+=2\sum_j\mathbb M_{\mathsf aj}\mathbb M_{\mathsf bj}\,dr\) (from (3.1)), so that the second-order term is \(\frac12\cdot2\sum_j\langle D^2u_\varepsilon v_j,v_j\rangle\,dr\). By (3.6) and Lemma 2.6(2), that last integral is \(\le0\). Hence, pointwise on \(\Omega\), \[u_\varepsilon(Z_{T\wedge\tau_N})\ \le\ u_\varepsilon(Z_0)+\mathcal M . \tag{3.8}\]
+
+For \(r<\tau_N\) we have \(|Z_r|\le N\), and \(\nabla u_\varepsilon\) is continuous, hence bounded on the closed ball \(\{|z|\le N\}\) by some \(C_{N,\varepsilon}<\infty\) (Lemma 2.6(1)); while \(|\mathbb M_r|\le C'\,|\nabla U(B_r,T-r)|\le C'\|\nabla f\|_\infty\). Thus \(\mathcal M\) is a stochastic integral of a bounded adapted integrand, so \(\mathcal M\in L^2(P_x)\) and \(E_x[\mathcal M]=0\) for every \(x\).
+
+Fix \(R>0\), put \(B_R:=\{x:|x|<R\}\), and let \(\mu_R\) denote the finite measure on \(B_R\times\Omega\) induced by the probability kernel \(x\mapsto P_x\):
+\[\int_{B_R\times\Omega}F\,d\mu_R
+  :=\int_{B_R}E_x[F(x,\cdot)]\,dx\qquad(F\ge0).\]
+Taking \(E_x\) in (3.8) (all terms are \(P_x\)-integrable, since \(|u_\varepsilon(Z_{T\wedge\tau_N})|\le C(N^p+\varepsilon^p)\)) and then integrating over \(B_R\) gives
+\[\int_{B_R}E_x\big[u_\varepsilon(Z_{T\wedge\tau_N})\big]dx\ \le\
+\int_{B_R}u_\varepsilon\big(U(x,T),0\big)\,dx . \tag{3.9}\]
+
+Let \(\varepsilon\downarrow0\) in (3.9). On the left, \(u_\varepsilon\to u\) locally uniformly (Lemma 2.6(3)) and \(|Z_{T\wedge\tau_N}|\le N\), so the integrand converges pointwise and is bounded by \(C(N^p+1)\) on the finite measure space \((B_R\times\Omega,\mu_R)\); dominated convergence applies. On the right, \(u_\varepsilon(U(x,T),0)\to u(U(x,T),0)\) pointwise with \(|u_\varepsilon(U(x,T),0)|\le C(|U(x,T)|^p+1)\in L^1(B_R)\). Hence \[\int_{B_R}E_x\big[u(Z_{T\wedge\tau_N})\big]dx\ \le\ \int_{B_R}u\big(U(x,T),0\big)dx\ \le\ 0,\] the last inequality by (A5), since \(u(x',0)=\varphi(|x'|,0)\le0\).
+
+Now apply the majorization (A4), \(u(x',y')\ge|y'|^p-\Lambda^p|x'|^p\): \[\int_{B_R}E_x\big[|Y_{T\wedge\tau_N}|^p\big]dx\ \le\ \Lambda^p\int_{B_R}E_x\big[|X_{T\wedge\tau_N}|^p\big]dx . \tag{3.10}\] The process \(X_s=U(B_s,T-s)\) is a continuous martingale bounded by \(\|f\|_\infty\), so \(|X_s|^p\) is a bounded submartingale (Jensen) and optional stopping gives \(E_x[|X_{T\wedge\tau_N}|^p]\le E_x[|X_T|^p]=E_x[|f(B_T)|^p]\). Therefore, by Lemma 3.1, \[\int_{B_R}E_x\big[|X_{T\wedge\tau_N}|^p\big]dx\le \int_{\mathbb R^2}E_x\big[|f(B_T)|^p\big]dx=\|f\|_p^p .\] Letting \(N\to\infty\) through values larger than \(\|f\|_\infty\), continuity of each path on \([0,T]\) gives \(\tau_N=T\) for all sufficiently large \(N\), a.s.; so \(|Y_{T\wedge\tau_N}|\to|Y_T|\) a.s. Fatou's lemma in (3.10) yields \[\int_{B_R}E_x\big[|Y_T|^p\big]dx\ \le\ \Lambda^p\|f\|_p^p ,\] and letting \(R\uparrow\infty\) (monotone convergence) gives (3.7).
+\end{proof}
+
+\subsection{Proof of the Bellman principle}\label{subsec:bellman-principle-proof}
+
+\begin{proposition}\label{prop:3-3}
+Let \(p\ge2\) and let \(\varphi\) be \((p,\Lambda)\)-admissible. Then for all \(f,g\in C_c^\infty\) and every \(T>0\), \[\Big|\,2\int_0^T\!\!\int_{\mathbb R^2}(A\nabla U)\cdot\overline{\nabla V}\,dx\,dt\,\Big|
+\ \le\ \Lambda\,\|f\|_p\,\|g\|_{p'} .\]
+\end{proposition}
+
+\begin{proof}
+Using (3.4) under each \(P_x\), then Lemma 3.1 and Fubini (legitimate since \(\int_0^T\!\int|A\nabla U||\nabla V|\le2\int_0^T\!\int|\nabla U||\nabla V|<\infty\) by Lemma 1.5 and Cauchy--Schwarz), \[E_\nu\big[Y_T\overline{(N_T-N_0)}\big]
+=2\int_{\mathbb R^2}E_x\!\int_0^T (A\nabla U)\cdot\overline{\nabla V}(B_r,T-r)\,dr\,dx
+=2\int_0^T\!\!\int_{\mathbb R^2}(A\nabla U)\cdot\overline{\nabla V}\,dx\,dt .\] (The expectation on the left is absolutely convergent because \(Y_T\) and \(N_T-N_0\) are in \(L^2(\nu)\) by (3.5).) Moreover \(E_x[Y_T\overline{N_0}]=\overline{V(x,T)}\,E_x[Y_T]=0\) for each \(x\), and \(Y_T\overline{N_0}\in L^1(\nu)\) by Cauchy--Schwarz in \(L^2(\nu)\); hence \(E_\nu[Y_T\overline{N_0}]=0\) and \[2\int_0^T\!\!\int(A\nabla U)\cdot\overline{\nabla V}\,dx\,dt=E_\nu\big[Y_T\overline{N_T}\big].\] By Hölder's inequality on the measure space \((\Omega,\nu)\), Proposition 3.2, and Lemma 3.1 (which gives \(\|N_T\|_{L^{p'}(\nu)}=\big(E_\nu|g(B_T)|^{p'}\big)^{1/p'}=\|g\|_{p'}\)), \[\big|E_\nu[Y_T\overline{N_T}]\big|\le\|Y_T\|_{L^p(\nu)}\|N_T\|_{L^{p'}(\nu)}
+\le\Lambda\,\|f\|_p\|g\|_{p'} . \]
+\end{proof}
+
+\begin{proof}[Proof of the Bellman principle] Let \(\varphi\) be \((p,\Lambda)\)-admissible, \(p\ge2\). Let \(T\to\infty\) in Proposition 3.3: the integrand \((A\nabla U)\cdot\overline{\nabla V}\) is dominated in absolute value by \(2|\nabla U||\nabla V|\in L^1(\mathbb R^2\times(0,\infty))\) (Lemma 1.5), so dominated convergence and (1.3) give \[\Big|\int (Bf)\bar g\,dx\Big|\ \le\ \Lambda\,\|f\|_p\|g\|_{p'}\qquad(f,g\in C_c^\infty).\] Then \(Bf\in L^2\subset L^1_{\mathrm{loc}}\) and Lemma 1.2 (with \(q=p'\), \(h=Bf\), \(M=\Lambda\|f\|_p\)) gives \(\|Bf\|_p\le\Lambda\|f\|_p\). The estimate on \(C_c^\infty\) therefore extends uniquely to all of \(L^p\), and \(\|B\|_{L^p\to L^p}\le\Lambda\).
+\end{proof}
+
+
+\section{Three admissible Bellman functions}\label{sec:examples}
+
+\subsection{The rescaled Burkholder function}\label{subsec:burkholder}
+
+Fix \(p\ge2\) and write \[q:=p-1\ge1,\qquad \kappa:=\sqrt{\frac{2p}{p-1}}=\sqrt{2+\frac2q}\in(\sqrt2,\,2],
+\qquad \alpha_p:=p\Big(1-\frac1p\Big)^{p-1}=\frac{(p-1)^{p-1}}{p^{p-2}}>0 .\] (Indeed \(\kappa^2=2+2/q\le4\) because \(q\ge1\), and \(\kappa^2>2\); so \(1<\sqrt2<\kappa\le2\).) Define \[\Phi(\rho,s):=\big(s-q\rho\big)(\rho+s)^{q}\qquad(\rho,s\ge0),\qquad
+\varphi^{\mathrm B}(r,s):=\alpha_p\,\Phi(\kappa r,s) . \tag{4.1}\]
+
+\begin{lemma}\label{lem:4-1}
+\(\alpha_p\ge1\) for every \(p\ge2\), with equality iff \(p=2\).
+\end{lemma}
+
+\begin{proof}
+Put \(X=p-1\ge1\). Then \(\alpha_p=(X+1)\big(\tfrac{X}{X+1}\big)^{X}\), and \(\alpha_p\ge1\) is equivalent (take logarithms) to \[\psi(X):=\ln(1+X)-X\ln\!\Big(1+\frac1X\Big)\ \ge\ 0 .\] We have \(\psi(1)=\ln2-\ln2=0\) and, using \(\frac{d}{dX}\ln(1+\frac1X)=\frac1{X+1}-\frac1X=-\frac1{X(X+1)}\), \[\psi'(X)=\frac1{1+X}-\ln\Big(1+\frac1X\Big)+X\cdot\frac1{X(X+1)}
+=\frac{2}{1+X}-\ln\Big(1+\frac1X\Big).\] Substituting \(v=1/X\in(0,1]\), \(\psi'(X)=\chi(v):=\frac{2v}{1+v}-\ln(1+v)\). Now \(\chi(0)=0\) and \(\chi'(v)=\frac{2}{(1+v)^2}-\frac1{1+v}=\frac{1-v}{(1+v)^2}\ge0\) for \(v\in[0,1]\), so \(\chi\ge0\) on \([0,1]\), i.e.~\(\psi'\ge0\) on \([1,\infty)\) (and \(\psi'(X)>0\) for \(X>1\)). Hence \(\psi(X)\ge\psi(1)=0\) for \(X\ge1\).
+\end{proof}
+
+\begin{lemma}[majorization]\label{lem:4-2}
+For all \(\rho,s\ge0\): \(\ \alpha_p\Phi(\rho,s)\ \ge\ s^p-(p-1)^p\rho^p\).
+\end{lemma}
+
+\begin{proof}
+Both sides are positively homogeneous of degree \(p\) in \((\rho,s)\). The inequality is trivial at \((0,0)\); otherwise divide by \((\rho+s)^p\) and set \(t:=\rho/(\rho+s)\in[0,1]\), so \(s/(\rho+s)=1-t\). The claim becomes \(G(t)\ge0\) on \([0,1]\), where \[G(t):=\alpha_p\big(1-t-(p-1)t\big)-(1-t)^p+(p-1)^pt^p
+=\alpha_p(1-pt)-(1-t)^p+(p-1)^pt^p .\]
+
+\emph{Case \(p=2\).} Then \(\alpha_2=1\) and \(G(t)=(1-2t)-(1-t)^2+t^2=0\).
+
+\emph{Case \(p>2\).} First, \[G\Big(\frac1p\Big)=0-\Big(1-\frac1p\Big)^{p}+\frac{(p-1)^p}{p^p}
+=-\Big(\frac{p-1}{p}\Big)^{p}+\Big(\frac{p-1}{p}\Big)^{p}=0 .\] Next \(G'(t)=-\alpha_pp+p(1-t)^{p-1}+p(p-1)^pt^{p-1}\), so, using \(\alpha_p=(p-1)^{p-1}/p^{p-2}\), \[G'\Big(\frac1p\Big)=-\alpha_pp+p\Big(\frac{p-1}{p}\Big)^{p-1}+p\frac{(p-1)^p}{p^{p-1}}
+=-\alpha_pp+\alpha_p+(p-1)\alpha_p=0 .\] Finally \(G''(t)=p(p-1)\big[(p-1)^pt^{p-2}-(1-t)^{p-2}\big]\), and for \(t\in[0,1]\), \(p>2\), taking \((p-2)\)-th roots of nonnegative numbers, \[G''(t)\ge0\iff (p-1)^{p/(p-2)}t\ \ge\ 1-t\iff t\ge t_0:=\frac1{1+(p-1)^{p/(p-2)}} .\] Since \(p-1>1\) and \(\frac p{p-2}>1\) we have \((p-1)^{p/(p-2)}>p-1\), hence \(1+(p-1)^{p/(p-2)}>p\) and therefore \(t_0<1/p\). Thus \(G\) is concave on \([0,t_0]\) and convex on \([t_0,1]\). On \([t_0,1]\): \(G\) is convex with \(G'(1/p)=0\) and \(1/p\in(t_0,1)\), so \(G\ge G(1/p)=0\) there. On \([0,t_0]\): \(G\) is concave, hence \(G\ge\min\{G(0),G(t_0)\}\), where \(G(t_0)\ge0\) by the previous sentence and \(G(0)=\alpha_p-1\ge0\) by Lemma 4.1.
+\end{proof}
+
+\begin{lemma}[derivatives]\label{lem:4-3}
+On \(\{\rho>0,s>0\}\) put \(\sigma:=\rho+s>0\), \(\tau:=\rho/\sigma\in(0,1)\), and \[K:=p\,q\,\sigma^{p-3}>0,\qquad m:=(q-1)\tau\ \ge0,\qquad
+J:=\frac{1-q\tau}{q(1-\tau)} .\] Then \[\Phi_{\rho\rho}=-K\sigma\big[1+m\big],\quad
+\Phi_{\rho s}=-K\sigma\,m,\quad
+\Phi_{ss}=K\sigma\big[1-m\big],\quad
+\frac{\Phi_\rho}{\rho}=-K\sigma,\quad
+\frac{\Phi_s}{s}=K\sigma\,J , \tag{4.2}\] and \(\Phi_\rho=-pq\rho\sigma^{p-2}\le0\). Moreover \(J\le\frac1q\).
+\end{lemma}
+
+\begin{proof}
+Direct differentiation of \(\Phi(\rho,s)=(s-q\rho)(\rho+s)^{q}\): \[\Phi_\rho=-q\sigma^{q}+q(s-q\rho)\sigma^{q-1}=q\sigma^{q-1}\big[-\sigma+s-q\rho\big]
+=-p\,q\,\rho\,\sigma^{p-2},\] \[\Phi_s=\sigma^{q}+q(s-q\rho)\sigma^{q-1}=\sigma^{p-2}\big[\sigma+qs-q^2\rho\big]
+=p\,\sigma^{p-2}\big[s-(p-2)\rho\big]\] (using \(1-q^2=1-(p-1)^2=-p(p-2)\) and \(\sigma=\rho+s\)), and, differentiating once more, \[\Phi_{\rho\rho}=-pq\big[\sigma^{p-2}+(p-2)\rho\sigma^{p-3}\big]=-K\big[q\rho+s\big],
+\qquad \Phi_{\rho s}=-pq(p-2)\rho\,\sigma^{p-3}=-K(q-1)\rho,\] \[\Phi_{ss}=p\big[(p-2)\sigma^{p-3}(s-(p-2)\rho)+\sigma^{p-2}\big]
+=p\,\sigma^{p-3}\big[(p-1)s-(p-1)(p-3)\rho\big]=K\big[s-(q-2)\rho\big]\] (using \(1-(p-2)^2=-(p-1)(p-3)\)). Also \(\frac{\Phi_\rho}{\rho}=-pq\,\sigma^{p-2}=-K\sigma\) and \(\frac{\Phi_s}{s}=p\,\sigma^{p-2}\frac{s-(p-2)\rho}{s}\). Substituting \(\rho=\tau\sigma\), \(s=(1-\tau)\sigma\) and \(p\sigma^{p-2}=K\sigma/q\): \(\Phi_{\rho\rho}=-K\sigma[q\tau+1-\tau]=-K\sigma[1+m]\); \(\Phi_{\rho s}=-K\sigma(q-1)\tau=-K\sigma m\); \(\Phi_{ss}=K\sigma[(1-\tau)-(q-2)\tau]=K\sigma[1-(q-1)\tau]=K\sigma[1-m]\); and \[\frac{\Phi_s}{s}=p\sigma^{p-2}\frac{(1-\tau)-(q-1)\tau}{1-\tau}
+=\frac{K\sigma}{q}\cdot\frac{1-q\tau}{1-\tau}=K\sigma J .\] Finally \(J\le1/q\iff\frac{1-q\tau}{1-\tau}\le1\iff 1-q\tau\le1-\tau\iff(q-1)\tau\ge0\), which holds.
+\end{proof}
+
+\begin{proposition}\label{prop:4-4}
+For every \(p\ge2\), \(\varphi^{\mathrm B}\) is \(\big(p,\sqrt{2p(p-1)}\big)\)-admissible. Consequently, by the Bellman principle, \[\|B\|_{L^p\to L^p}\ \le\ \sqrt{2p(p-1)}\qquad(p\ge2). \tag{4.3}\]
+\end{proposition}
+
+\begin{proof}
+\textbf{(A1)} \(\varphi^{\mathrm B}(r,s)=\alpha_p(s-q\kappa r)(\kappa r+s)^{q}\) is continuous on \([0,\infty)^2\), positively homogeneous of degree \(p\), and \(C^\infty\) where \(\kappa r+s>0\), in particular on the open quadrant.
+
+\textbf{(A5)} \(\varphi^{\mathrm B}(r,0)=\alpha_p(-q\kappa r)(\kappa r)^q\le0\).
+
+\textbf{(A4)} By Lemma 4.2 with \(\rho=\kappa r\), \(\varphi^{\mathrm B}(r,s)\ge s^p-(p-1)^p\kappa^pr^p=s^p-\Lambda^pr^p\) with \(\Lambda=\kappa(p-1)=\sqrt{2p/(p-1)}\,(p-1)=\sqrt{2p(p-1)}\).
+
+\textbf{(A2)} \emph{(with \(\theta=0\).)} Since \(\varphi^{\mathrm B}(r,s)=\alpha_p\Phi(\rho,s)\) with \(\rho=\kappa r\), we have \[\varphi^{\mathrm B}_{rr}=\alpha_p\kappa^2\Phi_{\rho\rho},\quad
+\varphi^{\mathrm B}_{rs}=\alpha_p\kappa\Phi_{\rho s},\quad
+\varphi^{\mathrm B}_{ss}=\alpha_p\Phi_{ss},\quad
+\frac{\varphi^{\mathrm B}_r}{r}=\alpha_p\kappa^2\frac{\Phi_\rho}{\rho},\quad
+\frac{\varphi^{\mathrm B}_s}{s}=\alpha_p\frac{\Phi_s}{s} . \tag{4.4}\] Write \(\sigma'=\kappa r+s\le 2(r+s)=2\sigma\). By (4.2) and \(0\le m\le q\), \(\kappa\le2\): \(|\varphi^{\mathrm B}_{rr}|,|\varphi^{\mathrm B}_{rs}|,|\varphi^{\mathrm B}_{ss}|,
+|\varphi^{\mathrm B}_r/r|\le 4\alpha_p pq(1+q)\sigma'^{\,p-2}\), while \[\Big|\frac{\varphi^{\mathrm B}_s}{s}\Big|=\alpha_p\,p\,\sigma'^{\,p-2}\frac{|s-(p-2)\kappa r|}{s}
+\le\alpha_p p\big(1+2(p-2)\big)\sigma'^{\,p-2}\Big(1+\frac rs\Big).\] Also \(|\varphi^{\mathrm B}|\le\alpha_pq\sigma'^{\,p}\) (as \(|s-q\kappa r|\le q\sigma'\) for \(q\ge1\)), \(|\varphi^{\mathrm B}_r|=\alpha_p pq\kappa^2r\sigma'^{\,p-2}\le4\alpha_ppq\sigma'^{\,p-1}\) and \(|\varphi^{\mathrm B}_s|\le\alpha_pp(1+2(p-2))\sigma'^{\,p-1}\). Since \(\sigma'\le2\sigma\) and \(1+r/s=\sigma/s\), (A2) holds with \(\theta=0\) and a suitable \(M=M(p)\).
+
+\textbf{(A3)} By (4.2) and (4.4), \(\varphi^{\mathrm B}_r=\alpha_p\kappa\Phi_\rho\le0\), which is (D0). Next, since \(m\ge0\), \(\varphi^{\mathrm B}_{rs}=-\alpha_pK\sigma'\kappa m\le0\), so \(|\varphi^{\mathrm B}_{rs}|=\alpha_pK\sigma'\kappa m\), and the entries of the drift matrix are (\(\alpha_pK\sigma'>0\) factored out): \[\frac{\mathcal A}{\alpha_pK\sigma'}=-\kappa^2(1+m)-\kappa^2=-\kappa^2(2+m),\qquad
+\frac{\mathcal B}{\alpha_pK\sigma'}=\kappa m+\kappa^2=\kappa(m+\kappa),\] \[\frac{\mathcal C}{\alpha_pK\sigma'}=(1-m)+J-\kappa^2 .\] Clearly \(\mathcal A<0\). Also \(\mathcal C\le0\), because by \(J\le1/q\), \(m\ge0\) and \(\kappa^2=2+\frac2q\), \[1-m+J-\kappa^2\ \le\ 1+\frac1q-2-\frac2q=-1-\frac1q\ <\ 0 .\] It remains to check \(\mathcal B^2\le\mathcal A\mathcal C\), i.e. \(\kappa^2(m+\kappa)^2\le\kappa^2(2+m)\big(\kappa^2-1+m-J\big)\), i.e. \[D:=(m+2)\big(\kappa^2-1+m-J\big)-(m+\kappa)^2\ \ge\ 0 .\] Expanding, \((m+2)(\kappa^2-1+m)=m\kappa^2+m^2+m+2\kappa^2-2\) and \((m+\kappa)^2=m^2+2m\kappa+\kappa^2\), so \[D=m\kappa^2-2m\kappa+m+\kappa^2-2-(m+2)J
+=m(\kappa-1)^2+\big(\kappa^2-2\big)-(m+2)J .\] Insert \(\kappa^2-2=\frac2q\), \(m=(q-1)\tau\), \(J=\frac{1-q\tau}{q(1-\tau)}\) and multiply by \(q(1-\tau)>0\): \[q(1-\tau)D=q(1-\tau)(q-1)\tau(\kappa-1)^2+2(1-\tau)-\big((q-1)\tau+2\big)(1-q\tau).\] The last two terms equal \[2-2\tau-\Big[(q-1)\tau-q(q-1)\tau^2+2-2q\tau\Big]
+=\tau\big[-2-(q-1)+2q\big]+q(q-1)\tau^2=(q-1)\tau\big[1+q\tau\big].\] Hence \[q(1-\tau)\,D=(q-1)\,\tau\,\Big[\,q(1-\tau)(\kappa-1)^2+1+q\tau\,\Big]\ \ge\ 0 ,
+\tag{4.5}\] because \(q\ge1\), \(\tau\in(0,1)\) and \((\kappa-1)^2\ge0\). Thus \(D\ge0\), (D1) holds, and \(\varphi^{\mathrm B}\) is admissible.
+\end{proof}
+
+\begin{remark}[criticality of \(\kappa\)]\label{rem:4-5}
+If \(\kappa\) is replaced by \(\kappa'\in(1,\kappa)\) in (4.1) then, repeating the computation, at \(\tau\to0\) (i.e.~\(m\to0\), \(J\to1/q\)) one gets \(D\to(\kappa'^2-2)-\frac2q<0\). So \(\kappa\) cannot be lowered inside this one-parameter family; a genuinely different profile is needed, which is what Section~4.2--Section~4.3 provide.
+\end{remark}
+
+\subsection{A quintic profile at \(p=\frac{16}{3}\)}\label{subsec:quintic}
+
+Let \(p=\frac{16}3\), so \(p-1=\frac{13}3\), \(2p-1=\frac{29}3\), \(p^2=\frac{256}9\), and put \[f(t):=729-20736\,t^2-61440\,t^3-56320\,t^4-4320\,t^5, \tag{4.6}\] \[\varphi(r,s):=s^{16/3}f(r/s)=729\,s^{16/3}-20736\,r^2s^{10/3}-61440\,r^3s^{7/3}
+-56320\,r^4s^{4/3}-4320\,r^5s^{1/3}.\] This is Lemma 2.8 with \(E=\{2,3,4,5\}\subset[2,\frac{16}3)\), \(a_0=729\) and \((b_2,b_3,b_4,b_5)=(20736,\,61440,\,56320,\,4320)\); note \(b_2=p^2a_0=\frac{256}9\cdot729=256\cdot81=20736\), which saturates the necessary condition in Remark 2.10. The growth parameter is \(\theta=\max\{0,\,5+1-\tfrac{16}3\}=\tfrac23<1\). Thus (A1), (A2), (A5) hold by Lemma 2.8.
+
+\begin{lemma}[drift]\label{lem:4-6}
+\(\varphi\) satisfies (D0) and (D1) at every \((r,s)\) with \(r,s>0\); i.e.~(A3) holds.
+\end{lemma}
+
+\begin{proof}
+We use Lemma 2.8 with \(p=\frac{16}3\). Since all \(b_k\ge0\) and all \(k<p\), we already know \(f'\le0\), \(\mathsf Q\ge0\), \(\mathsf P_1\le0\). Explicitly, \[\mathsf P_1=-\big(4\cdot20736\,t+9\cdot61440\,t^2+16\cdot56320\,t^3+25\cdot4320\,t^4\big)
+=-8t\,\Pi_1,\] \[\Pi_1:=13500t^3+112640t^2+69120t+10368 ,\] (check: \(4\cdot20736=82944=8\cdot10368\), \(9\cdot61440=552960=8\cdot69120\), \(16\cdot56320=901120=8\cdot112640\), \(25\cdot4320=108000=8\cdot13500\)).
+
+Next, with \(p-k=\frac{10}3,\frac73,\frac43,\frac13\) for \(k=2,3,4,5\), \[\mathsf Q=\sum_{k}k(p-k)b_kt^k
+=138240\,t^2+430080\,t^3+\tfrac{901120}3t^4+7200\,t^5
+=\tfrac{20}3t^2\big(1080t^3+45056t^2+64512t+20736\big)\ \ge0\] (check: \(\tfrac{20}3\cdot20736=138240\), \(\tfrac{20}3\cdot64512=430080\), \(\tfrac{20}3\cdot45056=\tfrac{901120}3\), \(\tfrac{20}3\cdot1080=7200\)).
+
+Also \(\sum_kkb_kt^{k-1}=41472t+184320t^2+225280t^3+21600t^4\), so \[\mathsf P_3=\sum_kkb_kt^{k-1}+\mathsf Q
+=41472t+322560t^2+655360t^3+\tfrac{965920}3t^4+7200\,t^5=\tfrac83t\,\Pi_3,\] \[\Pi_3:=2700t^4+120740t^3+245760t^2+120960t+15552\] (check: \(\tfrac83\cdot15552=41472\), \(\tfrac83\cdot120960=322560\), \(\tfrac83\cdot245760=655360\), \(\tfrac83\cdot120740=\tfrac{965920}3\), \(\tfrac83\cdot2700=7200\); and \(184320+138240=322560\), \(225280+430080=655360\), \(21600+\tfrac{901120}3=\tfrac{64800+901120}3=\tfrac{965920}3\)).
+
+For \(\mathsf P_2\): \(p^2a_0=\frac{256}9\cdot729=20736\) and \((p-k)^2b_k=\frac{100}9\cdot20736=230400\), \(\frac{49}9\cdot61440=\frac{1003520}3\), \(\frac{16}9\cdot56320=\frac{901120}9\), \(\frac19\cdot4320=480\) for \(k=2,3,4,5\). Hence \[\mathsf P_2=20736t-\big(41472t+184320t^2+225280t^3+21600t^4\big)
+-\big(230400t^3+\tfrac{1003520}3t^4+\tfrac{901120}9t^5+480t^6\big)\] \[=-20736t-184320t^2-455680t^3-\tfrac{1068320}3t^4-\tfrac{901120}9t^5-480t^6
+=-\tfrac89t\,\Pi_2\ \le\ 0,\] \[\Pi_2:=540t^5+112640t^4+400620t^3+512640t^2+207360t+23328\] (check: \(\tfrac89\cdot23328=20736\), \(\tfrac89\cdot207360=184320\), \(\tfrac89\cdot512640=455680\), \(\tfrac89\cdot400620=\tfrac{3204960}9=\tfrac{1068320}3\), \(\tfrac89\cdot112640=\tfrac{901120}9\), \(\tfrac89\cdot540=480\); and \(225280+230400=455680\), \(21600+\tfrac{1003520}3=\tfrac{64800+1003520}3=\tfrac{1068320}3\)).
+
+All the polynomials \(\Pi_1,\Pi_2,\Pi_3\) have nonnegative coefficients, so indeed \(\mathsf P_1\le0\), \(\mathsf P_2\le0\) for \(t>0\).
+
+Finally, since \(\mathsf P_1\mathsf P_2=8t\cdot\frac89t\,\Pi_1\Pi_2
+=\frac{64t^2}9\Pi_1\Pi_2\) and \(\mathsf P_3^2=\frac{64t^2}9\Pi_3^2\), \[\mathsf R=\mathsf P_1\mathsf P_2-\mathsf P_3^2=\frac{64t^2}9
+\big(\Pi_1\Pi_2-\Pi_3^2\big).\] Expanding the two degree-\(8\) polynomials: \[\Pi_1\Pi_2=7290000t^8+1581465600t^7+18133464400t^6+59837752320t^5\] \[\qquad\qquad+89401835520t^4+63259263360t^3+22275440640t^2+3762339840t+241864704,\] \[\Pi_3^2=7290000t^8+651996000t^7+15905251600t^6+59999308800t^5\] \[\qquad\qquad+89691379200t^4+63209756160t^3+22275440640t^2+3762339840t+241864704,\] so, subtracting coefficient by coefficient (the four lowest coefficients and the leading one cancel), \[\Pi_1\Pi_2-\Pi_3^2
+=2\,t^3\big(464734800t^4+1114106400t^3-80778240t^2-144771840t+24753600\big)\] and therefore \[\mathsf R=\frac{128}9\,t^{5}\,\mathsf N(t),\qquad
+\mathsf N(t):=464734800t^4+1114106400t^3-80778240t^2-144771840t+24753600 . \tag{4.7}\]
+
+It remains to prove \(\mathsf N\ge0\) on \([0,\infty)\). First we peel off, by an identity in \(t\), a part all of whose coefficients are \textbf{nonnegative} (hence \(\ge0\) for \(t\ge0\)): \[\mathsf N(t)=72000\,\mathsf M(t)+\big(46800t^4+50400t^3+5760t^2+20160t+57600\big),\] \[\mathsf M(t):=6454t^4+15473t^3-1122t^2-2011t+343 \tag{4.8}\] (check, coefficient by coefficient: \(72000\cdot6454=464688000\) and \(464688000+46800=464734800\); \(72000\cdot15473=1114056000\) and \(1114056000+50400=1114106400\); \(72000\cdot(-1122)=-80784000\) and \(-80784000+5760=-80778240\); \(72000\cdot(-2011)=-144792000\) and \(-144792000+20160=-144771840\); \(72000\cdot343=24696000\) and \(24696000+57600=24753600\)).
+
+Now \(\mathsf M\) splits, again identically in \(t\), into a part with nonnegative coefficients plus \(\mathsf q_1+t\,\mathsf q_2\) with two nonnegative quadratics: \[\mathsf M(t)=6454t^4+44t^3+\mathsf q_1(t)+t\,\mathsf q_2(t),\qquad
+\mathsf q_1(t):=5680t^2-2782t+343,\quad \mathsf q_2(t):=15429t^2-6802t+771
+\tag{4.9}\] (check: the \(t^3\) coefficient is \(44+15429=15473\), the \(t^2\) coefficient is \(5680-6802=-1122\), the \(t^1\) coefficient is \(-2782+771=-2011\), and the constant term is \(343\)). Both quadratics are nonnegative \textbf{on all of \(\mathbb R\)}, by their discriminants: \[2782^2=7739524\ \le\ 4\cdot5680\cdot343=7792960,\qquad
+6802^2=46267204\ \le\ 4\cdot15429\cdot771=47583036 .\] Hence \(\mathsf q_1\ge0\) and \(\mathsf q_2\ge0\) everywhere, so by (4.9) \(\mathsf M(t)\ge0\) for \(t\ge0\), so by the previous display \(\mathsf N(t)\ge0\) for \(t\ge0\), and finally \[\boxed{\ \mathsf R=\frac{128}9\,t^{5}\,\mathsf N(t)\ \ge\ 0\ \qquad(t>0).\ }\] By Lemma 2.7, (D0) and (D1) hold.
+\end{proof}
+
+\begin{lemma}[majorization]\label{lem:4-7}
+Put \[t_0:=\Big(\frac{47}{88}\Big)^{3}=\frac{103823}{681472},\qquad
+\lambda:=\frac{19}{6185},\qquad \mathsf M:=22830 .\] Then \(\lambda\varphi\) satisfies (A4) with \(\Lambda_1:=22830^{\,3/16}\).
+\end{lemma}
+
+\begin{proof}
+We verify (M1) and (M2) of Lemma 2.11. Write \(y:=\frac{47}{88}\), so \(t_0=y^3\), \(t_0^{\,k}=y^{3k}\) and \(t_0^{\,k-p}=y^{3k-16}\).
+
+\textbf{(M1).} Here \(1-\frac kp=1-\frac{3k}{16}\), giving the weights \(\frac58,\frac7{16},\frac14,\frac1{16}\) for \(k=2,3,4,5\), so \[b_2\Big(1-\tfrac2p\Big)=20736\cdot\tfrac58=12960,\quad
+b_3\cdot\tfrac7{16}=61440\cdot\tfrac7{16}=26880,\quad
+b_4\cdot\tfrac14=14080,\quad b_5\cdot\tfrac1{16}=270 ,\] and \[\mathsf S:=a_0-\sum_kb_k\Big(1-\frac kp\Big)t_0^{\,k}
+=729-12960\,y^{6}-26880\,y^{9}-14080\,y^{12}-270\,y^{15}.\] Multiply by \(88^{15}=146973853900112596791703109632\) and use \(y^{3j}=47^{3j}/88^{3j}\): \[88^{15}\,\mathsf S=729\cdot88^{15}-12960\cdot47^{6}\cdot88^{9}
+-26880\cdot47^{9}\cdot88^{6}-14080\cdot47^{12}\cdot88^{3}-270\cdot47^{15}.\] The five integers are \[107143939493182083061151566921728,\quad 44211596576200490352388677304320,\] \[13970309212700369991666122096640,\quad 1114871892671277389595594588160,\] \[3257104054721499424453142610,\] whence \(88^{15}\,\mathsf S=47843904707555223828076719789998\). Condition (M1), \(\lambda\mathsf S\ge1\) with \(\lambda=\frac{19}{6185}\), is therefore equivalent to \[19\cdot47843904707555223828076719789998\ \ge\
+6185\cdot146973853900112596791703109632,\] i.e.~to \[909034189443549252733457676009962\ \ge\ 909033286372196411156683733073920 ,\] which is true. (The ratio is \(1.00000099\ldots\).)
+
+\textbf{(M2).} Here \(\frac{\lambda}p=\frac{19}{6185}\cdot\frac3{16}=\frac{57}{98960}\) and \[\Sigma:=\sum_kk\,b_k\,t_0^{\,k-p}
+=41472\,y^{-10}+184320\,y^{-7}+225280\,y^{-4}+21600\,y^{-1},\] using \(2b_2=41472\), \(3b_3=184320\), \(4b_4=225280\), \(5b_5=21600\). Since \(y^{-1}=\frac{88}{47}\), multiplying by \(47^{10}=52599132235830049\) gives \[
+\begin{aligned}
+47^{10}\Sigma
+ &=41472\cdot88^{10}+184320\cdot47^{3}\cdot88^{7}\\
+ &\quad+225280\cdot47^{6}\cdot88^{4}+21600\cdot47^{9}\cdot88.
+\end{aligned}
+\] whose four summands are
+\[1154999247706192481353728,\quad 782068404177362611077120,\]
+\[145626520759631683256320,\quad 2127243203273739513600.\]
+Their sum is
+\[47^{10}\Sigma=2084821415846460515200768.\]
+Condition (M2), \(\mathsf M\ge\frac{57}{98960}\Sigma\), is therefore equivalent to
+\[22830\cdot98960\cdot47^{10}\ge57\cdot2084821415846460515200768.\]
+The two sides are, respectively,
+\[
+\begin{aligned}
+22830\cdot98960\cdot47^{10}
+ &=118834947177898241847583200,\\
+57\cdot2084821415846460515200768
+ &=118834820703248249366443776.
+\end{aligned}
+\]
+Thus (M2) holds.  Numerically, \(\frac{\lambda}{p}\Sigma=22829.9757\ldots\le22830\).
+
+By Lemma 2.11, \(\lambda\varphi\) satisfies (A4) with \(\Lambda_1=\mathsf M^{1/p}=22830^{3/16}\).
+\end{proof}
+
+\begin{proposition}\label{prop:4-8}
+\[\|B\|_{L^{16/3}\to L^{16/3}}\ \le\ \Lambda_1=22830^{\,3/16} . \tag{4.10}\]
+\end{proposition}
+
+\begin{proof}
+\(\varphi\) satisfies (A1), (A2) (with \(\theta=\frac23\)) and (A5) by Lemma 2.8, and (A3) by Lemma 4.6. Multiplying by \(\lambda=\frac{19}{6185}>0\) preserves (A1), (A2), (A3), (A5), and Lemma 4.7 gives (A4) with \(\Lambda_1\). So \(\lambda\varphi\) is \((\frac{16}3,\Lambda_1)\)-admissible, and the Bellman principle applies.
+\end{proof}
+
+Numerically \(\Lambda_1=6.5647752\ldots\), whereas \(\sqrt{2p(p-1)}=\sqrt{2\cdot\frac{16}3\cdot\frac{13}3}=\sqrt{\frac{416}9}=6.7986\ldots\); so (4.10) improves (4.3) at \(p=\frac{16}3\).
+
+\subsection{A sextic profile at \(p=\frac{15}{2}\)}\label{subsec:sextic}
+
+Let \(p=\frac{15}2\), so \(p-1=\frac{13}2\), \(2p-1=14\), \(p^2=\frac{225}4\), and put \[f(t):=12-675\,t^2-3300\,t^3-6600\,t^4-5423\,t^5-2640\,t^6, \tag{4.11}\] \[\varphi(r,s):=s^{15/2}f(r/s)=12\,s^{15/2}-675\,r^2s^{11/2}-3300\,r^3s^{9/2}
+-6600\,r^4s^{7/2}-5423\,r^5s^{5/2}-2640\,r^6s^{3/2}.\] This is Lemma 2.8 with \(E=\{2,3,4,5,6\}\subset[2,\frac{15}2)\), \(a_0=12\) and \((b_2,\dots,b_6)=(675,3300,6600,5423,2640)\); again \(b_2=p^2a_0=\frac{225}4\cdot12=675\). All exponents satisfy \(k\le6\le p-1=\frac{13}2\), so here \(\theta=0\). Thus (A1), (A2), (A5) hold by Lemma 2.8.
+
+\begin{lemma}[drift]\label{lem:4-9}
+\(\varphi\) satisfies (D0) and (D1) at every \((r,s)\) with \(r,s>0\).
+\end{lemma}
+
+\begin{proof}
+By Lemma 2.8 with \(p=\frac{15}2\): \[\mathsf P_1=-\big(4\cdot675\,t+9\cdot3300\,t^2+16\cdot6600\,t^3+25\cdot5423\,t^4
++36\cdot2640\,t^5\big)=-5t\,\Theta_1,\] \[\Theta_1:=19008t^4+27115t^3+21120t^2+5940t+540\] (check: \(5\cdot540=2700=4\cdot675\); \(5\cdot5940=29700=9\cdot3300\); \(5\cdot21120=105600=16\cdot6600\); \(5\cdot27115=135575=25\cdot5423\); \(5\cdot19008=95040=36\cdot2640\)).
+
+With \(p-k=\frac{11}2,\frac92,\frac72,\frac52,\frac32\) for \(k=2,\dots,6\), \[
+\begin{aligned}
+\mathsf Q
+ &=\sum_k k(p-k)b_kt^k\\
+ &=7425t^2+44550t^3+92400t^4+\tfrac{135575}{2}t^5+23760t^6\\
+ &=\tfrac{55}{2}t^2\bigl(864t^4+2465t^3+3360t^2+1620t+270\bigr)\ge0.
+\end{aligned}
+\] (check: \(\tfrac{55}2\cdot270=7425\), \(\tfrac{55}2\cdot1620=44550\), \(\tfrac{55}2\cdot3360=92400\), \(\tfrac{55}2\cdot2465=\tfrac{135575}2\), \(\tfrac{55}2\cdot864=23760\)).
+
+Also \(\sum_kkb_kt^{k-1}=1350t+9900t^2+26400t^3+27115t^4+15840t^5\), hence \[\mathsf P_3=\sum_kkb_kt^{k-1}+\mathsf Q
+=1350t+17325t^2+70950t^3+119515t^4+\tfrac{167255}2t^5+23760t^6=\tfrac52t\,\Theta_3,\] \[\Theta_3:=9504t^5+33451t^4+47806t^3+28380t^2+6930t+540\] (check: \(\tfrac52\cdot540=1350\), \(\tfrac52\cdot6930=17325\), \(\tfrac52\cdot28380=70950\), \(\tfrac52\cdot47806=119515\), \(\tfrac52\cdot33451=\tfrac{167255}2\), \(\tfrac52\cdot9504=23760\); and \(9900+7425=17325\), \(26400+44550=70950\), \(27115+92400=119515\), \(15840+\tfrac{135575}2=\tfrac{31680+135575}2=\tfrac{167255}2\)).
+
+For \(\mathsf P_2\): \(p^2a_0=675\), and \((p-k)^2b_k=\frac{121}4\cdot675=\frac{81675}4\), \(\frac{81}4\cdot3300=66825\), \(\frac{49}4\cdot6600=80850\), \(\frac{25}4\cdot5423=\frac{135575}4\), \(\frac94\cdot2640=5940\) for \(k=2,\dots,6\). Hence \[\mathsf P_2=675t-\big(1350t+9900t^2+26400t^3+27115t^4+15840t^5\big)\] \[\qquad-\big(\tfrac{81675}4t^3+66825t^4+80850t^5+\tfrac{135575}4t^6+5940t^7\big)\] \[=-675t-9900t^2-\tfrac{187275}4t^3-93940t^4-96690t^5-\tfrac{135575}4t^6-5940t^7
+=-\tfrac54t\,\Theta_2\ \le0,\] \[\Theta_2:=4752t^6+27115t^5+77352t^4+75152t^3+37455t^2+7920t+540\] (check: \(\tfrac54\cdot540=675\), \(\tfrac54\cdot7920=9900\), \(\tfrac54\cdot37455=\tfrac{187275}4\), \(\tfrac54\cdot75152=93940\), \(\tfrac54\cdot77352=96690\), \(\tfrac54\cdot27115=\tfrac{135575}4\), \(\tfrac54\cdot4752=5940\); and \(26400+\tfrac{81675}4=\tfrac{105600+81675}4=\tfrac{187275}4\), \(27115+66825=93940\), \(15840+80850=96690\)).
+
+All of \(\Theta_1,\Theta_2,\Theta_3\) have nonnegative coefficients, so \(\mathsf P_1\le0\) and \(\mathsf P_2\le0\) for \(t>0\).
+
+Since \(\mathsf P_1\mathsf P_2=5t\cdot\frac54t\,\Theta_1\Theta_2
+=\frac{25t^2}4\Theta_1\Theta_2\) and \(\mathsf P_3^2=\frac{25t^2}4\Theta_3^2\), \[\mathsf R=\frac{25t^2}4\big(\Theta_1\Theta_2-\Theta_3^2\big).\] Expanding the two degree-\(10\) polynomials: \[\Theta_1\Theta_2=90326016t^{10}+644252400t^{9}+2305892281t^{8}+4126784376t^{7}
++4546994540t^{6}\] \[\qquad+3227458905t^{5}+1504237680t^{4}+444977280t^{3}+78675300t^{2}+7484400t+291600,\] \[\Theta_3^{\,2}=90326016t^{10}+635836608t^{9}+2027665849t^{8}+3737764052t^{7}
++4315817836t^{6}\] \[\qquad+3187363740t^{5}+1504142640t^{4}+444977280t^{3}+78675300t^{2}+7484400t+291600,\] so \[\Theta_1\Theta_2-\Theta_3^{\,2}
+=t^4\big(8415792t^5+278226432t^4+389020324t^3+231176704t^2+40095165t+95040\big)\] and therefore \[\boxed{\ \mathsf R=\frac{25}4\,t^{6}\big(8415792t^5+278226432t^4+389020324t^3
++231176704t^2+40095165t+95040\big)\ \ge\ 0\ } \tag{4.12}\] for \(t>0\). Lemma 2.7 gives (D0), (D1).
+\end{proof}
+
+\begin{lemma}[majorization]\label{lem:4-10}
+Put \[t_0:=\Big(\frac8{25}\Big)^{2}=\frac{64}{625},\qquad
+\lambda:=\frac{105}{454},\qquad \mathsf M:=22865000 .\] Then \(\lambda\varphi\) satisfies (A4) with \(\Lambda_2:=22865000^{\,2/15}\).
+\end{lemma}
+
+\begin{proof}
+Write \(w:=\frac8{25}\), so \(t_0=w^2\), \(t_0^{\,k}=w^{2k}\), \(t_0^{\,k-p}=w^{2k-15}\).
+
+\textbf{(M1).} Here \(1-\frac kp=1-\frac{2k}{15}\), giving weights \(\frac{11}{15},\frac35,\frac7{15},\frac13,\frac15\) for \(k=2,\dots,6\), so \[675\cdot\tfrac{11}{15}=495,\quad 3300\cdot\tfrac35=1980,\quad
+6600\cdot\tfrac7{15}=3080,\quad 5423\cdot\tfrac13=\tfrac{5423}3,\quad
+2640\cdot\tfrac15=528,\] \[\mathsf S=12-495\,w^4-1980\,w^6-3080\,w^8-\tfrac{5423}3\,w^{10}-528\,w^{12}.\] Multiply by \(3\cdot25^{12}=178813934326171875\): \[3\cdot25^{12}\mathsf S=36\cdot25^{12}-1485\cdot8^{4}\cdot25^{8}-5940\cdot8^{6}\cdot25^{6}
+-9240\cdot8^{8}\cdot25^{4}-5423\cdot8^{10}\cdot25^{2}-1584\cdot8^{12},\] whose six terms are \[2145767211914062500,\quad 928125000000000000,\quad 380160000000000000,\] \[60555264000000000,\quad 3639313694720000,\quad 108851651149824,\] giving \(3\cdot25^{12}\mathsf S=773178782568192676\). Condition (M1), \(\frac{105}{454}\mathsf S\ge1\), is therefore equivalent to \[105\cdot773178782568192676\ \ge\ 454\cdot178813934326171875,\] i.e.~to \[81183772169660230980\ \ge\ 81181526184082031250,\] which is true. (The ratio is \(1.0000276\ldots\).)
+
+\textbf{(M2).} Here \(\frac\lambda p=\frac{105}{454}\cdot\frac2{15}=\frac{7}{227}\) and, using \(2b_2=1350\), \(3b_3=9900\), \(4b_4=26400\), \(5b_5=27115\), \(6b_6=15840\), \[\Sigma=\sum_kk\,b_k\,t_0^{\,k-p}
+=1350\,w^{-11}+9900\,w^{-9}+26400\,w^{-7}+27115\,w^{-5}+15840\,w^{-3}.\] Since \(w^{-1}=\frac{25}8\), multiplying by \(8^{11}=8589934592\) gives \[8^{11}\Sigma=1350\cdot25^{11}+9900\cdot8^{2}\cdot25^{9}+26400\cdot8^{4}\cdot25^{7}
++27115\cdot8^{6}\cdot25^{5}+15840\cdot8^{8}\cdot25^{3},\] whose five terms are \[3218650817871093750,\quad 2416992187500000000,\quad 660000000000000000,\] \[69414400000000000,\quad 4152360960000000,\] totalling \(8^{11}\Sigma=6369209766331093750\). Condition (M2), \(\mathsf M\ge\frac7{227}\Sigma\), is therefore equivalent to \[22865000\cdot227\cdot8^{11}\ \ge\ 7\cdot6369209766331093750 .\] Now \(227\cdot8^{11}=1949915152384\) and \(22865000\cdot1949915152384=44584809959260160000\), while \(7\cdot6369209766331093750=44584468364317656250\); since \[44584809959260160000\ \ge\ 44584468364317656250 ,\] (M2) holds. (Indeed \(\frac\lambda p\Sigma=22864824.8\ldots\le22865000\).)
+
+By Lemma 2.11, \(\lambda\varphi\) satisfies (A4) with \(\Lambda_2=\mathsf M^{1/p}=22865000^{2/15}\).
+\end{proof}
+
+\begin{proposition}\label{prop:4-11}
+\[\|B\|_{L^{15/2}\to L^{15/2}}\ \le\ \Lambda_2=22865000^{\,2/15} . \tag{4.13}\]
+\end{proposition}
+
+\begin{proof}
+Identical to Proposition 4.8: \(\varphi\) satisfies (A1), (A2) (with \(\theta=0\)) and (A5) by Lemma 2.8, and (A3) by Lemma 4.9; multiplying by \(\lambda=\frac{105}{454}>0\) preserves these, and Lemma 4.10 supplies (A4). Apply the Bellman principle.
+\end{proof}
+
+Numerically \(\Lambda_2=9.5768531\ldots\), whereas \(\sqrt{2\cdot\frac{15}2\cdot\frac{13}2}=\sqrt{\frac{195}2}=9.8742\ldots\).
+
+\subsection{Endpoint summary}\label{subsec:endpoint-summary}
+
+Collecting (0.2), Lemma 1.3, (4.3), (4.10) and (4.13):
+
+\begin{boundsummary}
+\(\|B\|_p=\|B\|_{p'}\) for all \(1<p<\infty\); \(\|B\|_2=1\); and \[\|B\|_p\le\sqrt{2p(p-1)}\ \ (p\ge2),\qquad
+\|B\|_{16/3}\le 22830^{\,3/16},\qquad
+\|B\|_{15/2}\le 22865000^{\,2/15}.\]
+\end{boundsummary}
+
+
+\section{Interpolation and the uniform constant}\label{sec:interpolation}
+
+Throughout this section \(u:=1.523958\). We must show \[\|B\|_p\ \le\ u\,(p-1)\qquad\text{for all }p\ge2 ; \tag{5.1}\] the range \(1<p<2\) then follows from \(\|B\|_p=\|B\|_{p'}\) (Lemma 1.3) and \(p^*-1=p'-1\).
+
+\subsection{A single interpolation interval}\label{subsec:one-range}
+
+\begin{lemma}\label{lem:5-1}
+Let \(2\le p_0<p_1<\infty\) and let \(L_0<L_1\) be real numbers with \(\|B\|_{p_0}\le e^{L_0}\) and \(\|B\|_{p_1}\le e^{L_1}\). Put \[\hat c:=\frac{L_1-L_0}{2\big(\frac1{p_0}-\frac1{p_1}\big)}>0,\qquad
+K:=L_0-2\hat c\Big(\frac12-\frac1{p_0}\Big).\] Then for every \(p\in[p_0,p_1]\), writing \(t:=1-\frac2p\in\big[1-\frac2{p_0},\,1-\frac2{p_1}\big]\), \[\ln\frac{\|B\|_p}{p-1}\ \le\ K+\hat c\,t-2\operatorname{artanh}t . \tag{5.2}\]
+\end{lemma}
+
+\begin{proof}
+\(B\) is a linear operator bounded on \(L^{p_0}\) and on \(L^{p_1}\) (Section~0), so Riesz--Thorin applies: if \(\frac1p=\frac{1-\vartheta}{p_0}+\frac{\vartheta}{p_1}\) with \(\vartheta\in[0,1]\), then \(\|B\|_p\le\|B\|_{p_0}^{1-\vartheta}\|B\|_{p_1}^{\vartheta}\le e^{(1-\vartheta)L_0+\vartheta L_1}\). Writing \(x:=1/p\), the exponent is the value at \(x\) of the affine function through \((1/p_0,L_0)\) and \((1/p_1,L_1)\), namely \[L(x)=L_0+m\Big(x-\frac1{p_0}\Big),\qquad
+m:=\frac{L_1-L_0}{\frac1{p_1}-\frac1{p_0}}=-2\hat c<0 .\] With \(t=1-2x\), i.e.~\(x=\frac{1-t}2\), \[L(x)=L_0+m\Big(\frac12-\frac1{p_0}\Big)-\frac m2\,t=K+\hat c\,t .\] Finally \(p-1=\frac{1+t}{1-t}\), so \(\ln(p-1)=\ln\frac{1+t}{1-t}=2\operatorname{artanh}t\), and \(\ln\|B\|_p-\ln(p-1)\le K+\hat ct-2\operatorname{artanh}t\).
+\end{proof}
+
+\begin{lemma}[Legendre transform]\label{lem:5-2}
+Let \(\hat c>2\) and \(S(t):=\hat ct-2\operatorname{artanh}t\) on \([0,1)\). Put \(g:=\sqrt{\hat c(\hat c-2)}>0\) and \(t^*:=g/\hat c=\sqrt{1-2/\hat c}\in(0,1)\). Then \(S\) is strictly increasing on \([0,t^*]\), strictly decreasing on \([t^*,1)\), and \[\max_{[0,1)}S=S(t^*)=g-2\operatorname{artanh}(t^*).\]
+\end{lemma}
+
+\begin{proof}
+\(S'(t)=\hat c-\frac{2}{1-t^2}\) is strictly decreasing on \([0,1)\), with \(S'(0)=\hat c-2>0\) and \(S'(t)\to-\infty\) as \(t\uparrow1\). Its unique zero is at \(1-t^2=2/\hat c\), i.e.~\(t=t^*\); note \(\hat c\,t^*=\hat c\sqrt{1-2/\hat c}=\sqrt{\hat c^2-2\hat c}=g\), so \(S(t^*)=g-2\operatorname{artanh}(t^*)\).
+\end{proof}
+
+\begin{lemma}[shift of \(\operatorname{artanh}\), and the logarithm identity]\label{lem:5-3}
+\begin{enumerate}
+\def\labelenumi{\arabic{enumi}.}
+\tightlist
+\item
+  For \(\alpha,\beta\in(-1,1)\), \(\operatorname{artanh}\alpha-\operatorname{artanh}\beta
+  =\operatorname{artanh}\frac{\alpha-\beta}{1-\alpha\beta}\).
+\item
+  For all \(A,B>0\), \(\ \ln A=\ln B+2\operatorname{artanh}\dfrac{A-B}{A+B}\).
+\item
+  \(\operatorname{artanh}\tfrac35=\ln2\) and \(\operatorname{artanh}\tfrac23=\tfrac12\ln5\).
+\end{enumerate}
+\end{lemma}
+
+\begin{proof}
+(1) Both sides are \(\frac12\ln\) of \(\frac{(1+\alpha)(1-\beta)}{(1-\alpha)(1+\beta)}\), since \(\frac{1+\frac{\alpha-\beta}{1-\alpha\beta}}{1-\frac{\alpha-\beta}{1-\alpha\beta}}
+=\frac{1-\alpha\beta+\alpha-\beta}{1-\alpha\beta-\alpha+\beta}
+=\frac{(1+\alpha)(1-\beta)}{(1-\alpha)(1+\beta)}\). (2) Put \(x:=\frac{A-B}{A+B}\in(-1,1)\). Then \(\frac{1+x}{1-x}=\frac{(A+B)+(A-B)}{(A+B)-(A-B)}=\frac{2A}{2B}=\frac AB\), so \(2\operatorname{artanh}x=\ln\frac AB\). (3) \(\operatorname{artanh}\frac35=\frac12\ln\frac{1+3/5}{1-3/5}=\frac12\ln4=\ln2\) and \(\operatorname{artanh}\frac23=\frac12\ln\frac{1+2/3}{1-2/3}=\frac12\ln5\).
+\end{proof}
+
+Combining Lemmas 5.1--5.3: if \(\hat c>2\) and \(t^*\) lies in the \(t\)-interval of the range, then (5.1) holds on \([p_0,p_1]\) as soon as \[K+g\ \le\ \ln u+2\operatorname{artanh}(\beta)+2\operatorname{artanh}(\delta),
+\qquad \delta:=\frac{t^*-\beta}{1-\beta t^*}, \tag{5.3}\] for any convenient base point \(\beta\in(0,1)\). Indeed, by Lemma 5.2 and Lemma 5.3(1), for every \(t\) in the range \[\ln\frac{\|B\|_p}{p-1}\le K+g-2\operatorname{artanh}t^*
+=K+g-2\operatorname{artanh}\beta-2\operatorname{artanh}\delta ,\] and (5.3) says exactly that the right-hand side is \(\le\ln u\). We shall use \(\beta=\frac35\) (so \(2\operatorname{artanh}\beta=2\ln2\) and the right side of (5.3) begins with \(\ln(4u)\)) and \(\beta=\frac23\) (so \(2\operatorname{artanh}\beta=\ln5\) and it begins with \(\ln(5u)\)).
+
+\subsection{The three ranges and their data}\label{subsec:three-ranges}
+
+We use Theorem A at the two base points \(p=\frac{16}3\) and \(p=\frac{15}2\), together with \(\|B\|_2=1\): \[L_{(0)}:=0,\qquad
+L_{(1)}:=\tfrac3{16}\ln 22830,\qquad
+L_{(2)}:=\tfrac2{15}\ln 22865000 . \tag{5.4}\] These are legitimate by (0.2), (4.10) and (4.13): \(\|B\|_2=1=e^{L_{(0)}}\), \(\|B\|_{16/3}\le22830^{3/16}=e^{L_{(1)}}\), \(\|B\|_{15/2}\le22865000^{2/15}=e^{L_{(2)}}\).
+
+\textbf{Reduction of the two logarithms to \(\ln2,\ln3,\ln5,\ln7\).} By Lemma 5.3(2):
+
+\begin{itemize}
+\tightlist
+\item
+  \(2^9\cdot3^7=512\cdot2187=1119744\), and \(22830\cdot49=1118670\), so with \(A=22830\), \(B=\frac{1119744}{49}\) we get \(A+B=\frac{1118670+1119744}{49}
+  =\frac{2238414}{49}\), \(A-B=\frac{1118670-1119744}{49}=-\frac{1074}{49}\), and \(\frac{1074}{2238414}=\frac{179}{373069}\) (divide by \(6\)), whence \[\ln 22830=9\ln2+7\ln3-2\ln7-2\operatorname{artanh}\tfrac{179}{373069}. \tag{5.5}\]
+\item
+  \(2^5\cdot3^5\cdot5^5=32\cdot243\cdot3125=24300000\), and with \(A=22865000\), \(B=24300000\): \(A-B=-1435000\), \(A+B=47165000\), and \(\frac{1435000}{47165000}=\frac{287}{9433}\) (divide by \(5000\)), whence \[\ln 22865000=5\ln2+5\ln3+5\ln5-2\operatorname{artanh}\tfrac{287}{9433}. \tag{5.6}\]
+\item
+  \(u=1.523958\), \(B=\frac32\): \(A-B=0.023958\), \(A+B=3.023958\), so \(\frac{A-B}{A+B}=\frac{23958}{3023958}=\frac{3993}{503993}\) (divide by \(6\)) and \[\ln u=\ln3-\ln2+2\operatorname{artanh}\tfrac{3993}{503993},\] \[\ln(4u)=\ln2+\ln3+2\operatorname{artanh}\tfrac{3993}{503993},\qquad
+  \ln(5u)=\ln3-\ln2+\ln5+2\operatorname{artanh}\tfrac{3993}{503993}. \tag{5.7}\]
+\end{itemize}
+
+\textbf{The three ranges.}
+
+\begin{longtable}[]{@{}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}
+  >{\raggedright\arraybackslash}p{(\columnwidth - 10\tabcolsep) * \real{0.1667}}@{}}
+\toprule\noalign{}
+\begin{minipage}[b]{\linewidth}\raggedright
+range
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(p\)-interval
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(t\)-interval
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(\hat c\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+\(K\)
+\end{minipage} & \begin{minipage}[b]{\linewidth}\raggedright
+base \(\beta\)
+\end{minipage} \\
+\midrule\noalign{}
+\endhead
+\bottomrule\noalign{}
+\endlastfoot
+I & \([2,\frac{16}3]\) & \([0,\frac58]\) & \(\frac85L_{(1)}=\frac3{10}\ln22830\) & \(0\) & \(\frac35\) \\
+II & \([\frac{16}3,\frac{15}2]\) & \([\frac58,\frac{11}{15}]\) & \(\frac{120}{13}\big(L_{(2)}-L_{(1)}\big)\) & \(L_{(1)}-\frac58\hat c\) & \(\frac23\) \\
+III & \([\frac{15}2,\infty)\) & --- & --- & --- & --- \\
+\end{longtable}
+
+(These are Lemma 5.1. Range I: \(\frac1{p_0}-\frac1{p_1}=\frac12-\frac3{16}=\frac5{16}\), so \(\hat c=\frac{L_{(1)}}{2\cdot\frac5{16}}=\frac85L_{(1)}
+=\frac85\cdot\frac3{16}\ln22830=\frac3{10}\ln22830\), and \(K=0-2\hat c(\frac12-\frac12)=0\); the \(t\)-interval is \([1-\frac22,\,1-\frac{2\cdot3}{16}]=[0,\frac58]\). Range II: \(\frac3{16}-\frac2{15}=\frac{45-32}{240}=\frac{13}{240}\), so \(\hat c=\frac{L_{(2)}-L_{(1)}}{13/120}=\frac{120}{13}(L_{(2)}-L_{(1)})\), and \(K=L_{(1)}-2\hat c(\frac12-\frac3{16})=L_{(1)}-\frac58\hat c\); the \(t\)-interval is \([\frac58,\,1-\frac4{15}]=[\frac58,\frac{11}{15}]\).)
+
+\subsection{Range III: \(p\ge\frac{15}{2}\)}\label{subsec:range3}
+
+By (4.3), \(\frac{\|B\|_p}{p-1}\le\sqrt{\frac{2p}{p-1}}\), and \(\frac{2p}{p-1}=2+\frac2{p-1}\) is decreasing in \(p\), so for \(p\ge\frac{15}2\) (where \(p-1\ge\frac{13}2\)) \[\Big(\frac{\|B\|_p}{p-1}\Big)^2\ \le\ 2+\frac2{13/2}=\frac{30}{13} .\] Since \(13\,u^2=13\cdot(1.523958)^2=13\cdot2.322447985764=30.191823814932>30\), we get \(\|B\|_p\le u(p-1)\) on \([\frac{15}2,\infty)\).
+
+\subsection{Rigorous numerical bounds}\label{subsec:numerics}
+
+For \(0<x<1\) the series \(\operatorname{artanh}x=\sum_{k\ge0}\frac{x^{2k+1}}{2k+1}\) has positive terms, so every partial sum is a lower bound, and \[\sum_{k=0}^{n-1}\frac{x^{2k+1}}{2k+1}\ \le\ \operatorname{artanh}x\ \le\ \sum_{k=0}^{n-1}\frac{x^{2k+1}}{2k+1}
++\frac{x^{2n+1}}{(2n+1)(1-x^2)} \tag{5.8}\] (bounding the tail \(\sum_{k\ge n}\frac{x^{2k+1}}{2k+1}\le\frac1{2n+1}\sum_{k\ge n}x^{2k+1}
+=\frac{x^{2n+1}}{(2n+1)(1-x^2)}\) by a geometric series). Using \[\ln2=2\operatorname{artanh}\tfrac13,\quad
+\ln3=\ln2+2\operatorname{artanh}\tfrac15,\quad
+\ln5=2\ln2+2\operatorname{artanh}\tfrac19,\quad
+\ln7=3\ln2-2\operatorname{artanh}\tfrac1{15}\] (each identity is Lemma 5.3(2): \(\frac{1+x}{1-x}=2,\frac32,\frac54,\frac87\) for \(x=\frac13,\frac15,\frac19,\frac1{15}\), so \(\ln2=2\operatorname{artanh}\frac13\), \(\ln3=\ln2+\ln\frac32\), \(\ln5=\ln4+\ln\frac54\), \(\ln7=\ln8-\ln\frac87\)), together with (5.8) applied with \(n=40,25,20,18\) terms respectively, one obtains \[\ln2\in(0.6931471804,\ 0.6931471806),\qquad \ln3\in(1.0986122884,\ 1.0986122888),\] \[\ln5\in(1.6094379120,\ 1.6094379126),\qquad \ln7\in(1.9459101484,\ 1.9459101492). \tag{5.9}\] Also, directly from (5.8) with \(n=2,4,3\) terms respectively, \[\operatorname{artanh}\tfrac{179}{373069}\in(0.0004798040,\ 0.0004798041),\] \[\operatorname{artanh}\tfrac{287}{9433}\in(0.0304344966,\ 0.0304344967),\qquad
+\operatorname{artanh}\tfrac{3993}{503993}\in(0.0079228948,\ 0.0079228949). \tag{5.10}\] (For instance \(x=\frac{179}{373069}=0.00047980400\ldots\), so \(x+\frac{x^3}3=0.00047980404\ldots\) and the \(n=2\) tail \(\frac{x^5}{5(1-x^2)}\) is \(<10^{-17}\); and for \(x=\frac{3993}{503993}=0.0079227290\ldots\), \(x+\frac{x^3}3+\frac{x^5}5=0.0079228948607\ldots\) with \(n=3\) tail \(<10^{-15}\).)
+
+All numbers below are obtained from (5.9)--(5.10) by \textbf{interval arithmetic on ten decimals}: each intermediate quantity is enclosed in an interval whose endpoints are ten-decimal rationals, obtained by rounding \textbf{outwards} the exact rational bounds produced by \(+,-,\times,\div\), and, for square roots, by the elementary rule ``\(a\le\sqrt X\le b\) whenever \(a^2\le X\) and \(b^2\ge X\)'' with ten-decimal rationals \(a,b\). Every single step is a finite rational computation, and every displayed interval below can be re-verified by these four operations alone.
+
+From (5.5), (5.6), (5.4), (5.7) and (5.9)--(5.10): \[\ln22830\in(10.0358307358,\ 10.0358307422),\qquad
+\ln22865000\in(16.9451179106,\ 16.9451179168), \tag{5.11}\] \[L_{(1)}\in(1.8817182629,\ 1.8817182642),\qquad
+L_{(2)}\in(2.2593490547,\ 2.2593490556), \tag{5.12}\] \[
+\begin{aligned}
+\ln u&\in(0.4213108974,\ 0.4213108982),\\
+\ln(4u)&\in(1.8076052584,\ 1.8076052592),\\
+\ln(5u)&\in(2.0307488094,\ 2.0307488108).
+\end{aligned}\tag{5.13}
+\] (For example, the lower end of (5.11) is \(9\cdot0.6931471804+7\cdot1.0986122884-2\cdot1.9459101492-2\cdot0.0004798041
+=6.2383246236+7.6902860188-3.8918202984-0.0009596082=10.0358307358\), and the upper end is \(9\cdot0.6931471806+7\cdot1.0986122888-2\cdot1.9459101484-2\cdot0.0004798040
+=10.0358307422\); then \(L_{(1)}=\frac3{16}\ln22830\) gives (5.12) after outward rounding --- e.g.~\(\frac3{16}\cdot10.0358307358=1.88171826296\underline{25}\), which rounds down to \(1.8817182629\). Likewise \(\ln u=\ln3-\ln2+2\operatorname{artanh}\frac{3993}{503993}\) has lower end \(1.0986122884-0.6931471806+2\cdot0.0079228948=0.4213108974\).)
+
+Finally we record the bound for the shift term used twice below: if \(|\delta|\le x\) with \(0<x\le\frac1{10}\), then by (5.8) with \(n=1\) and oddness of \(\operatorname{artanh}\), \[\big|\operatorname{artanh}\delta\big|\le\operatorname{artanh}x
+\le x+\frac{x^3}{3(1-x^2)} . \tag{5.14}\]
+
+\subsection{Range I: \(2\le p\le\frac{16}{3}\)}\label{subsec:range1}
+
+Here \(K=0\) and \(\hat c=\frac3{10}\ln22830\), so by (5.11) \[\hat c\in(3.0107492207,\ 3.0107492227) .\] In particular \(\hat c>2\). Since \(X\mapsto X(X-2)\) is increasing for \(X>1\), \[g^2=\hat c(\hat c-2)\in\big(3.0107492207\cdot1.0107492207,\
+3.0107492227\cdot1.0107492227\big)\subset(3.0431124285,\ 3.0431124366),\] and, since \(1.7444518991^2\le3.0431124285\) while \(1.7444519015^2\ge3.0431124366\), \[g\in(1.7444518991,\ 1.7444519015). \tag{5.15}\] Hence \(t^*=g/\hat c\in\big(\frac{1.7444518991}{3.0107492227},\frac{1.7444519015}{3.0107492207}\big)
+\subset(0.5794079048,\ 0.5794079061)\), which lies in \((0,\frac58)\); so Lemma 5.2 gives the maximum of \(S\) on the \(t\)-interval \([0,\frac58]\) at \(t^*\). With \(\beta=\frac35\), the map \(t\mapsto\frac{t-3/5}{1-3t/5}\) is increasing, so \[\delta\in(-0.0315657689,\ -0.0315657667),\qquad |\delta|\le x:=0.0315657689 .\] By (5.14): \(x^2\le0.0009963978\), \(x^3\le0.0000314521\), and \(\frac{x^3}{3(1-x^2)}\le\frac{0.0000314521}{3\cdot0.9990036022}\le0.0000104945\), so \(\operatorname{artanh}x\le0.0315657689+0.0000104945\le0.0315762634\) and \[2\operatorname{artanh}\delta\ \ge\ -0.0631525268 .\] Therefore, by (5.13), \[\ln(4u)+2\operatorname{artanh}\delta\ \ge\ 1.8076052584-0.0631525268=1.7444527316 ,\] while (recall \(K=0\)) \[K+g\ =\ g\ \le\ 1.7444519015\ <\ 1.7444527316 .\] This is (5.3), so \(\|B\|_p\le u(p-1)\) for \(2\le p\le\frac{16}3\). The margin is \(8.3\cdot10^{-7}\).
+
+\subsection{Range II: \(\frac{16}{3}\le p\le\frac{15}{2}\)}\label{subsec:range2}
+
+By (5.12), \[L_{(2)}-L_{(1)}\in(2.2593490547-1.8817182642,\ 2.2593490556-1.8817182629)
+\subset(0.3776307905,\ 0.3776307927),\] \[\hat c=\tfrac{120}{13}\big(L_{(2)}-L_{(1)}\big)\in(3.4858226815,\ 3.4858227019),\] \[
+\begin{aligned}
+K&=L_{(1)}-\tfrac58\hat c\\
+ &\in\bigl(1.8817182629-0.625\cdot3.4858227019,\\
+ &\hspace{4.2em}1.8817182642-0.625\cdot3.4858226815\bigr)\\
+ &\subset(-0.2969209258,\ -0.2969209117).
+\end{aligned}
+\] Again \(\hat c>2\), and \[g^2=\hat c(\hat c-2)\in\big(3.4858226815\cdot1.4858226815,\
+3.4858227019\cdot1.4858227019\big)\subset(5.1793144038,\ 5.1793145053),\] so, since \(2.2758107135^2\le5.1793144038\) and \(2.2758107359^2\ge5.1793145053\), \[g\in(2.2758107135,\ 2.2758107359).\] Hence \(t^*=g/\hat c\in\big(\frac{2.2758107135}{3.4858227019},\frac{2.2758107359}{3.4858226815}\big)
+\subset(0.6528762097,\ 0.6528762201)\), which lies in \((\frac58,\frac{11}{15})
+=(0.625,\,0.7333\ldots)\); so Lemma 5.2 applies on the \(t\)-interval \([\frac58,\frac{11}{15}]\). With \(\beta=\frac23\), the increasing map \(t\mapsto\frac{t-2/3}{1-2t/3}\) gives \[\delta\in(-0.0244187284,\ -0.0244187095),\qquad |\delta|\le x:=0.0244187284 .\] By (5.14): \(x^2\le0.0005962743\), \(x^3\le0.0000145603\), and \(\frac{x^3}{3(1-x^2)}\le\frac{0.0000145603}{3\cdot0.9994037257}\le0.0000048564\), so \(\operatorname{artanh}x\le0.0244187284+0.0000048564=0.0244235848\) and \[2\operatorname{artanh}\delta\ \ge\ -0.0488471696 .\] Therefore, by (5.13), \[\ln(5u)+2\operatorname{artanh}\delta\ \ge\ 2.0307488094-0.0488471696=1.9819016398,\] while \[K+g\ \le\ -0.2969209117+2.2758107359=1.9788898242\ <\ 1.9819016398 .\] This is (5.3) with \(\beta=\frac23\) (whose \(2\operatorname{artanh}\beta=\ln5\), so \(\ln u+2\operatorname{artanh}\beta=\ln(5u)\)), so \(\|B\|_p\le u(p-1)\) for \(\frac{16}3\le p\le\frac{15}2\). The margin is \(3.01\cdot10^{-3}\).
+
+\subsection{Completion of the proof}\label{subsec:completion}
+
+Combining the three ranges proves
+\[\|B\|_{L^p\to L^p}\le1.523958\,(p-1),\qquad p\ge2.\]
+For \(1<p<2\), transposition gives \(\|B\|_p=\|B\|_{p'}\), while
+\(p^*-1=p'-1\).  This completes the proof of the main theorem.
+
+\section{Concluding remarks}\label{sec:remarks}
+
+\begin{enumerate}[label=\textup{(\arabic*)},leftmargin=*]
+\item
+The binding interpolation interval is \([2,16/3]\).  High-precision evaluation
+of the explicit interpolation envelopes gives
+\[
+ \sup_{2\le p\le16/3}\frac{\|B\|_p}{p-1}
+ \le 1.5239567163458625\ldots,
+\]
+with the maximum at \(p=4.7552011223\ldots\).  The other two envelopes are
+\(1.5193749633\ldots\) and \(\sqrt{30/13}=1.5191090506\ldots\).  These decimal
+values are included only for orientation; the proof of the theorem uses the
+outward-rounded rational interval certificate in Section~5.
+
+\item
+The condition \(b_2\ge p^2a_0\) in Remark~2.10 is merely a necessary local
+condition for the polynomial drift determinant near \(t=0\).  The two profiles
+used here choose equality, but no claim of global optimality within all polynomial
+profiles, or within all Bellman functions satisfying the drift criterion, is made.
+
+\item
+The parameter \(\theta<1\) in the growth axiom is essential at
+\(p=16/3\): the monomial \(r^5s^{1/3}\) produces a second derivative of order
+\(s^{-5/3}\), which remains locally integrable in the two-dimensional \(y\)
+variable.  Compactly supported convolution then preserves the drift inequality
+by a direct distributional argument.
+
+\item
+The proof identifies two possible sources of further improvement: a stronger
+pointwise use of the joint geometry of the radial and tangential components, or
+new endpoint Bellman profiles outside the present generalized-polynomial family.
+The current argument establishes only the explicit coefficient stated in the main
+theorem and does not assert sharpness of the method.
+\end{enumerate}
+
+\begin{thebibliography}{99}
+
+\bibitem{BanuelosJanakiraman08}
+R. Bañuelos and P. Janakiraman,
+\emph{\(L^p\)-bounds for the Beurling--Ahlfors transform},
+Trans. Amer. Math. Soc. \textbf{360} (2008), no.~7, 3603--3612.
+
+\bibitem{BanuelosMendez03}
+R. Bañuelos and P. J. Méndez-Hernández,
+\emph{Space-time Brownian motion and the Beurling--Ahlfors transform},
+Indiana Univ. Math. J. \textbf{52} (2003), no.~4, 981--990.
+
+\bibitem{Burkholder84}
+D. L. Burkholder,
+\emph{Boundary value problems and sharp inequalities for martingale transforms},
+Ann. Probab. \textbf{12} (1984), no.~3, 647--702.
+
+\bibitem{Iwaniec82}
+T. Iwaniec,
+\emph{Extremal inequalities in Sobolev spaces and quasiconformal mappings},
+Z. Anal. Anwendungen \textbf{1} (1982), no.~6, 1--16.
+
+\end{thebibliography}
+
+\end{document}
