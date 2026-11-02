@@ -11,6 +11,11 @@ artifact and, where relevant, the self-contained scripts that reproduce it.
 
 ## News
 
+- **2026-11-02**: 📐 **Petty's equilateral-set conjecture in dimension five.**
+  The highest settled dimension rises from **4** (Makeev, 2005) to **5**:
+  every five-dimensional real normed space contains **six equidistant points**.
+  Paper: **[`AI4Science/petty_dimension_five/`](AI4Science/petty_dimension_five/)**.
+
 - **2026-08-19**: 🧾 **Three new results, each with a Lean 4 formalization of its
   finite and numerical core.**
   - **Beurling–Ahlfors transform.** Iwaniec's 1982 conjecture predicts the sharp
@@ -66,6 +71,7 @@ system or leaderboard) against **Hyra**. Arrows mark the better direction
 | | [`beurling_ahlfors_bellman`](AI4Science/beurling_ahlfors_bellman/) | C_BA ↓ | 1.575 <sup>i</sup> | **1.523958** |
 | | [`partial_hadamard_counting`](AI4Science/partial_hadamard_counting/) | regime exponent ↓ | 3 <sup>j</sup> | **2** |
 | | [`commutator_log_cubed`](AI4Science/commutator_log_cubed/) | log exponent ↓ | 4 <sup>k</sup> | **3** |
+| | [`petty_dimension_five`](AI4Science/petty_dimension_five/) | dimension settled ↑ | 4 <sup>l</sup> | **5** |
 
 **Prev-best sources.** 
 
@@ -101,6 +107,10 @@ Regime* ([arXiv:2603.30013](https://arxiv.org/abs/2603.30013)).
 commutators close to the identity*
 ([github.com/bilichboris/TaoCommutators](https://github.com/bilichboris/TaoCommutators));
 the published exponent is Tao's `5`, since refined to `4`.
+- <sup>l</sup> V. V. Makeev: *Equilateral simplices in normed 4-space*,
+Zap. Nauchn. Sem. POMI 329 (2005), 88–91; English translation in
+J. Math. Sci. 140(4) (2007), 548–550, establishing the four-dimensional case
+of Petty's equilateral-set conjecture.
 
 Metrics are as defined by each benchmark; comparisons are against the cited
 published results.
@@ -128,10 +138,13 @@ published results.
 - **log exponent**: smallest proven `k` in `m(ε) = O(logᵏ(1/ε))` for
   commutators within `ε` of the identity (minimize; the matching lower bound
   is `k = 1`).
+- **dimension settled**: highest dimension `n` for which every real
+  `n`-dimensional normed space is known to contain `n + 1` equidistant points,
+  as conjectured by Petty (maximize).
 
 > **Note.** The results above were current as of **2026-07-10**, except
-> `3d_blaschke_lebesgue`, added **2026-08-17**, and the three entries added
-> **2026-08-19**. Several of these
+> `3d_blaschke_lebesgue`, added **2026-08-17**, the three entries added
+> **2026-08-19**, and `petty_dimension_five`, added **2026-11-02**. Several of these
 > problems live on public, continuously-updated leaderboards; later entries there
 > may *warm-start from Hyra's published solutions* to reach still-better numbers.
 
