@@ -11,10 +11,17 @@ artifact and, where relevant, the self-contained scripts that reproduce it.
 
 ## News
 
-- **2026-11-02**: 📐 **Petty's equilateral-set conjecture in dimension five.**
-  The highest settled dimension rises from **4** (Makeev, 2005) to **5**:
-  every five-dimensional real normed space contains **six equidistant points**.
-  Paper: **[`AI4Science/petty_dimension_five/`](AI4Science/petty_dimension_five/)**.
+- **2026-11-02**: 📐 **Two results on Petty's and Yau's conjectures.**
+  - **Petty's equilateral-set conjecture in dimension five.** The highest
+    settled dimension rises from **4** (Makeev, 2005) to **5**: every
+    five-dimensional real normed space contains **six equidistant points**.
+    Paper: **[`AI4Science/petty_dimension_five/`](AI4Science/petty_dimension_five/)**.
+  - **Yau's circle-action conjecture (unrestricted form).** A closed
+    **seven-manifold** with strictly positive sectional curvature admits
+    **no effective smooth circle action**, giving a counterexample. The
+    manifold is not simply connected; the simply connected version remains
+    open. Paper:
+    **[`AI4Science/yau_circle_action_conjecture/`](AI4Science/yau_circle_action_conjecture/)**.
 
 - **2026-08-19**: 🧾 **Three new results, each with a Lean 4 formalization of its
   finite and numerical core.**
@@ -49,9 +56,9 @@ artifact and, where relevant, the self-contained scripts that reproduce it.
 
 ## Results
 
-Each row compares the best prior published result (**Prev best**, from the cited
-system or leaderboard) against **Hyra**. Arrows mark the better direction
-(↓ lower is better, ↑ higher is better); the Hyra-winning value is in bold.
+Each row compares the best prior published result or conjecture status
+(**Prev best**, from the cited sources) against **Hyra**. Arrows mark the better
+direction (↓ lower is better, ↑ higher is better); the Hyra result is in bold.
 
 | Track | Task | Metric | Prev best | Hyra |
 |---|---|---|---|---|
@@ -72,6 +79,7 @@ system or leaderboard) against **Hyra**. Arrows mark the better direction
 | | [`partial_hadamard_counting`](AI4Science/partial_hadamard_counting/) | regime exponent ↓ | 3 <sup>j</sup> | **2** |
 | | [`commutator_log_cubed`](AI4Science/commutator_log_cubed/) | log exponent ↓ | 4 <sup>k</sup> | **3** |
 | | [`petty_dimension_five`](AI4Science/petty_dimension_five/) | dimension settled ↑ | 4 <sup>l</sup> | **5** |
+| | [`yau_circle_action_conjecture`](AI4Science/yau_circle_action_conjecture/) | conjecture status | open <sup>m</sup> | **counterexample (dim 7)** |
 
 **Prev-best sources.** 
 
@@ -111,9 +119,13 @@ the published exponent is Tao's `5`, since refined to `4`.
 Zap. Nauchn. Sem. POMI 329 (2005), 88–91; English translation in
 J. Math. Sci. 140(4) (2007), 548–550, establishing the four-dimensional case
 of Petty's equilateral-set conjecture.
+- <sup>m</sup> S.-T. Yau: *Open problems in geometry*, Proc. Sympos. Pure
+Math. 54, Part 1 (1993), 1–28; see also *Structure of manifolds with positive
+curvature based on geometric analysis*, Notices of the ICCM 1(2) (2013),
+24–27, for the smooth circle-action conjecture.
 
 Metrics are as defined by each benchmark; comparisons are against the cited
-published results.
+published results and conjecture statements.
 
 **Metric notes.**
 - **C₁**: first autoconvolution/autocorrelation constant, `max(f∗f)/(∫f)²` (minimize).
@@ -141,10 +153,15 @@ published results.
 - **dimension settled**: highest dimension `n` for which every real
   `n`-dimensional normed space is known to contain `n + 1` equidistant points,
   as conjectured by Petty (maximize).
+- **conjecture status**: status of the unrestricted claim that every closed
+  manifold admitting strictly positive sectional curvature admits an effective
+  smooth circle action. The counterexample has `π₁ ≅ (ℤ/6)²`; the simply
+  connected version remains open.
 
 > **Note.** The results above were current as of **2026-07-10**, except
 > `3d_blaschke_lebesgue`, added **2026-08-17**, the three entries added
-> **2026-08-19**, and `petty_dimension_five`, added **2026-11-02**. Several of these
+> **2026-08-19**, and `petty_dimension_five` and `yau_circle_action_conjecture`,
+> added **2026-11-02**. Several of these
 > problems live on public, continuously-updated leaderboards; later entries there
 > may *warm-start from Hyra's published solutions* to reach still-better numbers.
 
