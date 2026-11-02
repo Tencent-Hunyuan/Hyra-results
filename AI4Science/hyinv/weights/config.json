@@ -1,0 +1,16 @@
+{
+  "architecture": {
+    "dim": 128,
+    "encoder_layers": 4,
+    "decoder_layers": 3,
+    "neighbors": 48,
+    "order_seed": 20260925
+  },
+  "sampling": {
+    "rounds": 8,
+    "draft_temperature": 0.6,
+    "rewrite_temperature": 0.34
+  },
+  "parameters": 1957573,
+  "source_checkpoint_sha256_16": "4f62870a6ed787c9"
+}

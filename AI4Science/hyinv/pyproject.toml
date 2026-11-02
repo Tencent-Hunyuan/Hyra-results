@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hyinv"
+version = "1.0.0"
+description = "HyInv: a 2M-parameter graph model for protein inverse folding"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+dependencies = ["torch>=2.4", "safetensors>=0.4", "numpy"]
+
+[project.optional-dependencies]
+fast = ["triton>=3.3"]
+
+[tool.setuptools.packages.find]
+include = ["hyinv*"]
