@@ -11,6 +11,13 @@ artifact and, where relevant, the self-contained scripts that reproduce it.
 
 ## News
 
+- **2026-11-02**: 🧬 **Two protein models released with weights and code.**
+  **HyInv**, a 1.96M-parameter inverse-folding model, and **HyPLM-Flash**, a
+  650M-parameter protein language model with a fast INT8 inference engine, are
+  published under `AI4Science/` together with their weights, inference code and
+  technical reports: **[`AI4Science/hyinv/`](AI4Science/hyinv/)**,
+  **[`AI4Science/hyplm_flash/`](AI4Science/hyplm_flash/)**.
+
 - **2026-11-02**: 📐 **Two results on Petty's and Yau's conjectures.**
   - **Petty's equilateral-set conjecture in dimension five.** The highest
     settled dimension rises from **4** (Makeev, 2005) to **5**: every
@@ -164,6 +171,21 @@ published results and conjecture statements.
 > added **2026-11-02**. Several of these
 > problems live on public, continuously-updated leaderboards; later entries there
 > may *warm-start from Hyra's published solutions* to reach still-better numbers.
+
+### Model releases
+
+Trained protein models, each with its weights, inference code and technical
+report:
+
+- [`AI4Science/hyinv/`](AI4Science/hyinv/): **HyInv**, a 1.96-million-parameter
+  message-passing graph network for protein inverse folding (backbone →
+  sequence), trained with structure-reward reinforcement learning. The 7.8 MB
+  weights ship in the folder; see its README for the CLI and Python API.
+- [`AI4Science/hyplm_flash/`](AI4Science/hyplm_flash/): **HyPLM-Flash**, a
+  650-million-parameter protein language model with an INT8 GPU inference engine
+  (about 130,000 residues per second on one H20). The 2.6 GB weights are a
+  GitHub Release on this repository; `weights/download.sh` fetches, merges and
+  verifies them.
 
 ### AI4Fun
 
