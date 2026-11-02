@@ -1,0 +1,138 @@
+{
+ "format": "hyff-checkpoints",
+ "release": {
+  "repository": "Tencent-Hunyuan/Hyra-results",
+  "tag": "hyff-v0.2.0",
+  "url": "https://github.com/{repo}/releases/download/{tag}/{file}"
+ },
+ "models": {
+  "presto": {
+   "weights": "presto/weights.safetensors",
+   "sha256": "353d6b3cdf3934cb71c9f0f18b65c184a39121644a1d93327b6f60dea93cc257",
+   "files": [
+    {
+     "path": "presto/weights.json",
+     "size": 1294,
+     "sha256": "3f974d30ff10ca89253721ece23e11175c83e73572eaaff1d51d77463381d26e"
+    },
+    {
+     "path": "presto/weights.safetensors",
+     "size": 9317504,
+     "sha256": "353d6b3cdf3934cb71c9f0f18b65c184a39121644a1d93327b6f60dea93cc257",
+     "asset": "hyff-presto-weights.safetensors"
+    }
+   ],
+   "defaults": {
+    "precision": "tf32x3",
+    "statistics": "fp32"
+   }
+  },
+  "vivace": {
+   "weights": "vivace/weights.safetensors",
+   "sha256": "4730a0391bdf714b3389c74ef3cf970cafb0410b1ed6e9114ee09f46ed8c02b3",
+   "files": [
+    {
+     "path": "vivace/weights.json",
+     "size": 1307,
+     "sha256": "5452200b00f66bae17c0a8f549da943922c79d320e5e79e049a65b0648ca458b"
+    },
+    {
+     "path": "vivace/weights.safetensors",
+     "size": 26736556,
+     "sha256": "4730a0391bdf714b3389c74ef3cf970cafb0410b1ed6e9114ee09f46ed8c02b3",
+     "asset": "hyff-vivace-weights.safetensors"
+    }
+   ],
+   "defaults": {
+    "precision": "tf32x3",
+    "statistics": "fp32"
+   }
+  },
+  "moderato": {
+   "weights": "moderato/weights.safetensors",
+   "sha256": "09df56119ef34b097b4e2aa4538a0ca534fdc8ee273018f1926a774ed05d0395",
+   "files": [
+    {
+     "path": "moderato/weights.json",
+     "size": 1326,
+     "sha256": "2b90f33ea100a0a8c9f54b0e259704b9e9497a9abfbc6d58e571d738f441ee5e"
+    },
+    {
+     "path": "moderato/weights.safetensors",
+     "size": 139347136,
+     "sha256": "09df56119ef34b097b4e2aa4538a0ca534fdc8ee273018f1926a774ed05d0395",
+     "asset": "hyff-moderato-weights.safetensors"
+    }
+   ],
+   "defaults": {
+    "precision": "tf32x3",
+    "statistics": "fp32"
+   }
+  },
+  "andante": {
+   "weights": "andante/weights.safetensors",
+   "sha256": "a624df0994bb05ed6ad70e511531391ba813b226a408c03019c09f414644b8fb",
+   "files": [
+    {
+     "path": "andante/weights.json",
+     "size": 1820,
+     "sha256": "b9d6822685447d216231d050c128c1ff93a6648205ac56d3de678a4746da627d"
+    },
+    {
+     "path": "andante/weights.safetensors",
+     "size": 699799828,
+     "sha256": "a624df0994bb05ed6ad70e511531391ba813b226a408c03019c09f414644b8fb",
+     "asset": "hyff-andante-weights.safetensors"
+    }
+   ],
+   "defaults": {
+    "precision": "fp32",
+    "statistics": "fp64",
+    "edge_reserve": 1.05,
+    "capacity_policy": "auto"
+   }
+  },
+  "largo": {
+   "weights": "largo/weights.safetensors.index.json",
+   "sha256": "e71ca60a2afe4c64282a38ae29982a52b75e8648c9fb3fd3102ba2d1d3c8d10d",
+   "files": [
+    {
+     "path": "largo/weights.json",
+     "size": 1793,
+     "sha256": "b6c1c478ae5a2f8f83869af9813abf48c42479feecd2cf4e1451b0580742a47a"
+    },
+    {
+     "path": "largo/weights.safetensors.index.json",
+     "size": 167018,
+     "sha256": "e71ca60a2afe4c64282a38ae29982a52b75e8648c9fb3fd3102ba2d1d3c8d10d",
+     "asset": "hyff-largo-weights.safetensors.index.json"
+    },
+    {
+     "path": "largo/weights-00001-of-00003.safetensors",
+     "size": 1894426860,
+     "sha256": "0407c122891a4b937b5bb26be62ed2fd12454ab110ee2e4f25f34b76f83449b8",
+     "asset": "hyff-largo-weights-00001-of-00003.safetensors"
+    },
+    {
+     "path": "largo/weights-00002-of-00003.safetensors",
+     "size": 1893840432,
+     "sha256": "059be02b94a5f72023397de854ca4d14639509d9cbd4c8bc22ec18d90fa4072c",
+     "asset": "hyff-largo-weights-00002-of-00003.safetensors"
+    },
+    {
+     "path": "largo/weights-00003-of-00003.safetensors",
+     "size": 1018806456,
+     "sha256": "b2f1ddb002903cfb1815d88673c5d4cdb04025096711acacb56dfc0763c0b25d",
+     "asset": "hyff-largo-weights-00003-of-00003.safetensors"
+    }
+   ],
+   "defaults": {
+    "precision": "tf32x3",
+    "statistics": "fp64",
+    "edge_reserve": 1.05,
+    "long_range": "auto",
+    "capacity_policy": "auto"
+   }
+  }
+ }
+}
