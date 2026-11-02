@@ -11,6 +11,14 @@ artifact and, where relevant, the self-contained scripts that reproduce it.
 
 ## News
 
+- **2026-11-02**: 🧫 **HyCell, a single-cell embedding model, released with weights and code.**
+  **HyCell**, a 16.1M-parameter model, maps the raw counts of a human cell to
+  a 512-dimensional embedding and decodes embeddings back to gene expression.
+  On seven atlases held out from pretraining, its frozen embeddings reach an
+  overall score of **0.735**, level with Stack (**0.736**, 218M parameters).
+  Weights, the `hycell` package and the technical report:
+  **[`AI4Science/hycell/`](AI4Science/hycell/)**.
+
 - **2026-11-02**: 🧬 **Two protein models released with weights and code.**
   **HyInv**, a 1.96M-parameter inverse-folding model, and **HyPLM-Flash**, a
   650M-parameter protein language model with a fast INT8 inference engine, are
@@ -174,8 +182,7 @@ published results and conjecture statements.
 
 ### Model releases
 
-Trained protein models, each with its weights, inference code and technical
-report:
+Trained models, each with its weights, inference code and technical report:
 
 - [`AI4Science/hyinv/`](AI4Science/hyinv/): **HyInv**, a 1.96-million-parameter
   message-passing graph network for protein inverse folding (backbone →
@@ -186,6 +193,12 @@ report:
   (about 130,000 residues per second on one H20). The 2.6 GB weights are a
   GitHub Release on this repository; `weights/download.sh` fetches, merges and
   verifies them.
+- [`AI4Science/hycell/`](AI4Science/hycell/): **HyCell**, a 16.1-million-parameter
+  embedding model for single-cell transcriptomes, pretrained without cell-type
+  labels on 79.5 million human cells of the CZ CELLxGENE Census. It maps raw
+  counts to 512-dimensional embeddings and decodes them back to expression, and
+  can be fine-tuned into a cell-type annotator. The 64 MB weights ship in the
+  folder as part of the `hycell` package.
 
 ### AI4Fun
 

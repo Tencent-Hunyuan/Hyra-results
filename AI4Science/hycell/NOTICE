@@ -1,0 +1,26 @@
+HyCell
+Copyright (C) 2026 Tencent. Licensed under the Apache License, Version 2.0; see the LICENSE file at the root
+of this repository.
+
+This folder contains or was derived from the following third-party data, each of which remains subject to its
+original license terms.
+
+1. CZ CELLxGENE Census (release of 8 November 2025)
+   The HyCell weights were trained on the human primary cells of this release, and the gene vocabulary in
+   src/hycell/assets/genes.tsv.gz (Ensembl gene ids and gene symbols) is taken from its gene metadata. Data in
+   the Census are available for re-use under the Creative Commons Attribution 4.0 International license
+   (CC BY 4.0, https://creativecommons.org/licenses/by/4.0/).
+   CZI Cell Science Program et al., "CZ CELLxGENE Discover: a single-cell data platform for scalable
+   exploration, analysis and modeling of aggregated data", Nucleic Acids Research 53(D1), D886-D900 (2025),
+   https://doi.org/10.1093/nar/gkae1142.
+   Source: https://cellxgene.cziscience.com/
+
+2. scIB integration-task datasets, human lung atlas
+   tests/data/lung_512.h5ad holds 512 cells of this atlas (128 randomly chosen cells from each of four
+   Drop-seq batches), with their raw counts, cell-type labels and batch labels; genes are given by Ensembl id
+   and symbol. The cells and counts are otherwise unchanged. Licensed under CC BY 4.0
+   (https://creativecommons.org/licenses/by/4.0/).
+   M. D. Luecken et al., "Benchmarking atlas-level data integration in single-cell genomics - integration
+   task datasets", figshare (2022), https://doi.org/10.6084/m9.figshare.12420968.
+   M. D. Luecken et al., "Benchmarking atlas-level data integration in single-cell genomics", Nature Methods
+   19, 41-50 (2022), https://doi.org/10.1038/s41592-021-01336-8.

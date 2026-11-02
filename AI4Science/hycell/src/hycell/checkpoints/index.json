@@ -1,0 +1,11 @@
+{
+ "format": "hycell-checkpoints",
+ "default": "hycell-16m",
+ "models": {
+  "hycell-16m": {
+   "weights": "hycell-16m/weights.safetensors",
+   "size": 64439816,
+   "sha256": "11197d805aa6bafd7a69996bf8e0c7cfd7706b4fbbf5466f9e350d5b3e79d744"
+  }
+ }
+}
