@@ -1,0 +1,10 @@
+# Model weights are release assets and never committed; checkpoints/ is a local directory
+# for maintainers who build the release assets (tools/make_release_assets.py).
+/checkpoints/
+/dist/
+*.part
+*.corrupt
+__pycache__/
+*.pyc
+*.egg-info/
+/build/
