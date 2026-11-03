@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hyff"
+version = "0.2.0"
+description = "HyFF machine-learning force fields: inference, molecular dynamics and batched prediction"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+authors = [{name = "Hyra team"}]
+requires-python = ">=3.11"
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Operating System :: POSIX :: Linux",
+    "Topic :: Scientific/Engineering :: Chemistry",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+    "numpy",
+    "torch>=2.7",
+    "triton>=3.3",
+    "safetensors>=0.4",
+    "warp-lang==1.10.1",
+    "nvalchemi-toolkit-ops==0.3.1",
+]
+
+[project.urls]
+Source = "https://github.com/Tencent-Hunyuan/Hyra-results"
+
+[project.scripts]
+hyff = "hyff.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"hyff" = ["checkpoints/index.json", "checkpoints/*/weights.json"]
+"hyff.md.device" = ["conditional.cu"]

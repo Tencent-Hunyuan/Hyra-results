@@ -18,6 +18,17 @@ artifact and, where relevant, the self-contained scripts that reproduce it.
   overall score of **0.735**, level with Stack (**0.736**, 218M parameters).
   Weights, the `hycell` package and the technical report:
   **[`AI4Science/hycell/`](AI4Science/hycell/)**.
+  
+- **2026-11-02**: ⚛️ **HyFF force fields released with weights and code.** Five
+  machine-learning force fields for molecular simulation, from 2.3M to 1.2B
+  parameters, covering 83 elements with total charge and spin and trained on
+  OMol25. On the full OMol25 validation set, **HyFF Andante** reaches a force
+  error comparable to UMA-S-1.2 (7.65 vs 7.55 meV/Å) at **29×** its MD speed,
+  and **HyFF Largo** has the lowest energy error of the evaluated models
+  (0.364 meV/atom; DPA4-Pro: 0.380) at **9.7×** DPA4-Pro's speed (MD of a
+  2,586-atom system on one H20). The `hyff` package runs NVE, NVT and NPT
+  molecular dynamics and batched prediction:
+  **[`AI4Science/hyff/`](AI4Science/hyff/)**.
 
 - **2026-11-02**: 🧬 **Two protein models released with weights and code.**
   **HyInv**, a 1.96M-parameter inverse-folding model, and **HyPLM-Flash**, a
@@ -199,6 +210,12 @@ Trained models, each with its weights, inference code and technical report:
   counts to 512-dimensional embeddings and decodes them back to expression, and
   can be fine-tuned into a cell-type annotator. The 64 MB weights ship in the
   folder as part of the `hycell` package.
+- [`AI4Science/hyff/`](AI4Science/hyff/): **HyFF**, five machine-learning force
+  fields for molecular simulation (Presto, Vivace, Moderato, Andante and Largo;
+  2.3 million to 1.2 billion parameters, 83 elements), with the `hyff` package
+  for single-structure inference, NVE/NVT/NPT molecular dynamics and batched
+  prediction. The weights (9 MB to 4.8 GB per model) are a GitHub Release on
+  this repository; the package downloads and verifies them on first use.
 
 ### AI4Fun
 

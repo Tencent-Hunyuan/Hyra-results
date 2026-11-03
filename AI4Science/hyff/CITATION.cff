@@ -1,0 +1,15 @@
+cff-version: 1.2.0
+message: "If you use HyFF, please cite the HyFF technical report."
+title: "HyFF: Atomic Foundation Models on the Speed–Accuracy Frontier"
+authors:
+  - name: "Hyra Team"
+type: software
+version: "0.2.0"
+license: Apache-2.0
+repository-code: "https://github.com/Tencent-Hunyuan/Hyra-results"
+preferred-citation:
+  type: report
+  title: "HyFF: Atomic Foundation Models on the Speed–Accuracy Frontier"
+  authors:
+    - name: "Hyra Team"
+  year: 2026
