@@ -229,6 +229,15 @@ You may find the original code here: https://github.com/KellerJordan/modded-nano
 2. nanochat
 Copyright (c) 2025 Andrej Karpathy
 You may find the original code here: https://github.com/karpathy/nanochat
+
+3. drat-trim (external third-party component; vendored as source in AI4Science/hyqec/hyqec-verify/src/hyqec_verify/vendor/drat-trim/drat-trim.c)
+Copyright (c) 2014 Marijn Heule and Nathan Wetzler, The University of Texas at Austin.
+Copyright (c) 2015-2024 Marijn Heule, Carnegie Mellon University
+You may find the original code here: https://github.com/marijnheule/drat-trim
+
+4. lrat-check (external third-party component; vendored as source in AI4Science/hyqec/hyqec-verify/src/hyqec_verify/vendor/drat-trim/lrat-check.c)
+Copyright (c) 2017-2023 Marijn Heule, Carnegie Mellon University
+You may find the original code here: https://github.com/marijnheule/drat-trim
 Terms of the MIT:
 --------------------------------------------------------------------
 MIT License

@@ -1,0 +1,9 @@
+hyqec-check
+Copyright (C) 2026 Tencent
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This is a separately authored companion to hyqec-verify. Its implementation was
+developed from the BNB_CERT_SPEC.md specification and soundness prose, without
+reading or importing the prover's source or tests. The protocol specification
+is shared; this package does not include the prover implementation.

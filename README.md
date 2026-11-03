@@ -11,6 +11,16 @@ artifact and, where relevant, the self-contained scripts that reproduce it.
 
 ## News
 
+- **2026-11-03**: 🔐 **Certified distances of non-CSS quantum codes.** The
+  qldpc-challenge board labels all 184 of its general (non-CSS) stabilizer codes
+  as upper bounds only. **hyqec**, a prover plus an independently written
+  certificate checker, proves the exact Pauli-weight distance of **165** of
+  them: 122 with SAT proofs checked by `drat-trim`, 42 with re-executable
+  branch-and-bound records, and the board's `[[452,115,18]]` (**d = 18**) with
+  a coverage certificate of 124.6 billion search nodes that the independent
+  checker re-executed in full. Code:
+  **[`AI4Science/hyqec/`](AI4Science/hyqec/)**.
+
 - **2026-11-02**: ⚛️ **HyFF force fields released with weights and code.** Five
   machine-learning force fields for molecular simulation, from 2.3M to 1.2B
   parameters, covering 83 elements with total charge and spin and trained on
@@ -98,6 +108,7 @@ direction (↓ lower is better, ↑ higher is better); the Hyra result is in bol
 | | [`commutator_log_cubed`](AI4Science/commutator_log_cubed/) | log exponent ↓ | 4 <sup>k</sup> | **3** |
 | | [`petty_dimension_five`](AI4Science/petty_dimension_five/) | dimension settled ↑ | 4 <sup>l</sup> | **5** |
 | | [`yau_circle_action_conjecture`](AI4Science/yau_circle_action_conjecture/) | conjecture status | open <sup>m</sup> | **counterexample (dim 7)** |
+| | [`hyqec`](AI4Science/hyqec/) | board non-CSS codes with exact d ↑ | 0 / 184 <sup>n</sup> | **165 / 184** (122 with `drat-trim`-checked SAT proofs, 1 independently re-checked certificate) |
 
 **Prev-best sources.** 
 
@@ -141,6 +152,17 @@ of Petty's equilateral-set conjecture.
 Math. 54, Part 1 (1993), 1–28; see also *Structure of manifolds with positive
 curvature based on geometric analysis*, Notices of the ICCM 1(2) (2013),
 24–27, for the smooth circle-action conjecture.
+- <sup>n</sup> The qldpc-challenge board
+([github.com/unitaryfoundation/qldpc-challenge](https://github.com/unitaryfoundation/qldpc-challenge))
+labels every one of its general stabilizer (non-CSS) entries as an upper bound
+(`d≤`) only, as its certifier does not minimise Pauli weight (`TRACKS.md`,
+2026-10-27). Codes are from the 2026-10-16 snapshot. Exact distances of other
+non-CSS codes have been computed elsewhere (e.g. Lee et al.,
+[arXiv:2609.30069](https://arxiv.org/abs/2609.30069)); the count is about this
+board. Hyra's 165 are made up as follows. 122 have SAT proofs checked by
+`drat-trim`; the CNF encoding is hyqec's own. 1 (`[[452,115,18]]`) has a
+branch-and-bound coverage certificate re-executed by the independent checker.
+42 have branch-and-bound search records that only the same prover can re-run.
 
 Metrics are as defined by each benchmark; comparisons are against the cited
 published results and conjecture statements.
@@ -175,11 +197,14 @@ published results and conjecture statements.
   manifold admitting strictly positive sectional curvature admits an effective
   smooth circle action. The counterexample has `π₁ ≅ (ℤ/6)²`; the simply
   connected version remains open.
+- **board non-CSS codes with exact d**: number of the board's 184 general
+  stabilizer codes whose Pauli-weight distance is proven exactly, not only
+  bounded (maximize).
 
 > **Note.** The results above were current as of **2026-07-10**, except
 > `3d_blaschke_lebesgue`, added **2026-08-17**, the three entries added
-> **2026-08-19**, and `petty_dimension_five` and `yau_circle_action_conjecture`,
-> added **2026-11-02**. Several of these
+> **2026-08-19**, `petty_dimension_five` and `yau_circle_action_conjecture`,
+> added **2026-11-02**, and `hyqec`, added **2026-11-03**. Several of these
 > problems live on public, continuously-updated leaderboards; later entries there
 > may *warm-start from Hyra's published solutions* to reach still-better numbers.
 

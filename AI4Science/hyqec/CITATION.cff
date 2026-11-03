@@ -1,0 +1,34 @@
+cff-version: 1.2.0
+message: "If you use hyqec, please cite it as below."
+title: "hyqec: certified distances of quantum stabilizer codes (hyqec-verify and hyqec-check)"
+type: software
+authors:
+  - family-names: Gao
+    given-names: Minbo
+    affiliation: "Hyra Team, Tencent Hunyuan"
+version: 0.3.0
+license: Apache-2.0
+repository-code: "https://github.com/Tencent-Hunyuan/hyra-results/tree/main/AI4Science/hyqec"
+keywords:
+  - quantum error correction
+  - stabilizer codes
+  - code distance
+  - certificates
+  - DRAT
+references:
+  - type: article
+    title: "Distance Verification for Classical and Quantum LDPC Codes"
+    authors:
+      - family-names: Dumer
+        given-names: Ilya
+      - family-names: Kovalev
+        given-names: Alexey A.
+      - family-names: Pryadko
+        given-names: Leonid P.
+    journal: "IEEE Transactions on Information Theory"
+    volume: 63
+    issue: 7
+    start: 4675
+    end: 4686
+    year: 2017
+    doi: 10.1109/TIT.2017.2690381

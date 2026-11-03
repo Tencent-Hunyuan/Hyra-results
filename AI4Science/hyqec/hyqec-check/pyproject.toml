@@ -1,0 +1,28 @@
+[build-system]
+requires = ["setuptools>=77", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hyqec-check"
+version = "2.0.2"
+description = "Independent stabilizer-code branch-and-bound coverage certificate checker"
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+license-files = ["LICENSE", "NOTICE"]
+authors = [{name = "The hyqec-check contributors"}]
+classifiers = [
+  "Programming Language :: Python :: 3",
+  "Programming Language :: C++",
+  "Operating System :: POSIX :: Linux",
+  "Topic :: Scientific/Engineering :: Mathematics",
+]
+
+[project.scripts]
+hyqec-check = "hyqec_check.__main__:main"
+hyqec-check-wide = "hyqec_check_wide.__main__:main"
+hyqec-check-v2 = "hyqec_check_v2.__main__:main"
+
+[tool.setuptools]
+packages = ["hyqec_check", "hyqec_check_wide", "hyqec_check_v2"]
+include-package-data = false
