@@ -1,0 +1,43 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hycell"
+version = "0.1.0"
+description = "HyCell: a compact embedding model for single-cell transcriptomes"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+authors = [{name = "Hyra Team"}]
+requires-python = ">=3.10"
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Bio-Informatics",
+]
+dependencies = [
+    "numpy",
+    "pandas",
+    "scipy",
+    "torch>=2.4",
+    "safetensors>=0.4",
+    "anndata>=0.10",
+]
+
+[project.optional-dependencies]
+flash = ["flash-attn>=2.6"]
+examples = ["scanpy", "scikit-learn", "matplotlib"]
+test = ["pytest"]
+
+[project.urls]
+Source = "https://github.com/Tencent-Hunyuan/Hyra-results"
+
+[project.scripts]
+hycell = "hycell.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"hycell" = ["assets/genes.tsv.gz", "checkpoints/index.json", "checkpoints/*/weights.json",
+            "checkpoints/*/weights.safetensors"]

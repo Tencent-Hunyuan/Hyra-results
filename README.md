@@ -11,6 +11,14 @@ artifact and, where relevant, the self-contained scripts that reproduce it.
 
 ## News
 
+- **2026-11-02**: 🧫 **HyCell, a single-cell embedding model, released with weights and code.**
+  **HyCell**, a 16.1M-parameter model, maps the raw counts of a human cell to
+  a 512-dimensional embedding and decodes embeddings back to gene expression.
+  On seven atlases held out from pretraining, its frozen embeddings reach an
+  overall score of **0.735**, level with Stack (**0.736**, 218M parameters).
+  Weights, the `hycell` package and the technical report:
+  **[`AI4Science/hycell/`](AI4Science/hycell/)**.
+  
 - **2026-11-02**: ⚛️ **HyFF force fields released with weights and code.** Five
   machine-learning force fields for molecular simulation, from 2.3M to 1.2B
   parameters, covering 83 elements with total charge and spin and trained on
@@ -196,6 +204,12 @@ Trained models, each with its weights, inference code and technical report:
   (about 130,000 residues per second on one H20). The 2.6 GB weights are a
   GitHub Release on this repository; `weights/download.sh` fetches, merges and
   verifies them.
+- [`AI4Science/hycell/`](AI4Science/hycell/): **HyCell**, a 16.1-million-parameter
+  embedding model for single-cell transcriptomes, pretrained without cell-type
+  labels on 79.5 million human cells of the CZ CELLxGENE Census. It maps raw
+  counts to 512-dimensional embeddings and decodes them back to expression, and
+  can be fine-tuned into a cell-type annotator. The 64 MB weights ship in the
+  folder as part of the `hycell` package.
 - [`AI4Science/hyff/`](AI4Science/hyff/): **HyFF**, five machine-learning force
   fields for molecular simulation (Presto, Vivace, Moderato, Andante and Largo;
   2.3 million to 1.2 billion parameters, 83 elements), with the `hyff` package

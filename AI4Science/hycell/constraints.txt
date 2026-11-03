@@ -1,0 +1,8 @@
+# Versions used to record the results in README.md
+torch==2.7.1
+flash-attn==2.8.1
+numpy==2.5.3
+scipy==1.16.2
+pandas==2.3.2
+anndata==0.13.4
+safetensors==0.6.2

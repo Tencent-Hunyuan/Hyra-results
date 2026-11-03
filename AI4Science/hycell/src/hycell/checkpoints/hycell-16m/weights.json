@@ -1,0 +1,29 @@
+{
+ "format": "hycell-weights",
+ "model_id": "hycell-16m",
+ "version": "0.1.0",
+ "model_config": {
+  "n_genes": 36495,
+  "d_model": 256,
+  "n_layers": 6,
+  "n_heads": 4,
+  "d_ff": 704,
+  "d_embed": 512,
+  "n_reserved": 64,
+  "d_value": 64,
+  "d_decoder": 1024,
+  "d_code": 64,
+  "n_datasets": 555,
+  "n_donors": 12533
+ },
+ "tokenizer": {
+  "max_tokens": 1024,
+  "zero_ratio": 0.25,
+  "zero_genes": "core genes measured by the input dataset",
+  "value": "log1p(counts per 10,000 in-vocabulary counts)"
+ },
+ "n_parameters": 16108766,
+ "training_tokens": 64000195776,
+ "training_cells_seen": 78201849,
+ "weights_sha256": "11197d805aa6bafd7a69996bf8e0c7cfd7706b4fbbf5466f9e350d5b3e79d744"
+}
