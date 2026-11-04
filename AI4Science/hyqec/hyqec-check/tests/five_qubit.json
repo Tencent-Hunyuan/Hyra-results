@@ -1,0 +1,7 @@
+{
+  "format": "bnbcheck-reference-code/0",
+  "n": 5,
+  "k": 1,
+  "generators": ["XZZXI", "IXZZX", "XIXZZ", "ZXIXZ"],
+  "permutations": [[1, 2, 3, 4, 0]]
+}

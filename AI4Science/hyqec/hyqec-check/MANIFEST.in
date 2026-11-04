@@ -1,0 +1,13 @@
+include REPORT.md Makefile LICENSE NOTICE CHANGELOG.md
+recursive-include native *.cpp
+recursive-include tests *.py *.json *.cpp *.hpp
+recursive-include docs *
+prune docs/history
+prune docs/reviews
+recursive-include scripts *.py
+prune build
+prune results
+prune dist
+global-exclude __pycache__ *.pyc
+
+include native/*.hpp

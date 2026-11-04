@@ -1,0 +1,39 @@
+[build-system]
+requires = ["setuptools>=64"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hyqec-verify"
+version = "0.3.0"
+description = "Certified distances of quantum stabilizer codes (general and CSS): upper-bound search, branch-and-bound and SAT/DRAT lower-bound certificates"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+requires-python = ">=3.10"
+dependencies = ["numpy>=1.22"]
+classifiers = [
+  "License :: OSI Approved :: Apache Software License",
+  "Programming Language :: Python :: 3",
+  "Topic :: Scientific/Engineering :: Physics",
+]
+
+[project.optional-dependencies]
+nauty = ["pynauty>=2.8"]
+test = ["pytest>=7"]
+
+[project.scripts]
+hyqec-verify = "hyqec_verify.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+hyqec_verify = ["native/**/*", "native/*", "vendor/drat-trim/*"]
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+markers = [
+  "slow: long-running tests",
+  "native: needs the compiled native engines",
+  "sat: needs external SAT solver and DRAT checker",
+  "gpu: needs a CUDA GPU",
+]

@@ -1,0 +1,5 @@
+# [[5,1,3]] perfect code, one generator per line
+XZZXI
+IXZZX
+XIXZZ
+ZXIXZ

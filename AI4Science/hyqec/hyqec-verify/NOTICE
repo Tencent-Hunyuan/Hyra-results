@@ -1,0 +1,57 @@
+hyqec-verify
+Copyright (C) 2026 Tencent
+
+Licensed under the Apache License, Version 2.0 (see LICENSE).
+
+This product includes third-party software, distributed in source form under
+src/hyqec_verify/vendor/drat-trim/ (upstream https://github.com/marijnheule/drat-trim,
+revision 2e3b2dc0ecf938addbd779d42877b6ed69d9a985), under the MIT License.
+The notices below are copied verbatim from the file headers.
+
+------------------------------------------------------------------------------
+drat-trim.c:
+Copyright (c) 2014 Marijn Heule and Nathan Wetzler, The University of Texas at Austin.
+Copyright (c) 2015-2024 Marijn Heule, Carnegie Mellon University
+Last edit: April 21, 2024
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+associated documentation files (the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish, distribute,
+sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+------------------------------------------------------------------------------
+lrat-check.c:
+Copyright (c) 2017-2023 Marijn Heule, Carnegie Mellon University
+Last edit: July 2023
+
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software and
+associated documentation files (the "Software"), to deal in the Software without restriction,
+including without limitation the rights to use, copy, modify, merge, publish, distribute,
+sublicense, and/or sell copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in all copies or
+substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED, INCLUDING BUT
+NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND
+NONINFRINGEMENT. IN NO EVENT SHALL THE AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM,
+DAMAGES OR OTHER LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM, OUT
+OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
+
+------------------------------------------------------------------------------
+Kissat and CaDiCaL (MIT, Armin Biere et al.) are NOT redistributed; `hyqec-verify tools
+install` downloads and builds them from their upstream repositories on the user's machine.
+
+Input-format compatibility: hyqec-verify reads the code JSON format of the Unitary Foundation
+qldpc-challenge repository (Apache-2.0). No code from that repository is included.

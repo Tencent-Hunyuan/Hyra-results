@@ -1,0 +1,175 @@
+{
+  "trace_base": "00000100000001b3",
+  "mix_vectors": {
+    "0": "0000000000000000",
+    "1": "5692161d100b05e5",
+    "2": "dbd238973a2b148a",
+    "3": "1e535eede31428f0",
+    "4": "b7a4712c74562914",
+    "7": "12ae30237b17df14",
+    "8": "d56b1fbb9ceba9e8",
+    "9": "826c6abf7fdd5ad7",
+    "31": "540f172e046ef165"
+  },
+  "case": "[[4,2,2]] XXXX,ZZZZ; trivial orbits; P cap1",
+  "records": [
+    {
+      "root": 0,
+      "lab": [
+        1,
+        4,
+        4,
+        4
+      ],
+      "state_fp": "9e61a730c7cbf140",
+      "packed": "0000ffff01000101",
+      "node_count": 1,
+      "trace": "ebe157e2808af0c1"
+    },
+    {
+      "root": 1,
+      "lab": [
+        2,
+        4,
+        4,
+        4
+      ],
+      "state_fp": "5be0c14a1ef4cd3a",
+      "packed": "0000ffff01000101",
+      "node_count": 1,
+      "trace": "13b6aaf19af8ba8f"
+    },
+    {
+      "root": 2,
+      "lab": [
+        3,
+        4,
+        4,
+        4
+      ],
+      "state_fp": "f217ee8b89b6ccde",
+      "packed": "0000ffff01000201",
+      "node_count": 1,
+      "trace": "1578351a029e1f3b"
+    },
+    {
+      "root": 3,
+      "lab": [
+        0,
+        1,
+        4,
+        4
+      ],
+      "state_fp": "c88799f6f1216487",
+      "packed": "0000ffff01000101",
+      "node_count": 1,
+      "trace": "dfd0259abcbdd266"
+    },
+    {
+      "root": 4,
+      "lab": [
+        0,
+        2,
+        4,
+        4
+      ],
+      "state_fp": "fbb9c4a7ad29da93",
+      "packed": "0000ffff01000101",
+      "node_count": 1,
+      "trace": "e684bbea3f1e68ca"
+    },
+    {
+      "root": 5,
+      "lab": [
+        0,
+        3,
+        4,
+        4
+      ],
+      "state_fp": "f86544078f325a42",
+      "packed": "0000ffff01000201",
+      "node_count": 1,
+      "trace": "466ddad7538f6027"
+    },
+    {
+      "root": 6,
+      "lab": [
+        0,
+        0,
+        1,
+        4
+      ],
+      "state_fp": "644f9b4dbecb9811",
+      "packed": "0000ffff01000101",
+      "node_count": 1,
+      "trace": "3eddf61a34f365e4"
+    },
+    {
+      "root": 7,
+      "lab": [
+        0,
+        0,
+        2,
+        4
+      ],
+      "state_fp": "78ced904d020e837",
+      "packed": "0000ffff01000101",
+      "node_count": 1,
+      "trace": "6863fa2ca8ea9676"
+    },
+    {
+      "root": 8,
+      "lab": [
+        0,
+        0,
+        3,
+        4
+      ],
+      "state_fp": "953dcde71a051a92",
+      "packed": "0000ffff01000201",
+      "node_count": 1,
+      "trace": "9d2071b037ac2817"
+    },
+    {
+      "root": 9,
+      "lab": [
+        0,
+        0,
+        0,
+        1
+      ],
+      "dead_generator": 1,
+      "node_count": 0,
+      "trace": "0000000000000000",
+      "state_fp": "0c76cd91e7c00857"
+    },
+    {
+      "root": 10,
+      "lab": [
+        0,
+        0,
+        0,
+        2
+      ],
+      "dead_generator": 0,
+      "node_count": 0,
+      "trace": "0000000000000000",
+      "state_fp": "d6936ce62ee00070"
+    },
+    {
+      "root": 11,
+      "lab": [
+        0,
+        0,
+        0,
+        3
+      ],
+      "dead_generator": 0,
+      "node_count": 0,
+      "trace": "0000000000000000",
+      "state_fp": "3b5cf0da2eb8152e"
+    }
+  ],
+  "nodes": 9,
+  "global_trace": "05dc5a17c64e8a73"
+}

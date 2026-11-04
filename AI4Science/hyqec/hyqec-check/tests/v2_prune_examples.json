@@ -1,0 +1,155 @@
+{
+  "5": {
+    "n": 5,
+    "rows": [
+      "YZYIZ",
+      "YYIYX",
+      "YYZII",
+      "YYZXZ"
+    ],
+    "cap": 4,
+    "lab": [
+      3,
+      6,
+      3,
+      3,
+      7
+    ],
+    "expected": {
+      "rule": 5,
+      "generator": 65535,
+      "packing": [
+        2
+      ],
+      "np": 1,
+      "PK": [
+        2
+      ],
+      "zeros": [],
+      "wiped": [
+        0
+      ],
+      "first": [
+        [
+          1
+        ]
+      ]
+    }
+  },
+  "6": {
+    "n": 5,
+    "rows": [
+      "YZYIZ",
+      "YYIYX",
+      "YYZII",
+      "YYZXZ"
+    ],
+    "cap": 4,
+    "lab": [
+      4,
+      6,
+      7,
+      3,
+      2
+    ],
+    "expected": {
+      "rule": 6,
+      "generator": 65535,
+      "packing": [
+        1
+      ],
+      "np": 1,
+      "PK": [
+        1
+      ],
+      "zeros": [],
+      "wiped": [
+        0
+      ],
+      "first": [
+        [
+          0,
+          0,
+          2
+        ]
+      ]
+    }
+  },
+  "7": {
+    "n": 5,
+    "rows": [
+      "YZYIZ",
+      "YYIYX",
+      "YYZII",
+      "YYZXZ"
+    ],
+    "cap": 4,
+    "lab": [
+      0,
+      5,
+      7,
+      5,
+      3
+    ],
+    "expected": {
+      "rule": 7,
+      "generator": 65535,
+      "packing": [
+        0
+      ],
+      "np": 1,
+      "PK": [
+        0
+      ],
+      "zeros": [],
+      "wiped": [
+        0
+      ],
+      "first": [
+        [
+          2
+        ]
+      ]
+    }
+  },
+  "2": {
+    "n": 5,
+    "rows": [
+      "YZYIZ",
+      "YYIYX",
+      "YYZII",
+      "YYZXZ"
+    ],
+    "cap": 4,
+    "lab": [
+      3,
+      6,
+      5,
+      1,
+      1
+    ],
+    "expected": {
+      "rule": 2,
+      "generator": 65535,
+      "packing": [
+        0,
+        1
+      ],
+      "np": 2,
+      "PK": [
+        0,
+        1
+      ],
+      "zeros": [],
+      "wiped": [],
+      "first": [
+        [
+          -1
+        ],
+        [
+          -1
+        ]
+      ]
+    }
+  }
+}
