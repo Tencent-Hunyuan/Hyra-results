@@ -1,0 +1,26 @@
+{
+ "architecture": {
+  "d": 1024,
+  "depth": 24,
+  "heads": 16,
+  "mlp_hidden": 2816,
+  "history": 6,
+  "k_max": 4,
+  "c_stem": 384,
+  "d_frame": 384,
+  "max_merge": 2,
+  "refiner_hidden": 32,
+  "refiner_blocks": 2,
+  "refiner_kernel": 5,
+  "n_registers": 4,
+  "n_datasets": 32
+ },
+ "parameters": 323465837,
+ "processor_parameters": 308606976,
+ "weights": "raw (not EMA)",
+ "source_step": 27280,
+ "source_commit": "a33e9d3bdf23",
+ "source_checkpoint_sha256": "81ebd9d6ec2facb177e4f535f02ab3ee37eeef4c594107edd3b18d8009054d30",
+ "sha256": "67f67339b501dd5bcaddccb233437d4f4dcc24189ecb79d4ff8f5a1fa3600e54",
+ "dtype": "float32"
+}
