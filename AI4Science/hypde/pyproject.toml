@@ -1,0 +1,38 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hypde"
+version = "0.1.0"
+description = "HyPDE: a 2D foundation model for partial differential equations"
+readme = "README.md"
+license = {text = "Apache-2.0"}
+authors = [{name = "Hyra Team"}]
+requires-python = ">=3.10"
+classifiers = [
+    "License :: OSI Approved :: Apache Software License",
+    "Programming Language :: Python :: 3",
+    "Topic :: Scientific/Engineering :: Physics",
+]
+dependencies = [
+    "numpy",
+    "torch>=2.4",
+    "safetensors>=0.4",
+    "h5py>=3.8",
+]
+
+[project.optional-dependencies]
+test = ["pytest"]
+
+[project.urls]
+Source = "https://github.com/Tencent-Hunyuan/Hyra-results"
+
+[project.scripts]
+hypde = "hypde.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.package-data]
+"hypde" = ["assets/datasets.json", "assets/test_panel.json"]

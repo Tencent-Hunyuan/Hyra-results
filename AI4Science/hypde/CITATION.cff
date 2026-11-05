@@ -1,0 +1,10 @@
+cff-version: 1.2.0
+message: "If you use HyPDE, please cite it as below."
+title: "HyPDE: a 2D Foundation Model for Partial Differential Equations"
+authors:
+  - name: "Hyra Team"
+type: software
+version: "0.1.0"
+license: Apache-2.0
+repository-code: "https://github.com/Tencent-Hunyuan/Hyra-results"
+date-released: 2026-11-05
