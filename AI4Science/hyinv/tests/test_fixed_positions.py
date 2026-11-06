@@ -75,11 +75,11 @@ class FixedInsertionCodesTest(unittest.TestCase):
                            st.native, st.labels, st.chain_names)
         np.testing.assert_array_equal(parse_fixed("A12", legacy), [False, True, True, True, False, False])
 
-    def test_reference_model_keeps_selected_native_residues(self):
+    def assert_reference_model_keeps_selected_native_residues(self, device):
         old_threads = torch.get_num_threads()
         try:
             torch.set_num_threads(2)
-            model = HyInv.from_pretrained(device="cpu")
+            model = HyInv.from_pretrained(device=device)
             sequences = design(model, self.structure, n=2, seed=7, fixed="A12.,A12A,B12A")
         finally:
             torch.set_num_threads(old_threads)
@@ -88,6 +88,13 @@ class FixedInsertionCodesTest(unittest.TestCase):
             chain_a, chain_b = sequence.split("/")
             self.assertEqual(chain_a[1:3], "AS")
             self.assertEqual(chain_b, "V")
+
+    def test_reference_model_keeps_selected_native_residues(self):
+        self.assert_reference_model_keeps_selected_native_residues("cpu")
+
+    @unittest.skipUnless(torch.cuda.is_available(), "test requires CUDA")
+    def test_reference_model_cuda_keeps_selected_native_residues(self):
+        self.assert_reference_model_keeps_selected_native_residues("cuda")
 
     def test_command_line_uses_the_same_fixed_positions(self):
         with tempfile.NamedTemporaryFile(suffix=".fasta", delete=False) as output:
