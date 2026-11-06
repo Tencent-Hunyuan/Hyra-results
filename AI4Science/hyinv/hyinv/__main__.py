@@ -10,7 +10,7 @@ def main():
     ap.add_argument("command", choices=["design"])
     ap.add_argument("--pdb", required=True, help="input PDB file")
     ap.add_argument("--chain", help="use only these chains, e.g. A or AB (all by default)")
-    ap.add_argument("--fixed", help="positions that keep the native residue (PDB numbering), e.g. 12-20,45; prefix a chain name for multi-chain input, e.g. A12-20,B7")
+    ap.add_argument("--fixed", help="positions that keep the native residue (PDB numbering), e.g. 12-20,45 or A12B; prefix a chain name for multi-chain input, e.g. A12-20,B7")
     ap.add_argument("--n", type=int, default=8, help="number of designs")
     ap.add_argument("--seed", type=int, default=0)
     ap.add_argument("--draft-temperature", type=float, default=0.6)
