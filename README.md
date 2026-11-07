@@ -8,6 +8,8 @@ released alongside the Hyra launch post. Each folder holds the final solution
 artifact and, where relevant, the self-contained scripts that reproduce it.
 
 > 📝 Launch post: **[hy.tencent.com/research/hyra](https://hy.tencent.com/research/hyra)**
+>
+> 🚀 Hyra 2.0 blog: **[hy.tencent.ai/research/hyra2](https://hy.tencent.ai/research/hyra2)**
 
 ## News
 
@@ -30,6 +32,11 @@ artifact and, where relevant, the self-contained scripts that reproduce it.
   a coverage certificate of 124.6 billion search nodes that the independent
   checker re-executed in full. Code:
   **[`AI4Science/hyqec/`](AI4Science/hyqec/)**.
+
+- **2026-11-02**: 🚀 **Hyra 2.0 blog released.**
+  Read **[Hyra 2.0: The Next Step for Auto Research](https://hy.tencent.ai/research/hyra2)**
+  for an overview of Hyra's progress in developing reusable scientific tools,
+  models, and workflows.
 
 - **2026-11-02**: 🧫 **HyCell, a single-cell embedding model, released with weights and code.**
   **HyCell**, a 16.1M-parameter model, maps the raw counts of a human cell to
