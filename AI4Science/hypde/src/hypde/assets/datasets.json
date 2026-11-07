@@ -1,0 +1,340 @@
+{
+ "acoustic_scattering_discontinuous": {
+  "dataset_id": 1,
+  "fields": [
+   "pressure",
+   "velocity_x",
+   "velocity_y"
+  ],
+  "constants": [
+   "zeros_like_density",
+   "speed_of_sound"
+  ],
+  "bcs": [
+   [
+    0,
+    1
+   ],
+   [
+    0,
+    1
+   ]
+  ],
+  "grid": [
+   256,
+   256
+  ],
+  "n_frames": 102
+ },
+ "acoustic_scattering_inclusions": {
+  "dataset_id": 2,
+  "fields": [
+   "pressure",
+   "velocity_x",
+   "velocity_y"
+  ],
+  "constants": [
+   "zeros_like_density",
+   "speed_of_sound"
+  ],
+  "bcs": [
+   [
+    0,
+    1
+   ],
+   [
+    0,
+    1
+   ]
+  ],
+  "grid": [
+   256,
+   256
+  ],
+  "n_frames": 102
+ },
+ "acoustic_scattering_maze": {
+  "dataset_id": 3,
+  "fields": [
+   "pressure",
+   "velocity_x",
+   "velocity_y"
+  ],
+  "constants": [
+   "zeros_like_density",
+   "speed_of_sound"
+  ],
+  "bcs": [
+   [
+    0,
+    1
+   ],
+   [
+    0,
+    1
+   ]
+  ],
+  "grid": [
+   256,
+   256
+  ],
+  "n_frames": 202
+ },
+ "active_matter": {
+  "dataset_id": 4,
+  "fields": [
+   "concentration",
+   "velocity_x",
+   "velocity_y",
+   "D_xx",
+   "D_xy",
+   "D_yx",
+   "D_yy",
+   "E_xx",
+   "E_xy",
+   "E_yx",
+   "E_yy"
+  ],
+  "constants": [],
+  "bcs": [
+   [
+    2,
+    2
+   ],
+   [
+    2,
+    2
+   ]
+  ],
+  "grid": [
+   256,
+   256
+  ],
+  "n_frames": 81
+ },
+ "euler_multi_quadrants_openBC": {
+  "dataset_id": 5,
+  "fields": [
+   "energy",
+   "density",
+   "pressure",
+   "momentum_x",
+   "momentum_y"
+  ],
+  "constants": [],
+  "bcs": [
+   [
+    1,
+    1
+   ],
+   [
+    1,
+    1
+   ]
+  ],
+  "grid": [
+   512,
+   512
+  ],
+  "n_frames": 101
+ },
+ "euler_multi_quadrants_periodicBC": {
+  "dataset_id": 6,
+  "fields": [
+   "energy",
+   "density",
+   "pressure",
+   "momentum_x",
+   "momentum_y"
+  ],
+  "constants": [],
+  "bcs": [
+   [
+    2,
+    2
+   ],
+   [
+    2,
+    2
+   ]
+  ],
+  "grid": [
+   512,
+   512
+  ],
+  "n_frames": 101
+ },
+ "flowbench_FPO_NS_2D_512x128_harmonics": {
+  "dataset_id": 7,
+  "fields": [
+   "pressure",
+   "velocity_x",
+   "velocity_y"
+  ],
+  "constants": [
+   "mask"
+  ],
+  "bcs": [
+   [
+    1,
+    1
+   ],
+   [
+    1,
+    1
+   ]
+  ],
+  "grid": [
+   512,
+   128
+  ],
+  "n_frames": 242
+ },
+ "gray_scott_reaction_diffusion": {
+  "dataset_id": 8,
+  "fields": [
+   "A",
+   "B"
+  ],
+  "constants": [],
+  "bcs": [
+   [
+    2,
+    2
+   ],
+   [
+    2,
+    2
+   ]
+  ],
+  "grid": [
+   128,
+   128
+  ],
+  "n_frames": 1001
+ },
+ "helmholtz_staircase": {
+  "dataset_id": 9,
+  "fields": [
+   "pressure_re",
+   "pressure_im"
+  ],
+  "constants": [
+   "mask"
+  ],
+  "bcs": [
+   [
+    1,
+    1
+   ],
+   [
+    1,
+    1
+   ]
+  ],
+  "grid": [
+   1024,
+   256
+  ],
+  "n_frames": 50
+ },
+ "planetswe": {
+  "dataset_id": 10,
+  "fields": [
+   "height",
+   "velocity_theta",
+   "velocity_phi"
+  ],
+  "constants": [],
+  "bcs": [
+   [
+    1,
+    1
+   ],
+   [
+    2,
+    2
+   ]
+  ],
+  "grid": [
+   256,
+   512
+  ],
+  "n_frames": 1008
+ },
+ "rayleigh_benard": {
+  "dataset_id": 11,
+  "fields": [
+   "buoyancy",
+   "pressure",
+   "velocity_x",
+   "velocity_y"
+  ],
+  "constants": [],
+  "bcs": [
+   [
+    2,
+    2
+   ],
+   [
+    0,
+    0
+   ]
+  ],
+  "grid": [
+   512,
+   128
+  ],
+  "n_frames": 200
+ },
+ "shear_flow": {
+  "dataset_id": 13,
+  "fields": [
+   "tracer",
+   "pressure",
+   "velocity_x",
+   "velocity_y"
+  ],
+  "constants": [],
+  "bcs": [
+   [
+    2,
+    2
+   ],
+   [
+    2,
+    2
+   ]
+  ],
+  "grid": [
+   256,
+   512
+  ],
+  "n_frames": 200
+ },
+ "turbulent_radiative_layer_2D": {
+  "dataset_id": 16,
+  "fields": [
+   "density",
+   "pressure",
+   "velocity_x",
+   "velocity_y"
+  ],
+  "constants": [],
+  "bcs": [
+   [
+    2,
+    2
+   ],
+   [
+    1,
+    1
+   ]
+  ],
+  "grid": [
+   128,
+   384
+  ],
+  "n_frames": 101
+ }
+}
