@@ -27,6 +27,7 @@ class Structure:
     native: str               # native sequence (X for unknown residues)
     labels: list              # (chain name, PDB residue number) for each position
     chain_names: list
+    insertion_codes: list[str] | None = None  # PDB insertion code for each position; "" for none
 
     def __len__(self):
         return len(self.native)
@@ -70,20 +71,34 @@ def read_pdb(path, chains: str | None = None) -> Structure:
         index[i] = seen[chain[i]] = seen.get(chain[i], -1) + 1
     return Structure(Path(path).stem, coords, mask, chain, index,
                      "".join(THREE.get(r["key"][3], "X") for r in residues),
-                     [(r["key"][0], r["key"][1]) for r in residues], chain_names)
+                     [(r["key"][0], r["key"][1]) for r in residues], chain_names,
+                     [r["key"][2].strip() for r in residues])
 
 
 def parse_fixed(spec: str | None, st: Structure) -> np.ndarray:
-    """Fixed-position spec -> bool [L]. Comma-separated items `12` or `12-20`, prefixed with a chain name for multi-chain input (`A12-20`); numbering follows the PDB."""
+    """Fixed-position spec -> bool [L]. Numbering and insertion codes follow the PDB."""
     fixed = np.zeros(len(st), bool)
+    codes = st.insertion_codes if st.insertion_codes is not None else [""] * len(st.labels)
+    if len(codes) != len(st.labels):
+        raise ValueError("insertion_codes must have one entry per residue")
     for token in filter(None, (t.strip() for t in (spec or "").split(","))):
-        m = re.fullmatch(r"([A-Za-z])?(-?\d+)(?:-(-?\d+))?", token)
+        m = re.fullmatch(r"([A-Za-z])?(-?\d+)([A-Za-z.]?)(?:-(-?\d+)([A-Za-z.]?))?", token)
         if m is None:
             raise ValueError(f"cannot parse fixed position {token!r}")
-        chain, lo, hi = m.group(1), int(m.group(2)), int(m.group(3) or m.group(2))
+        chain, lo, lo_code, hi, hi_code = m.groups()
+        lo = int(lo)
         if chain is None and len(st.chain_names) > 1:
             raise ValueError(f"with multiple chains, prefix fixed positions with a chain name, e.g. A{token}")
-        hit = np.array([(chain is None or c == chain) and lo <= num <= hi for c, num in st.labels])
+        if hi is None:
+            hit = np.array([(chain is None or c == chain) and num == lo
+                            and (not lo_code or code == ("" if lo_code == "." else lo_code))
+                            for (c, num), code in zip(st.labels, codes)])
+        else:
+            # Unspecified endpoint codes include all insertions at that number.
+            lower = (lo, "" if lo_code == "." else lo_code)
+            upper = (int(hi), "\uffff" if not hi_code else ("" if hi_code == "." else hi_code))
+            hit = np.array([(chain is None or c == chain) and lower <= (num, code) <= upper
+                            for (c, num), code in zip(st.labels, codes)])
         if not hit.any():
             raise ValueError(f"fixed position {token!r} matched no residue")
         fixed |= hit

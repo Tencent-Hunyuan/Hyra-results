@@ -31,6 +31,12 @@ Options: `--draft-temperature 0.6`, `--rewrite-temperature 0.34`, `--device cpu|
 `--chain AB`, or omit `--chain` to read all chains; chains are separated by `/` in the output, and fixed
 positions must be qualified with a chain name (e.g. `A12-20,B7`).
 
+PDB insertion codes can be selected explicitly: `A12B` fixes residue 12B of chain A, and `A12.` fixes
+only residue 12 without an insertion code. `A12` retains its existing meaning and fixes all residues
+numbered 12, including insertions. Ranges accept insertion codes at either end, e.g. `A12A-12C`;
+an end without a code includes all insertions at that number. Ranges use numeric and then lexicographic
+order, rather than the order of residues in the file.
+
 ```python
 from hyinv import HyInv, read_pdb, design
 
