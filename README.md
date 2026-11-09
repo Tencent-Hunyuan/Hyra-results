@@ -258,6 +258,14 @@ Trained models, each with its weights, inference code and technical report:
   for single-structure inference, NVE/NVT/NPT molecular dynamics and batched
   prediction. The weights (9 MB to 4.8 GB per model) are a GitHub Release on
   this repository; the package downloads and verifies them on first use.
+- [`AI4Science/hypde/`](AI4Science/hypde/): **HyPDE**, a 323-million-parameter
+  2D foundation model for partial-differential-equation simulations, trained
+  from scratch on thirteen datasets of The Well and FlowBench. From the last
+  six frames of a field it forecasts the next four, and rolls out
+  autoregressively; zero-shot against Walrus it has the lower median VRMSE on
+  9, 10 and 8 of 13 datasets in one-step, T[1:20] and T[21:60]. The 1.3 GB
+  weights are a GitHub Release on this repository; `weights/download.sh`
+  fetches and verifies them.
 
 ### AI4Fun
 
