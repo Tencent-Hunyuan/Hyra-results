@@ -280,7 +280,9 @@ class NeighborCache:
         signature = (tuple(batch["positions"].shape), batch["positions"].device)
         if self.signature is not None and signature != self.signature:
             raise ValueError("A neighbor cache belongs to one fixed system")
-        cell_changed = "cell" in batch and (self.cell is None or not torch.equal(self.cell, batch["cell"]))
+        # A switch between periodic and isolated (same atom count) also invalidates the edges.
+        cell_changed = ("cell" in batch) != (self.cell is not None) or (
+            "cell" in batch and not torch.equal(self.cell, batch["cell"]))
         moved = cell_changed or self.reference is None or bool(
             (batch["positions"] - self.reference).square().sum(-1).max() > (self.skin / 2) ** 2
         )

@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "hyff"
-version = "0.2.0"
+version = "0.3.0"
 description = "HyFF machine-learning force fields: inference, molecular dynamics and batched prediction"
 readme = "README.md"
 license = {text = "Apache-2.0"}
@@ -25,6 +25,9 @@ dependencies = [
     "warp-lang==1.10.1",
     "nvalchemi-toolkit-ops==0.3.1",
 ]
+
+[project.optional-dependencies]
+ase = ["ase>=3.23"]
 
 [project.urls]
 Source = "https://github.com/Tencent-Hunyuan/Hyra-results"

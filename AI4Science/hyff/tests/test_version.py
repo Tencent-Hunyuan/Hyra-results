@@ -8,7 +8,7 @@ import hyff
 
 class VersionTest(unittest.TestCase):
     def test_package_version(self):
-        self.assertEqual(hyff.__version__, '0.2.0')
+        self.assertEqual(hyff.__version__, '0.3.0')
 
     @unittest.skipUnless(os.environ.get('HYFF_TEST_INSTALLED') == '1', 'source checkout')
     def test_installed_distribution(self):
