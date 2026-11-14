@@ -113,6 +113,38 @@ result["energies"], result["forces"]
 CLI: `hyff predict --model vivace --system collection.npz --output predictions.npz`.
 See [docs/batch.md](docs/batch.md).
 
+## ASE calculator
+
+```python
+from hyff.calculator import HyFFCalculator      # needs ase
+
+atoms.calc = HyFFCalculator("presto")           # charge and multiplicity from atoms.info
+atoms.get_potential_energy(), atoms.get_forces()
+```
+
+Isolated or periodic systems, the model's fast CUDA engine for repeated evaluations of one system
+(MD, geometry optimization) or the eager engine for many different structures. See
+[docs/ase.md](docs/ase.md).
+
+Use the calculator for geometry optimization, single points and ASE-based workflows; for production MD
+use `hyff.Simulation`, which keeps the whole integration on the GPU and supports bond constraints. MD
+driven by ASE moves positions and forces between GPU and CPU at every step, about 0.7 ms per step on
+the 2,586-atom system: presto 1.42 instead of 0.71 ms/step, moderato 4.78 instead of 4.04, andante 29.9
+instead of 29.5 (see [docs/ase.md](docs/ase.md#md-with-ase-or-with-hyffsimulation)).
+
+## Fine-tuning
+
+```python
+summary = hyff.finetune("presto", train="train.extxyz", output="ft/", epochs=20)
+model = hyff.load(weights=summary["best"])      # also hyff.Simulation(..., weights=...)
+```
+
+CLI: `hyff finetune --model presto --train train.extxyz --output ft/`. Trains on your energies and forces
+(extended XYZ or NPZ), with per-element energy offsets refitted first, optional parameter freezing,
+checkpoints and resume, on one GPU or data-parallel on several (`--gpus 8`); the exported weights run on
+the fast engines. See
+[docs/finetune.md](docs/finetune.md).
+
 ## Input format
 
 | Key | Shape | Meaning |
@@ -129,7 +161,8 @@ MD additionally needs velocities, masses, a box and the bond constraints (possib
 ## Documentation
 
 [inputs](docs/inputs.md) · [molecular dynamics](docs/md.md) · [batched inference](docs/batch.md) ·
-[largo](docs/largo.md) · [performance](docs/performance.md)
+[ASE calculator](docs/ase.md) · [fine-tuning](docs/finetune.md) · [largo](docs/largo.md) ·
+[performance](docs/performance.md)
 
 ## Citation
 

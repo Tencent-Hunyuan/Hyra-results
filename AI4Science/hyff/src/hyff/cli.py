@@ -1,4 +1,4 @@
-"""Command-line interface: ``hyff models|download|infer|md|predict``."""
+"""Command-line interface: ``hyff models|download|infer|md|predict|finetune``."""
 from __future__ import annotations
 
 import argparse
@@ -84,6 +84,39 @@ def _parser():
     md.add_argument('--gpus', type=int, choices=(1, 2, 4, 8), default=1,
                     help='experimental multi-GPU largo MD (automatic card policy)')
     _add_engine_options(md)
+
+    finetune = commands.add_parser('finetune', parents=[common],
+                                   help='fine-tune a model on reference energies and forces (see docs/finetune.md)')
+    _add_model(finetune)
+    finetune.add_argument('--train', help='training structures: extended XYZ (or another ASE-readable file) '
+                          'with energies and forces, or an NPZ (see docs/finetune.md)')
+    finetune.add_argument('--valid', help='validation structures (default: a random --valid-fraction of --train)')
+    finetune.add_argument('--valid-fraction', type=float, default=0.05)
+    finetune.add_argument('--output', help='output directory (checkpoint, best/ and final/ weights)')
+    finetune.add_argument('--epochs', type=int, default=10)
+    finetune.add_argument('--lr', type=float, help='peak learning rate (default: per model, 3e-5 for presto '
+                          'to 3e-6 for largo; see docs/finetune.md)')
+    finetune.add_argument('--batch-atoms', type=int, default=2048, help='atoms per batch')
+    finetune.add_argument('--energy-weight', type=float, default=10.0,
+                          help='weight of the squared energy error per atom, (eV/atom)^2')
+    finetune.add_argument('--force-weight', type=float, default=1.0,
+                          help='weight of the squared force error per component, (eV/A)^2')
+    finetune.add_argument('--freeze', nargs='+', default=[], metavar='PATTERN',
+                          help='keep parameters matching these name patterns fixed (e.g. "embedding.*" "blocks.0.*")')
+    finetune.add_argument('--train-only', nargs='+', default=[], metavar='PATTERN',
+                          help='train only parameters matching these name patterns (e.g. "readouts.*")')
+    finetune.add_argument('--no-refit-element-energies', action='store_true',
+                          help='keep the per-element energy offsets instead of refitting them first')
+    finetune.add_argument('--ema-decay', type=float, help='keep an exponential moving average of the weights')
+    finetune.add_argument('--energy-key', help='atoms.info key of the energy (default: the frame\'s energy)')
+    finetune.add_argument('--forces-key', help='atoms.arrays key of the forces (default: the frame\'s forces)')
+    finetune.add_argument('--device', help='cuda (default when available) or cpu')
+    finetune.add_argument('--gpus', type=int, default=1,
+                          help='data-parallel GPUs of this machine (--batch-atoms is per GPU)')
+    finetune.add_argument('--seed', type=int, default=0)
+    finetune.add_argument('--resume', action='store_true', help='continue the run in --output from its checkpoint')
+    finetune.add_argument('--list-parameters', action='store_true',
+                          help='print the parameter groups of the model (for --freeze/--train-only) and exit')
 
     predict = commands.add_parser('predict', parents=[common], help='batched energies and forces of many molecules')
     _add_model(predict)
@@ -220,12 +253,37 @@ def _predict(args):
                           route=meta['route'], seconds=round(meta['prediction_host_seconds'], 3))))
 
 
+def _finetune(args):
+    if args.list_parameters:
+        from hyff.finetuning import parameter_groups
+        from hyff.registry import resolve
+        from hyff.weights import load_model
+        model, _ = load_model(resolve(_model(args), args.weights, engine='reference').weights, 'cpu')
+        for group, count, tensors in parameter_groups(model):
+            print(f'{group + ".*":<40} {count:>14,} parameters  {tensors:>4} tensors')
+        return 0
+    missing = [flag for flag, value in (('--train', args.train), ('--output', args.output)) if value is None]
+    if missing:
+        raise ValueError(f'{" and ".join(missing)} required')
+    from hyff.finetuning import finetune
+    summary = finetune(_model(args), train=args.train, output=args.output, weights=args.weights, valid=args.valid,
+                       valid_fraction=args.valid_fraction, epochs=args.epochs, lr=args.lr,
+                       batch_atoms=args.batch_atoms, energy_weight=args.energy_weight,
+                       force_weight=args.force_weight, freeze=args.freeze, train_only=args.train_only,
+                       refit_element_energies=not args.no_refit_element_energies, ema_decay=args.ema_decay,
+                       energy_key=args.energy_key, forces_key=args.forces_key, device=args.device,
+                       gpus=args.gpus, seed=args.seed, resume=args.resume)
+    print(json.dumps(dict(best=summary['best'], best_epoch=summary['best_epoch'], final=summary['final'])))
+    return 0
+
+
 def _main(argv=None):
     import logging
     args = _parser().parse_args(argv)
     logging.basicConfig(format='%(message)s')
     logging.getLogger('hyff').setLevel(logging.INFO)
-    commands = dict(models=lambda a: _models(), download=_download, infer=_infer, md=_md, predict=_predict)
+    commands = dict(models=lambda a: _models(), download=_download, infer=_infer, md=_md, predict=_predict,
+                    finetune=_finetune)
     try:
         code = commands[args.command](args)
     except KeyboardInterrupt:
