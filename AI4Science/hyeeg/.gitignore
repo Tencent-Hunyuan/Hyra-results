@@ -1,0 +1,9 @@
+weights/*/model.safetensors
+weights/*.safetensors
+weights/*.part*
+__pycache__/
+*.pyc
+*.egg-info/
+.pytest_cache/
+dist/
+build/
