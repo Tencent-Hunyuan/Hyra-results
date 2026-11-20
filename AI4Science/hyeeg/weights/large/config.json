@@ -1,0 +1,24 @@
+{
+  "model_name": "HyEEG-Large",
+  "schema_version": "hyeeg-v1",
+  "embed_dim": 512,
+  "depth": 8,
+  "heads": 8,
+  "head_dim": 64,
+  "mlp_dim_ratio": 2.66,
+  "use_geglu": true,
+  "freqs": 4,
+  "patch_size": 200,
+  "patch_overlap": 20,
+  "sampling_rate_hz": 200,
+  "noise_ratio": 0.0025,
+  "norm_eps": 1e-06,
+  "input_norm": {
+    "mode": "window",
+    "rel_floor": 0.001,
+    "clip": 15.0
+  },
+  "encoder_readout": "cls_query_attention_pool",
+  "num_parameters": 25228288,
+  "weights_sha256": "d1dc6b05f969d07cdc47f69ff0ce37b2118f174b3a0d6c610059dcbd2071cd43"
+}
