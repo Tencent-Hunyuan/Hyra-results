@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>hyprover dashboard</title>
+  <link rel="stylesheet" media="print" data-renderer-style href="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.css" />
+  <script async data-renderer src="https://cdn.jsdelivr.net/npm/echarts@5.5.0/dist/echarts.min.js"></script>
+  <script async data-renderer src="https://cdn.jsdelivr.net/npm/katex@0.16.11/dist/katex.min.js"></script>
+  <script async data-renderer src="https://cdn.jsdelivr.net/npm/markdown-it@14.1.0/dist/markdown-it.min.js"></script>
+  <link rel="stylesheet" href="/static/style.css" />
+</head>
+<body>
+  <div id="conn-banner" class="conn-banner" role="status" aria-live="polite" hidden>Cannot load notebook — is <code>python -m hyprover.observability</code> running?</div>
+  <header class="header">
+    <h1>hyprover</h1>
+    <span class="badge badge-version">unified research notebook</span>
+    <span id="project-badge" class="badge badge-project"></span>
+    <nav class="header-nav">
+      <button type="button" class="nav-link active" data-tab="overview" aria-pressed="true">Overview</button>
+      <button type="button" class="nav-link" data-tab="graph" aria-pressed="false">Fact Graph</button>
+      <button type="button" class="nav-link" data-tab="memory" aria-pressed="false">Research Notes</button>
+      <button type="button" class="nav-link" data-tab="report" aria-pressed="false">Project Reports <span id="report-count" class="cnt">0</span></button>
+    </nav>
+    <span id="refresh-note" class="refresh-note"></span>
+  </header>
+
+  <main class="main">
+    <!-- Overview -->
+    <section id="tab-overview" class="tab active">
+      <div id="ov-cards" class="cards"></div>
+      <div class="ov-grid">
+        <div class="panel"><div class="panel-h">Non-factual sections</div><div id="ov-channels" class="bars"></div></div>
+        <div class="panel"><div class="panel-h">Verification submissions</div><div id="ov-verdicts"></div></div>
+        <div class="panel"><div class="panel-h">Facts by author</div><div id="ov-authors" class="bars"></div></div>
+      </div>
+    </section>
+
+    <!-- Fact Graph -->
+    <section id="tab-graph" class="tab">
+      <div class="graph-wrap">
+        <div class="graph-toolbar">
+          <span class="muted">size + shade = dependency depth:</span>
+          <span class="legend">base fact</span>
+          <span style="width:130px;height:11px;border-radius:6px;display:inline-block;background:linear-gradient(90deg,hsl(248,50%,80%),hsl(248,76%,28%))"></span>
+          <span class="legend">deep result</span>
+          <span id="graph-stat" class="muted"></span>
+        </div>
+        <div id="graph" class="graph"></div>
+        <aside id="fact-detail" class="fact-detail">
+          <div class="muted">Statements load by default. Click a node to load its proof and inspect dependencies.</div>
+        </aside>
+      </div>
+    </section>
+
+    <!-- Research Notes -->
+    <section id="tab-memory" class="tab">
+      <div id="mem-subtabs" class="subtabs" aria-label="Note sections"></div>
+      <div id="mem-browser"></div>
+      <div id="mem-list" class="mem-list" aria-live="polite"></div>
+      <div id="mem-pager" class="pager"></div>
+    </section>
+
+    <section id="tab-report" class="tab" aria-labelledby="report-heading">
+      <h2 id="report-heading">Project Reports <span class="tag">NOT A FACT</span></h2>
+      <p class="section-note">Project-shared research explanations, not published to the internet and not verified facts. Review scope and reported checks do not certify conclusions.</p>
+      <div id="report-browser"></div>
+      <div id="report-list" class="mem-list" aria-live="polite"></div>
+      <div id="report-pager" class="pager"></div>
+    </section>
+    <dialog id="entry-dialog" aria-labelledby="entry-dialog-title">
+      <div class="dialog-toolbar"><h2 id="entry-dialog-title">Related note · NOT A FACT</h2><button type="button" id="entry-close">Close</button></div>
+      <div id="entry-dialog-body" aria-live="polite"></div>
+    </dialog>
+  </main>
+
+  <script defer src="/static/app.js"></script>
+</body>
+</html>

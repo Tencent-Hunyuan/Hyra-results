@@ -1,0 +1,10 @@
+#!/usr/bin/env bash
+# hyprover-mcp — launches the hyprover gateway MCP server (role=main by default) for
+# Claude Code (.mcp.json) or any MCP client. Sources env so HYPROVER_AGENTS_ROOT
+# etc. are set.
+set -euo pipefail
+HERE="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+. "$HERE/../scripts/env.sh" >/dev/null 2>&1
+export HYPROVER_ROLE="${HYPROVER_ROLE:-main}"
+export HYPROVER_AUTHOR="${HYPROVER_AUTHOR:-main_agent}"
+exec "$HYPROVER_PY" -m hyprover.gateway "$@"

@@ -1,0 +1,51 @@
+name: tests
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+  workflow_dispatch:
+
+jobs:
+  tests:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        # the supported floor and the current ceiling (requires-python >= 3.10)
+        python-version: ["3.10", "3.13"]
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: ${{ matrix.python-version }}
+      - name: Install (all extras)
+        run: pip install -e ".[dev]"
+      - name: Run the offline test suite
+        run: python -m pytest hyprover/ -q
+
+  article-linux-sandbox:
+    # Exercise unprivileged user namespaces without weakening the runner's security policy.
+    runs-on: ubuntu-22.04
+    timeout-minutes: 20
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.13"
+      - name: Install the Linux PDF toolchain
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y --no-install-recommends bubblewrap util-linux poppler-utils \
+            texlive-latex-base texlive-latex-recommended texlive-latex-extra \
+            texlive-fonts-recommended texlive-fonts-extra lmodern
+      - name: Require Linux isolation and PDF executables
+        run: |
+          for tool in bwrap prlimit pdflatex pdfinfo pdftotext; do command -v "$tool"; done
+          bwrap --unshare-all --die-with-parent --ro-bind / / /usr/bin/true
+      - name: Install (all extras)
+        run: pip install -e ".[dev]"
+      - name: Verify real isolated compilation, extraction, and delivery
+        run: |
+          python -m pytest -q \
+            hyprover/article/tests/test_pdf_sources.py::test_real_generated_pdf_is_readable_but_not_automatically_verified \
+            hyprover/article/tests/test_pdf_delivery.py::test_real_isolated_pdf_and_delivery_preserve_review_state

@@ -1,0 +1,12 @@
+{
+  "name": "hyprover-dashboard-tests",
+  "private": true,
+  "scripts": {
+    "test": "node --test dashboard.test.cjs"
+  },
+  "devDependencies": {
+    "jsdom": "26.1.0",
+    "katex": "0.16.11",
+    "markdown-it": "14.1.0"
+  }
+}

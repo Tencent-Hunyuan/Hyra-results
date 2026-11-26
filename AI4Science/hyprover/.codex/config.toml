@@ -1,0 +1,18 @@
+# Repository-root Codex session; API credentials come from the local environment.
+model = "gpt-6-astra"
+review_model = "gpt-6-astra"
+model_reasoning_effort = "max"
+web_search = "live"
+disable_response_storage = true
+
+[sandbox_workspace_write]
+network_access = true
+
+[mcp_servers.hyprover]
+command = "./bin/hyprover-mcp"
+cwd = "."
+tool_timeout_sec = 3600
+
+[mcp_servers.hyprover.env]
+HYPROVER_ROLE = "main"
+HYPROVER_AUTHOR = "main_agent"

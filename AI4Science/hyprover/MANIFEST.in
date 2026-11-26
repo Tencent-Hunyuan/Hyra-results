@@ -1,0 +1,19 @@
+include README.md AGENTS.md OPERATOR.md .gitignore
+include .codex/config.toml
+recursive-include .github/workflows *.yml
+recursive-include agents *.md
+recursive-include bin codex hyprover hyprover-mcp
+recursive-include config *.env.example
+recursive-include scripts *.sh
+recursive-include docs *.md *.png
+recursive-include templates *.md .gitkeep
+include examples/README.md
+recursive-include examples/research-notebook *.md *.json
+recursive-include hyprover *.py *.md *.json *.html *.js *.css *.cjs *.tex
+prune .git
+prune .codebuddy
+prune .venv
+prune runtime
+prune hyprover/verify/agent
+prune hyprover/verify/runs
+global-exclude *.pyc *.pyo *.log *.jsonl *.env *.env.local *.pem *.key

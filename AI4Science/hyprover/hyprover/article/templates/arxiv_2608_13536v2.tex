@@ -1,0 +1,93 @@
+\documentclass[11pt,a4paper]{amsart}
+\allowdisplaybreaks[1]
+\usepackage{mathtools}
+\mathtoolsset{showonlyrefs}
+\usepackage{amssymb}
+\usepackage{mathrsfs}
+\usepackage{amsbsy,amsgen,amscd,amsthm}
+\usepackage{bm}
+\usepackage{dsfont}
+\usepackage{graphicx}
+\usepackage{subfig}
+\usepackage{caption}
+\usepackage{float}
+\usepackage{enumerate}
+\usepackage{enumitem}
+\usepackage{setspace}
+\usepackage{tikz}
+\usepackage[top=3.2cm,bottom=3.8cm,left=3cm,right=2cm]{geometry}
+\usepackage{xcolor}
+\usepackage[T1]{fontenc}
+\usepackage{lmodern}
+\usepackage[unicode=true,colorlinks,linkcolor=blue,citecolor=blue,urlcolor=blue,pagebackref]{hyperref}
+
+\textwidth=16 true cm \textheight=22 true cm \pagestyle{plain}
+\renewcommand{\baselinestretch}{1.2}
+\overfullrule=0pt
+\oddsidemargin=0pt
+\evensidemargin=0pt
+\topmargin=0pt
+\raggedbottom
+\renewcommand{\thefootnote}{\fnsymbol{footnote}}
+
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{fact}[theorem]{Fact}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{problem}{Problem}
+\newtheorem{conjecture}[theorem]{Conjecture}
+\theoremstyle{definition}
+\newtheorem{definition}[theorem]{Definition}
+\newtheorem{example}[theorem]{Example}
+\theoremstyle{remark}
+\newtheorem{remark}[theorem]{Remark}
+\numberwithin{equation}{section}
+
+\newcommand{\R}{\mathbb{R}}
+\newcommand{\Sph}{\mathbb{S}}
+\newcommand{\Ball}{\mathbb{B}}
+\newcommand{\cP}{\mathcal{P}}
+\newcommand{\cE}{\mathcal{E}}
+\newcommand{\cA}{\mathcal{A}}
+\newcommand{\Aut}{\operatorname{Aut}}
+\newcommand{\vol}{\operatorname{vol}}
+\newcommand{\degree}{\operatorname{deg}}
+\newcommand{\supp}{\operatorname{supp}}
+\newcommand{\Hom}{\operatorname{Hom}}
+\newcommand{\End}{\operatorname{End}}
+\newcommand{\GL}{\operatorname{GL}}
+\newcommand{\OO}{\operatorname{O}}
+\newcommand{\Lip}{\operatorname{Lip}}
+\newcommand{\Int}{\operatorname{int}}
+\newcommand{\Span}{\operatorname{span}}
+\newcommand{\Sym}{\operatorname{Sym}}
+\newcommand{\Gr}{\operatorname{Gr}}
+\newcommand{\dd}{\,d}
+\newcommand{\ip}[2]{\langle #1,#2\rangle}
+\let\mathbbm\mathds
+
+\hypersetup{pdfauthor={hyprover}}
+\begin{document}
+\enlargethispage{3pt}
+\begin{center}
+{\Large\bfseries @@HYPROVER_TITLE@@\par}
+\vskip 20pt
+{\bfseries hyprover\par}
+\end{center}
+\vskip 10pt
+\begin{center}
+\begin{minipage}{14cm}
+\textbf{Abstract.} @@HYPROVER_ABSTRACT@@
+\par\vskip 5pt
+@@HYPROVER_MSC@@
+\par\vskip 5pt
+\textbf{Keywords.} @@HYPROVER_KEYWORDS@@
+\end{minipage}
+\end{center}
+\vskip 25pt
+
+@@HYPROVER_BODY@@
+
+\input{references.tex}
+\end{document}

@@ -1,0 +1,416 @@
+{
+  "version": 1,
+  "description": "Agent-readable reference for common mathematical notation. Models check definitions in the statement, proof, cited predecessors and glossary_introduces themselves. Explicit local definitions and hypotheses determine the meaning; aliases are contextual, not unconditional equivalences. This reference does not supply verified facts or automatically certify symbol coverage. See DATA_MODEL.md.",
+  "terms": {
+    "Z+": {
+      "kind": "set",
+      "definition": "The set of positive integers {1, 2, 3, ...}.",
+      "aliases": ["positive integers", "Z_+", "Z>=1"]
+    },
+    "Z>=k": {
+      "kind": "set",
+      "definition": "The set of integers >= k, i.e. {k, k+1, k+2, ...}; concrete k must be substituted at the point of use (Z>=0 = nonnegative integers, Z>=2, etc.).",
+      "aliases": ["Z_{>=k}", "integers at least k"]
+    },
+    "Z": {
+      "kind": "set",
+      "definition": "The ring of integers {..., -2, -1, 0, 1, 2, ...}.",
+      "aliases": ["integers"]
+    },
+    "N": {
+      "kind": "set",
+      "definition": "The natural numbers. Convention: N starts at 0 unless restated locally; use Z+ for {1,2,3,...} when 1-based is required.",
+      "aliases": ["naturals"]
+    },
+    "Q": {
+      "kind": "set",
+      "definition": "The field of rational numbers.",
+      "aliases": ["rationals"]
+    },
+    "R": {
+      "kind": "set",
+      "definition": "The field of real numbers.",
+      "aliases": ["reals"]
+    },
+    "R+": {
+      "kind": "set",
+      "definition": "The set of strictly positive real numbers, i.e. {x in R : x > 0}.",
+      "aliases": ["R_+", "positive reals"]
+    },
+    "R>=0": {
+      "kind": "set",
+      "definition": "The set of nonnegative real numbers, i.e. {x in R : x >= 0}.",
+      "aliases": ["R_{>=0}", "nonnegative reals"]
+    },
+    "C": {
+      "kind": "set",
+      "definition": "The field of complex numbers.",
+      "aliases": ["complex numbers"]
+    },
+    "floor(x)": {
+      "kind": "function",
+      "definition": "For x in R, floor(x) is the unique integer n with n <= x < n+1.",
+      "aliases": ["lfloor x rfloor", "[x] (when context is integer part, but prefer floor)"]
+    },
+    "ceil(x)": {
+      "kind": "function",
+      "definition": "For x in R, ceil(x) is the unique integer n with n-1 < x <= n.",
+      "aliases": ["lceil x rceil"]
+    },
+    "{x}": {
+      "kind": "function",
+      "definition": "In fractional-part notation, for x in R, {x} = x - floor(x), the unique element of [0,1) congruent to x mod 1. In set notation, {x} instead denotes the singleton containing x; disambiguate by context or write frac(x).",
+      "aliases": ["frac(x)", "fractional part"]
+    },
+    "gcd": {
+      "kind": "function",
+      "definition": "gcd(a, b) is the greatest common divisor of integers a, b (with gcd(0, 0) = 0 by convention).",
+      "aliases": ["greatest common divisor"]
+    },
+    "lcm": {
+      "kind": "function",
+      "definition": "lcm(a, b) is the least common multiple of integers a, b (with lcm(a, 0) = 0).",
+      "aliases": ["least common multiple"]
+    },
+    "mod": {
+      "kind": "operator",
+      "definition": "a mod b (for b != 0) is the unique nonnegative integer r with 0 <= r < |b| and a = qb + r for some integer q.",
+      "aliases": ["modulo"]
+    },
+    "divides": {
+      "kind": "predicate",
+      "definition": "For integers a, b, 'a divides b' (a | b) means there exists an integer k with b = ka.",
+      "aliases": ["|", "is a divisor of"]
+    },
+    "[a,b]": {
+      "kind": "set",
+      "definition": "Closed real interval {x in R : a <= x <= b}. When a, b are integers and the integer interval is meant, restate explicitly as 'integer interval' or use {a, a+1, ..., b}.",
+      "aliases": ["closed interval"]
+    },
+    "(a,b)": {
+      "kind": "set",
+      "definition": "In interval notation, the open real interval {x in R : a < x < b}. The same parentheses can denote an ordered pair in other contexts; state which meaning is intended.",
+      "aliases": ["open interval"]
+    },
+    "[a,b)": {
+      "kind": "set",
+      "definition": "Half-open real interval {x in R : a <= x < b}.",
+      "aliases": ["half-open interval (left-closed)"]
+    },
+    "(a,b]": {
+      "kind": "set",
+      "definition": "Half-open real interval {x in R : a < x <= b}.",
+      "aliases": ["half-open interval (right-closed)"]
+    },
+    "iff": {
+      "kind": "logical",
+      "definition": "If and only if; logical biconditional.",
+      "aliases": ["<=>"]
+    },
+    "sgn(x)": {
+      "kind": "function",
+      "definition": "Sign function: sgn(x) = 1 if x > 0, 0 if x = 0, -1 if x < 0.",
+      "aliases": ["sign"]
+    },
+    "epsilon": {
+      "kind": "parameter",
+      "definition": "Conventional name for a small real parameter; introduce with an explicit range, e.g. 'let epsilon in (0, 1/Q)'.",
+      "aliases": ["eps", "ε"]
+    },
+    "eta": {
+      "kind": "parameter-or-point",
+      "definition": "Two standard meanings, disambiguated by context: (i) a small positive real parameter (use with explicit range like 'eta in R+, eta < ...'); (ii) the generic point of an integral scheme.",
+      "aliases": ["η"]
+    },
+    "delta": {
+      "kind": "parameter",
+      "definition": "Conventional name for a (small or fixed) real parameter; introduce with an explicit value or range (e.g. 'put delta := deg_C(f^* T_{X/B}) > 0').",
+      "aliases": ["δ"]
+    },
+    "lambda": {
+      "kind": "parameter",
+      "definition": "Conventional name for a real or complex parameter / scalar / eigenvalue; introduce with an explicit type (e.g. 'lambda in R+', 'lambda an eigenvalue of A').",
+      "aliases": ["λ"]
+    },
+    "mu": {
+      "kind": "function-or-parameter",
+      "definition": "Standard meanings include (i) the slope mu(E) := deg(E)/rk(E) of a coherent sheaf on a curve; (ii) a real parameter (introduce with range). Disambiguate by context at the point of use.",
+      "aliases": ["μ"]
+    },
+    "nu": {
+      "kind": "morphism-or-parameter",
+      "definition": "Conventional name for a finite covering morphism (e.g. nu : B -> C of degree e), or for a normalization morphism, or sometimes for a real parameter; introduce with the specific role at point of use.",
+      "aliases": ["ν"]
+    },
+    "rho": {
+      "kind": "morphism",
+      "definition": "Conventional name for a structure morphism, projection, or scheme map (e.g. rho : W -> B). Introduce the source, target, and any extra structure (projective, dominant, smooth, ...) at the point of use.",
+      "aliases": ["ρ"]
+    },
+    "sigma": {
+      "kind": "morphism",
+      "definition": "Conventional name for a section of a morphism (e.g. sigma : B -> W is a section of rho : W -> B), or sometimes for a permutation. Introduce the role and source/target at the point of use.",
+      "aliases": ["σ"]
+    },
+    "phi": {
+      "kind": "morphism",
+      "definition": "Conventional name for a morphism between schemes / varieties (e.g. phi : W -> X). Introduce source, target, and any further structure at the point of use.",
+      "aliases": ["φ", "ϕ"]
+    },
+    "pi": {
+      "kind": "morphism-or-constant",
+      "definition": "Two standard meanings, disambiguated by context: (i) a structural morphism (e.g. pi : X -> B is a projection or projective morphism); (ii) Archimedes' constant pi = 3.14... in analysis. Introduce the role at the point of use.",
+      "aliases": ["π"]
+    },
+    "tau": {
+      "kind": "morphism",
+      "definition": "Conventional name for a stabilization morphism (Kontsevich), a transposition / permutation, or another auxiliary map. Introduce the role at the point of use.",
+      "aliases": ["τ"]
+    },
+    "Phi": {
+      "kind": "morphism",
+      "definition": "Capital phi; conventional name for a Frobenius-type morphism (e.g. geometric Frobenius Phi_m : C_m -> C of degree p^m), or a more general system of morphisms. Introduce the role at the point of use.",
+      "aliases": ["Φ"]
+    },
+    "Pi": {
+      "kind": "operator-or-product",
+      "definition": "Capital pi; conventional name for a product (Pi_{i in I} a_i), a projection, or another structural map / scheme. Disambiguate at the point of use.",
+      "aliases": ["Π"]
+    },
+    "Sigma": {
+      "kind": "set-or-curve",
+      "definition": "Capital sigma; conventional name for a sum, a set, or in algebraic geometry an irreducible curve in a variety (often a rational curve produced by bend-and-break). Disambiguate at the point of use.",
+      "aliases": ["Σ"]
+    },
+    "Gamma": {
+      "kind": "graph-or-curve",
+      "definition": "Capital gamma; conventional name for a graph (e.g. dual graph of a nodal curve), a curve, or a discrete group. Disambiguate at the point of use.",
+      "aliases": ["Γ"]
+    },
+    "chi": {
+      "kind": "function",
+      "definition": "Euler characteristic: for a coherent sheaf F on a projective scheme Y, chi(Y, F) := sum_i (-1)^i h^i(Y, F). On a smooth projective curve C of genus g, chi(C, E) = deg E + rk(E)(1 - g) for a vector bundle E (Riemann-Roch).",
+      "aliases": ["Euler characteristic", "χ"]
+    },
+    "h^i": {
+      "kind": "function",
+      "definition": "Sheaf cohomology dimension: h^i(Y, F) := dim_k H^i(Y, F) for a coherent sheaf F on a projective k-scheme Y.",
+      "aliases": ["h^0", "h^1", "h^i(Y, F)", "cohomology dimension"]
+    },
+    "X_b": {
+      "kind": "scheme",
+      "definition": "Schematic fiber of a morphism rho : X -> B over a point b in B; defined as X x_B Spec(k(b)) (or X x_B {b} when b is a closed point of B).",
+      "aliases": ["fiber over b", "X_y"]
+    },
+    "O_{Y,y}": {
+      "kind": "ring",
+      "definition": "Local ring of a scheme Y at a point y; the stalk of the structure sheaf O_Y at y. For a smooth curve B and a closed point b in B, O_{B,b} is a DVR.",
+      "aliases": ["local ring", "stalk"]
+    },
+    "T_Y": {
+      "kind": "sheaf",
+      "definition": "Tangent sheaf of a scheme Y; on the smooth locus it is a vector bundle of rank dim Y. For a morphism Y -> Z it makes sense to talk about the relative tangent T_{Y/Z}.",
+      "aliases": ["tangent sheaf", "tangent bundle"]
+    },
+    "T_{Y/Z}": {
+      "kind": "sheaf",
+      "definition": "Relative tangent sheaf for a morphism Y -> Z; on the smooth locus of the morphism it is a vector bundle of rank dim Y - dim Z.",
+      "aliases": ["relative tangent"]
+    },
+    "forall": {
+      "kind": "logical",
+      "definition": "Universal quantifier: forall x in A, P(x) asserts that P(x) holds for every element of A. State the domain and scope of each quantifier; quantifier order matters.",
+      "aliases": ["for all", "∀", "\\forall"]
+    },
+    "exists": {
+      "kind": "logical",
+      "definition": "Existential quantifier: exists x in A such that P(x) asserts that at least one such element exists. The notation exists! asserts existence of exactly one such element.",
+      "aliases": ["there exists", "∃", "\\exists"]
+    },
+    "implies": {
+      "kind": "logical",
+      "definition": "Logical implication P => Q: if P holds, then Q holds. It does not assert the converse Q => P or assert P on its own.",
+      "aliases": ["=>", "⇒", "\\implies"]
+    },
+    "emptyset": {
+      "kind": "set",
+      "definition": "The empty set, containing no elements. It differs from {0} and from {emptyset}, each of which has one element.",
+      "aliases": ["empty set", "∅", "\\emptyset", "\\varnothing"]
+    },
+    "x in A": {
+      "kind": "predicate",
+      "definition": "Set membership: x is an element of A. Membership is distinct from the subset relation between two sets.",
+      "aliases": ["membership", "x ∈ A", "x \\in A"]
+    },
+    "A subseteq B": {
+      "kind": "predicate",
+      "definition": "Every element of A is an element of B; equality A = B is allowed. The unqualified symbol subset is used with differing conventions, so state whether equality is permitted.",
+      "aliases": ["subset or equal", "A ⊆ B", "A \\subseteq B"]
+    },
+    "A subsetneq B": {
+      "kind": "predicate",
+      "definition": "Proper inclusion: A subseteq B and A != B.",
+      "aliases": ["proper subset", "A ⊊ B", "A \\subsetneq B"]
+    },
+    "A union B": {
+      "kind": "operator",
+      "definition": "The set of elements belonging to A or B, including those belonging to both. This does not assert that A and B are disjoint.",
+      "aliases": ["union", "A ∪ B", "A \\cup B"]
+    },
+    "A intersect B": {
+      "kind": "operator",
+      "definition": "The set of elements belonging to both A and B.",
+      "aliases": ["intersection", "A ∩ B", "A \\cap B"]
+    },
+    "A setminus B": {
+      "kind": "operator",
+      "definition": "Set difference: {x in A : x not in B}. A complement A^c means U setminus A only relative to a specified ambient set U.",
+      "aliases": ["set difference", "A \\setminus B"]
+    },
+    "A x B": {
+      "kind": "set",
+      "definition": "Cartesian product: the set of ordered pairs (a,b) with a in A and b in B. Here parentheses denote an ordered pair, not a real interval.",
+      "aliases": ["Cartesian product", "A × B", "A \\times B"]
+    },
+    "P(A)": {
+      "kind": "set",
+      "definition": "In set-theoretic notation, the power set of A: the set of all subsets of A. It is also written 2^A. Do not confuse this use of P with a probability measure.",
+      "aliases": ["power set", "\\mathcal{P}(A)"]
+    },
+    "|A|": {
+      "kind": "function",
+      "definition": "For a set A, its cardinality; for finite A, the number of its elements. Infinite cardinality requires the relevant set-theoretic interpretation. Vertical bars have other meanings for numbers, matrices and divisibility.",
+      "aliases": ["cardinality", "card(A)", "#A"]
+    },
+    "f: A -> B": {
+      "kind": "map",
+      "definition": "A function with domain A and codomain B, assigning each a in A exactly one value f(a) in B. This notation alone implies neither injectivity nor surjectivity; the image may be a proper subset of B.",
+      "aliases": ["function from A to B", "f: A → B", "f: A \\to B"]
+    },
+    "f^{-1}(S)": {
+      "kind": "set",
+      "definition": "For f: A -> B and S subseteq B, the inverse image {a in A : f(a) in S}. This is defined without assuming f is invertible. An inverse function f^{-1}: B -> A instead requires f to be bijective.",
+      "aliases": ["inverse image", "preimage"]
+    },
+    "g o f": {
+      "kind": "operator",
+      "definition": "Composition: for f: A -> B and g: B -> C, (g o f)(a) = g(f(a)). The rightmost function is applied first; domains and codomains must be compatible.",
+      "aliases": ["function composition", "g ∘ f", "g \\circ f"]
+    },
+    "a equiv b (mod m)": {
+      "kind": "predicate",
+      "definition": "For integers a, b and positive integer m, a and b are congruent modulo m when m divides a-b. This is a relation, distinct from the operation returning a remainder.",
+      "aliases": ["congruence modulo m", "a ≡ b (mod m)", "a \\equiv b \\pmod{m}"]
+    },
+    "coprime": {
+      "kind": "predicate",
+      "definition": "Integers a and b are coprime when gcd(a,b) = 1. For more than two integers, having collective gcd 1 does not imply pairwise coprimality; specify which condition is intended.",
+      "aliases": ["relatively prime"]
+    },
+    "n!": {
+      "kind": "function",
+      "definition": "For a nonnegative integer n, n! is the product of the integers from 1 through n, with 0! = 1. Extension outside nonnegative integers is not implicit.",
+      "aliases": ["factorial"]
+    },
+    "binom(n,k)": {
+      "kind": "function",
+      "definition": "For integers n >= 0 and 0 <= k <= n, the binomial coefficient n!/(k!(n-k)!), counting k-element subsets of an n-element set. With n >= 0 it is commonly set to 0 for integer k outside this range; state any generalized convention.",
+      "aliases": ["binomial coefficient", "n choose k", "\\binom{n}{k}"]
+    },
+    "span(S)": {
+      "kind": "subspace",
+      "definition": "For a subset S of a vector space V over a specified field K, the set of all finite K-linear combinations of elements of S; span(emptyset) = {0}. The scalar field is part of the definition.",
+      "aliases": ["linear span", "span_K(S)", "\\operatorname{span}(S)"]
+    },
+    "ker(T)": {
+      "kind": "subspace",
+      "definition": "For a linear map T: V -> W, its kernel {v in V : T(v) = 0_W}. In other algebraic categories, specify the corresponding notion of kernel rather than silently reusing the vector-space definition.",
+      "aliases": ["kernel of a linear map", "\\ker T"]
+    },
+    "im(T)": {
+      "kind": "subspace",
+      "definition": "For a linear map T: V -> W, its image {T(v) : v in V}, a subspace of W. For an arbitrary function, the image is a set, not necessarily a vector space.",
+      "aliases": ["image of a linear map", "\\operatorname{im} T"]
+    },
+    "dim(V)": {
+      "kind": "function",
+      "definition": "The dimension of a vector space V over a specified field K: the cardinality of a basis; a nonnegative integer in the finite-dimensional case. Dimensions over different scalar fields need not agree.",
+      "aliases": ["vector-space dimension", "dim_K(V)", "\\dim_K V"]
+    },
+    "rank(T)": {
+      "kind": "function",
+      "definition": "For a linear map T, rank(T) = dim(im(T)) over the specified scalar field. For a matrix, use its associated linear map over that field; changing the field can change the rank.",
+      "aliases": ["linear rank", "matrix rank", "\\operatorname{rank} T"]
+    },
+    "det(A)": {
+      "kind": "function",
+      "definition": "For a square n by n matrix A over a commutative ring, det(A) = sum over permutations sigma of sgn(sigma) times the product of A[i,sigma(i)] for i = 1,...,n. The 0 by 0 determinant is 1 by convention; an ordinary determinant is not defined for a nonsquare matrix.",
+      "aliases": ["determinant", "\\det A"]
+    },
+    "||v||": {
+      "kind": "function",
+      "definition": "A specified norm on a real or complex vector space: nonnegative, zero exactly at v = 0, absolutely homogeneous, and satisfying the triangle inequality. Do not assume the Euclidean, operator or another norm without a stated convention.",
+      "aliases": ["norm", "\\|v\\|"]
+    },
+    "<u,v>": {
+      "kind": "function",
+      "definition": "In an inner-product space, the specified positive-definite inner product of u and v. Over C it is conjugate-symmetric and linear in one argument, conjugate-linear in the other; state which argument is linear. Angle brackets can also denote a generated subgroup or a dual pairing, which require separate context.",
+      "aliases": ["inner product", "⟨u,v⟩", "\\langle u,v\\rangle"]
+    },
+    "|x|": {
+      "kind": "function",
+      "definition": "For real x, its absolute value max(x,-x); for complex z, its modulus sqrt(z times conjugate(z)). These are distinct uses from set cardinality, divisibility, determinants and conditional-probability bars.",
+      "aliases": ["absolute value", "complex modulus", "abs(x)"]
+    },
+    "sup(A)": {
+      "kind": "function",
+      "definition": "For a nonempty real set A bounded above, its least upper bound: the smallest real s with a <= s for every a in A. It need not belong to A. State conventions separately when empty sets or extended-real values are allowed.",
+      "aliases": ["supremum", "least upper bound", "\\sup A"]
+    },
+    "inf(A)": {
+      "kind": "function",
+      "definition": "For a nonempty real set A bounded below, its greatest lower bound: the largest real t with t <= a for every a in A. It need not belong to A. State conventions separately when empty sets or extended-real values are allowed.",
+      "aliases": ["infimum", "greatest lower bound", "\\inf A"]
+    },
+    "max(A)": {
+      "kind": "function",
+      "definition": "A greatest element of an ordered set A: an element M in A such that a <= M for every a in A. A maximum need not exist; a finite real supremum alone does not ensure it is attained.",
+      "aliases": ["maximum", "greatest element", "\\max A"]
+    },
+    "min(A)": {
+      "kind": "function",
+      "definition": "A least element of an ordered set A: an element m in A such that m <= a for every a in A. A minimum need not exist; a finite real infimum alone does not ensure it is attained.",
+      "aliases": ["minimum", "least element", "\\min A"]
+    },
+    "log(x)": {
+      "kind": "function",
+      "definition": "For real x > 0, a logarithm with a specified base b > 0, b != 1. ln(x) denotes base e; bare log commonly means ln in analysis, but the base must be clear. A complex logarithm requires a branch or a multivalued interpretation to be stated.",
+      "aliases": ["logarithm", "\\log x"]
+    },
+    "lim_{x->a} f(x)": {
+      "kind": "operator",
+      "definition": "For a real-valued function on a real domain D and an accumulation point a of D, the finite limit L means: for every epsilon > 0 there exists delta > 0 such that x in D and 0 < |x-a| < delta imply |f(x)-L| < epsilon. State one-sided, infinite or other topological limit conventions explicitly.",
+      "aliases": ["function limit", "\\lim_{x \\to a} f(x)"]
+    },
+    "O(g)": {
+      "kind": "asymptotic",
+      "definition": "In a stated limiting regime, f = O(g) means |f| <= C|g| throughout some neighborhood or eventual range, for a fixed C > 0. Specify which parameters C and the range may depend on; uniformity in extra parameters is not automatic.",
+      "aliases": ["big-O", "big O", "Landau O"]
+    },
+    "o(g)": {
+      "kind": "asymptotic",
+      "definition": "In a stated limiting regime, f = o(g) means that for every epsilon > 0, eventually |f| <= epsilon|g|. Where g is eventually nonzero, this is equivalent to f/g -> 0. Specify any uniformity in extra parameters.",
+      "aliases": ["little-o", "little o", "Landau o"]
+    },
+    "Pr(E)": {
+      "kind": "function",
+      "definition": "The probability of a measurable event E under a specified probability measure on a specified probability space. A conditioning expression Pr(E | F) with an event F requires Pr(F) > 0 for the elementary ratio definition.",
+      "aliases": ["probability", "P(E)", "\\Pr(E)"]
+    },
+    "E[X]": {
+      "kind": "function",
+      "definition": "On a specified probability space, the expectation of an integrable real random variable X is its integral with respect to the probability measure. For nonnegative X, the extended expectation may equal +infinity; arbitrary nonintegrable signed variables need not have a defined expectation.",
+      "aliases": ["expectation", "expected value", "\\mathbb{E}[X]"]
+    }
+  }
+}

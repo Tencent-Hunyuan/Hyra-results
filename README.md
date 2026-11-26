@@ -267,6 +267,15 @@ Trained models, each with its weights, inference code and technical report:
   weights are a GitHub Release on this repository; `weights/download.sh`
   fetches and verifies them.
 
+### Research tools
+
+- [`AI4Science/hyprover/`](AI4Science/hyprover/): **HyProver**, an agent
+  workflow for pure mathematics. The main agent explores proof routes and
+  formulates intermediate conjectures. Workers submit proofs for independent
+  LLM review, and published facts enter a shared notebook with traceable proof
+  dependencies. An annotated snapshot follows a run on the known
+  Grünbaum–Loewner centroid-section theorem.
+
 ### AI4Fun
 
 Creative and game-playing demos (no leaderboard comparison):

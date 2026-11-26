@@ -1,0 +1,36 @@
+{
+  "format": "hyprover-article-template-v1",
+  "id": "arxiv_2608_13536v2",
+  "source_url": "https://arxiv.org/src/2608.13536v2",
+  "html_url": "https://arxiv.org/html/2608.13536v2",
+  "source_title": "A solution to Banach's isometric conjecture",
+  "source_authors": ["Xinbao Lu", "Kaiwen Yang"],
+  "version": "v2",
+  "source_date": "2026-08-31",
+  "source_main_tex_sha256": "b7bb2be840eeb0172957b47e7b298d4cda409396d6ac9d37298b2563326b34c8",
+  "template_sha256": "d29a855815048c70b17c4730142894aff93192979fe75b96e947a0e0683f8288",
+  "author": "hyprover",
+  "language": "English",
+  "publication_requirements_revision": 2,
+  "reference_pdf_sha256": "d9eff679d967e53310bec2b3a81b4c83d2df7f158ff72812423b3ad101155127",
+  "reference_pages_inspected": [1, 3, 22],
+  "reference_structure": {
+    "preliminaries": ["Convex bodies", "Principal bundles and classifying spaces", "Degree theory"],
+    "core": ["Finite-moment detection and orbit coordinates", "The local isometry bundle", "The globalization of the isometry bundle"],
+    "adaptation": "Preserve the purpose-driven organization, not these topic names or its bibliography."
+  },
+  "section_roles": ["introduction", "preliminaries", "core", "main_proofs"],
+  "section_titles": {"introduction": "Introduction", "preliminaries": "Preliminaries", "main_proofs": "Proofs of the main results"},
+  "style": [
+    "State the problem, historical context with precise citations, exact contribution boundaries and principal results in the introduction.",
+    "Compare the actual method with relevant prior work without unsupported novelty or priority claims; finish the introduction with a proof roadmap.",
+    "Set global notation and hypotheses before definitions and supporting lemmas.",
+    "Organize the topic-specific technical development by dependency, with complete proofs and precise cross-references.",
+    "Split lengthy arguments into meaningful numbered steps and explain how each step is used.",
+    "Conclude with complete proofs of the principal results; identify exactly where restrictive hypotheses are used.",
+    "Use restrained mathematical prose and precise source locators, not generic experimental-paper sections.",
+    "Omit funding, AI-use, conflict-of-interest, data-availability and other non-mathematical declarations, without placeholders."
+  ],
+  "not_copied": ["mathematical content", "topic-specific section titles", "bibliography", "page count", "original author metadata"],
+  "visual_comparison_performed": false
+}

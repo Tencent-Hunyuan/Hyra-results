@@ -1,0 +1,28 @@
+{
+  "project": "research-notebook",
+  "problem_id": "arxiv-2606-19865",
+  "knowledge_format": "hyprover-knowledge-v1",
+  "synthetic_example": false,
+  "static_snapshot": true,
+  "workers": [],
+  "source_arxiv": "2606.19865v2",
+  "source_theorem": "1.1",
+  "source_run": {
+    "model": "gpt-6-astra",
+    "reasoning_effort": "max",
+    "worker_count": 8,
+    "allow_math_computation": false,
+    "external_literature_retrieval": false
+  },
+  "completion": {
+    "state": "completed",
+    "outcome": "passed",
+    "target_fact_ids": ["846e296f22ef7853"],
+    "checked_facts": 9,
+    "checked_jobs": 10,
+    "feedback_id": "entry-1f7592f4059e7fcc",
+    "provenance": "Historical source-run result; not rerun on export."
+  },
+  "formal_certificate": false,
+  "blind_research_certified": false
+}
