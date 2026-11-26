@@ -13,12 +13,13 @@ artifact and, where relevant, the self-contained scripts that reproduce it.
 
 ## News
 
-- **2026-11-26**: 📐 **HyProver, an agent workflow for pure mathematics.**
-  A main agent turns proof gaps into intermediate conjectures and assigns them
-  to workers. Proofs that pass independent LLM review enter a shared notebook
-  as reusable facts. The project includes the source code and an annotated
-  research run on the Grünbaum–Loewner centroid-section theorem.
-  **[`AI4Science/hyprover/`](AI4Science/hyprover/)**.
+- **2026-11-26**: 📐 **HyProver coordinates AI agents to investigate problems in pure mathematics.**
+  The main agent explores proof routes and proposes intermediate conjectures,
+  while workers develop and submit proofs. The verification service commissions
+  independent LLM reviews and publishes accepted results as reusable facts in a
+  shared research notebook. The project includes the source code and, as an
+  example of the workflow, an annotated record of a run on the Grünbaum–Loewner
+  centroid-section theorem. **[`AI4Science/hyprover/`](AI4Science/hyprover/)**.
 
 - **2026-11-04**: 🌊 **HyPDE, a 2D foundation model for PDEs, released with weights and code.**
   **HyPDE**, a 323M-parameter fused-history transformer trained from scratch on
