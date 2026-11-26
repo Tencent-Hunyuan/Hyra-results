@@ -13,7 +13,7 @@ artifact and, where relevant, the self-contained scripts that reproduce it.
 
 ## News
 
-- **2026-11-26**: 📐 **HyProver coordinates AI agents to investigate problems in pure mathematics.**
+- **2026-11-26**: 📐 **HyProver is an agent workflow for pure mathematics that combines broad exploration with efficient token use.**
   The main agent explores proof routes and proposes intermediate conjectures,
   while workers develop and submit proofs. The verification service commissions
   independent LLM reviews and publishes accepted results as reusable facts in a
