@@ -43,7 +43,7 @@ Here `demo` is the project name. Use one coordinator per project to avoid confli
 
 ## Acknowledgements
 
-HyProver was developed and refined by Kaiwen Yang. Throughout development, Mingbo Gao tested HyProver and suggested improvements. Hyra assisted with parts of the development process. We thank the mathematicians and theoretical computer scientists who reviewed the test results.
+HyProver was developed and refined by Kaiwen Yang. Throughout development, Mingbo Gao tested HyProver and suggested improvements. Hyra assisted with the development process. We thank the mathematicians and theoretical computer scientists who reviewed the test results.
 
 ## Citation
 
