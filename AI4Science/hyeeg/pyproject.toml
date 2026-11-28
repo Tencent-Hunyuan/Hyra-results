@@ -1,0 +1,18 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hyeeg"
+version = "1.0.0"
+description = "HyEEG: montage-agnostic self-supervised EEG foundation models (Small, Base, Large)"
+readme = "README.md"
+requires-python = ">=3.10"
+license = {file = "LICENSE"}
+dependencies = ["torch>=2.2", "safetensors>=0.4", "numpy>=1.24"]
+
+[tool.setuptools.packages.find]
+include = ["hyeeg*"]
+
+[tool.setuptools.package-data]
+hyeeg = ["assets/*.json"]
