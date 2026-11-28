@@ -1,0 +1,74 @@
+# --- Python caches ---
+__pycache__/
+*.py[cod]
+*.pyo
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+/.test-tmp/
+/tmp????????/
+
+# --- Build / packaging artifacts (from `pip install -e .`) ---
+build/
+dist/
+*.egg-info/
+
+# --- Virtual environments ---
+.venv/
+venv/
+env/
+
+# --- Editor / OS files ---
+.vscode/
+.idea/
+.codebuddy/
+.DS_Store
+Thumbs.db
+
+# --- Secrets & local config (NEVER commit) ---
+config/*.env
+config/*.env.*
+!config/*.env.example
+.env
+.env.*
+!.env.example
+*.egg-info/SOURCES.txt
+/.codex/*
+!/.codex/config.toml
+**/knowledge/.write.lock
+*.pem
+*.key
+*.p12
+*.pfx
+id_ed25519
+id_rsa
+
+# --- Runtime logs ---
+*.log
+
+# --- Per-project runtime ---
+/output/
+/runtime/*
+!/runtime/README.md
+!/runtime/projects/
+!/runtime/logs/
+!/runtime/run/
+!/runtime/verify-runs/
+/runtime/projects/*
+/runtime/logs/*
+/runtime/run/*
+/runtime/verify-runs/*
+!/runtime/projects/.gitkeep
+!/runtime/logs/.gitkeep
+!/runtime/run/.gitkeep
+!/runtime/verify-runs/.gitkeep
+.coverage
+.cov_*
+
+# verify agent home — provisioned on service start (launcher.ensure_agent_home)
+hyprover/verify/agent/
+# Library-level default verification output when runtime paths are not configured
+/hyprover/verify/runs/
+
+# Node dependencies are installed outside tracked source.
+node_modules/

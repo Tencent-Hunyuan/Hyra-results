@@ -1,0 +1,48 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "hyprover"
+version = "0.1.0"
+description = "hyprover — automated mathematics proof-search orchestration engine"
+readme = "README.md"
+requires-python = ">=3.10"
+keywords = ["mathematics", "proof-search", "multi-agent", "llm", "orchestration"]
+classifiers = [
+    "Development Status :: 3 - Alpha",
+    "Intended Audience :: Science/Research",
+    "Operating System :: POSIX :: Linux",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Topic :: Scientific/Engineering :: Mathematics",
+]
+# The truth layer (hyprover.core) is pure standard library. Install the optional
+# extras below for the services and model adapters in use (see docs/ARCHITECTURE.md).
+dependencies = []
+
+[project.optional-dependencies]
+api = ["openai>=2.40,<3"]
+gateway = ["mcp"]                                   # hyprover.gateway — role-gated MCP server
+verify = ["fastapi", "uvicorn", "pydantic>=2"]         # hyprover.verify — cold-start verifier HTTP service
+observability = ["fastapi", "uvicorn", "pydantic>=2"]  # hyprover.observability — read-only dashboard
+dev = [
+    "pytest", "mcp", "fastapi", "uvicorn", "pydantic>=2", "httpx", "openai>=2.40,<3",
+    "tomli; python_version < '3.11'",
+    "setuptools>=68", "wheel",  # the offline wheel test disables build isolation
+]
+
+[tool.setuptools]
+include-package-data = false
+
+[tool.setuptools.packages.find]
+include = ["hyprover*"]
+namespaces = false
+
+[tool.setuptools.package-data]
+"hyprover.article" = ["templates/*.tex", "templates/*.json"]
+"hyprover.core" = ["*.json"]
+"hyprover.observability" = ["static/*.html", "static/*.js", "static/*.css"]

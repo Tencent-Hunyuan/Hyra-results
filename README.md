@@ -13,6 +13,17 @@ artifact and, where relevant, the self-contained scripts that reproduce it.
 
 ## News
 
+
+- **2026-11-26**: 📐 **HyProver is an agent workflow for pure mathematics that combines broad exploration with efficient token use.**
+  As a run progresses, agents search the literature, investigate leads,
+  reformulate problems, propose conjectures, and establish facts. They
+  organize the work around promising routes, connecting different areas of
+  mathematics through reformulations and proposing intermediate conjectures
+  that advance a proof.
+  The project includes the source code and, as an
+  example of the workflow, an annotated record of a run on the Grünbaum–Loewner
+  centroid-section theorem. **[`AI4Science/hyprover/`](AI4Science/hyprover/)**.
+
 - **2026-11-20**: 🧠 **HyEEG, a three-scale family of EEG foundation models, released with weights and code.**
   **HyEEG** (**Small** 3.25M, **Base** 9.53M, and **Large** 25.23M parameters),
   montage-agnostic spatio-temporal Transformers trained from scratch on over
@@ -288,6 +299,15 @@ Trained models, each with its weights, inference code and technical report:
   accuracy-scale Pareto frontier. The FP32 weights (152 MB total across all
   three scales) are a GitHub Release on this repository; `weights/download.sh`
   fetches and verifies them.
+
+### Research tools
+
+- [`AI4Science/hyprover/`](AI4Science/hyprover/): **HyProver**, an agent
+  workflow for pure mathematics. The main agent explores proof routes and
+  formulates intermediate conjectures. Workers submit proofs for independent
+  LLM review, and published facts enter a shared notebook with traceable proof
+  dependencies. An annotated snapshot follows a run on the known
+  Grünbaum–Loewner centroid-section theorem.
 
 ### AI4Fun
 
