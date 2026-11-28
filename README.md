@@ -13,6 +13,19 @@ artifact and, where relevant, the self-contained scripts that reproduce it.
 
 ## News
 
+- **2026-11-20**: 🧠 **HyEEG, a three-scale family of EEG foundation models, released with weights and code.**
+  **HyEEG** (**Small** 3.25M, **Base** 9.53M, and **Large** 25.23M parameters),
+  montage-agnostic spatio-temporal Transformers trained from scratch on over
+  64,000 hours of waveform-decontaminated public human EEG, extracts frozen
+  representations from arbitrary electrode layouts. Under strict frozen-encoder
+  linear probing across six public EEG benchmarks (LargeMI, EEGMMIDB, SHU-DB,
+  BCIC IV-2a, EEGMAT, and DTU; 17 cross-subject tasks, 79 splits), HyEEG-Large
+  (**0.557** BA / **0.229** cnBA), HyEEG-Base (**0.548** / **0.213**), and
+  HyEEG-Small (**0.540** / **0.194**) occupy the top three positions and form a
+  continuous Pareto frontier ahead of five public EEG foundation models (winning
+  76%–92% of splits for HyEEG-Large). Weights, the `hyeeg` package, and the
+  technical report: **[`AI4Science/hyeeg/`](AI4Science/hyeeg/)**.
+
 - **2026-11-04**: 🌊 **HyPDE, a 2D foundation model for PDEs, released with weights and code.**
   **HyPDE**, a 323M-parameter fused-history transformer trained from scratch on
   thirteen 2D physics datasets, forecasts simulated fields from their last six
@@ -265,6 +278,15 @@ Trained models, each with its weights, inference code and technical report:
   autoregressively; zero-shot against Walrus it has the lower median VRMSE on
   9, 10 and 8 of 13 datasets in one-step, T[1:20] and T[21:60]. The 1.3 GB
   weights are a GitHub Release on this repository; `weights/download.sh`
+  fetches and verifies them.
+- [`AI4Science/hyeeg/`](AI4Science/hyeeg/): **HyEEG**, a three-scale family of
+  montage-agnostic EEG foundation models (Small 3.25M, Base 9.53M, and Large
+  25.23M parameters) trained from scratch on over 64,000 hours of public human
+  EEG verified to have zero overlap with downstream benchmarks. Under frozen
+  linear probing across six public benchmarks (17 cross-subject tasks), the
+  three scales occupy the top three overall positions and establish a continuous
+  accuracy-scale Pareto frontier. The FP32 weights (152 MB total across all
+  three scales) are a GitHub Release on this repository; `weights/download.sh`
   fetches and verifies them.
 
 ### AI4Fun
